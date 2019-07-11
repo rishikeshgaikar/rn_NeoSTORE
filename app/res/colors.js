@@ -15,6 +15,6 @@ const colors = {
   r3: "#bb0100",
   r4: "#9e0100",
 
-  y1: "#fe3f3"
+  y1: "#fe3f3f"
 };
 export default colors;
