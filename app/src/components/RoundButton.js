@@ -4,16 +4,17 @@ import R from "../R";
 
 const RoundButton = props => {
   return (
-    <TouchableOpacity style={ButtonStyles.buttonBody}>
-      <Text style={ButtonStyles.buttonText}>{props.children}</Text>
+    <TouchableOpacity style={buttonStyle.buttonBody}>
+      <Text style={buttonStyle.buttonText}>{props.children}</Text>
     </TouchableOpacity>
   );
 };
 
-const ButtonStyles = StyleSheet.create({
+const buttonStyle = StyleSheet.create({
   buttonBody: {
-    backgroundColor: R.colors.r1,
-    width: "75%",
+    margin: 30,
+    backgroundColor: R.colors.b1,
+    // width: "80%",
     padding: 20,
     marginTop: 20,
     alignItems: "center",
@@ -21,9 +22,10 @@ const ButtonStyles = StyleSheet.create({
     borderRadius: 8
   },
   buttonText: {
-    color: R.colors.b10,
-    fontSize: 20,
+    color: R.colors.r2,
+    fontSize: 25,
     fontStyle: "normal",
+    fontWeight: "bold",
     fontFamily: R.fonts.GothamBold
   }
 });
