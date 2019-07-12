@@ -4,6 +4,7 @@ import Register from "./Register";
 import ResetPassword from "./ResetPassword";
 import UserProfile from "./UserProfile";
 import EditProfile from "./EditProfile";
+import Home from "./Home";
 
 export {
   ForgotPassword,
@@ -11,5 +12,6 @@ export {
   Register,
   ResetPassword,
   UserProfile,
-  EditProfile
+  EditProfile,
+  Home
 };

@@ -7,7 +7,8 @@ import {
   Register,
   ResetPassword,
   UserProfile,
-  EditProfile
+  EditProfile,
+  Home
 } from "./app/src/scenes";
 import R from "./app/src/R";
 
@@ -44,10 +45,16 @@ const Rootstack = createStackNavigator(
     //     title: "MY ACCOUNT"
     //   }
     // },
-    EditProfile: {
-      screen: EditProfile,
+    // EditProfile: {
+    //   screen: EditProfile,
+    //   navigationOptions: {
+    //     title: "EDIT PROFILE"
+    //   }
+    // },
+    Home: {
+      screen: Home,
       navigationOptions: {
-        title: "EDIT PROFILE"
+        title: "NeoSTORE"
       }
     }
   },
