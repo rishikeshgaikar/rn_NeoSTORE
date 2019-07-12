@@ -1,7 +1,16 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StatusBar, Image, TouchableHighlight } from "react-native";
+import {
+  RoundButton,
+  Spinner,
+  Heading,
+  Input,
+  RoundImage
+} from "../components";
+import style from "../Styles";
+import R from "../R";
 
-export default class Login extends Component {
+export default class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -9,8 +18,35 @@ export default class Login extends Component {
 
   render() {
     return (
-      <View>
-        <Text> User profile </Text>
+      <View style={style.redContainer}>
+        <RoundImage />
+        <Input
+          image={R.images.username_icon}
+          placeholder="First Name"
+          placeholderColor={R.colors.b1}
+        />
+        <Input
+          image={R.images.username_icon}
+          placeholder="Last Name"
+          placeholderColor={R.colors.b1}
+        />
+        <Input
+          image={R.images.email_icon}
+          placeholder="Email"
+          placeholderColor={R.colors.b1}
+        />
+        <Input
+          image={R.images.cellphone}
+          placeholder="PHONE NUMBER"
+          placeholderColor={R.colors.b1}
+        />
+        <Input
+          image={R.images.dob_icon}
+          placeholder="DOB"
+          placeholderColor={R.colors.b1}
+        />
+        <RoundButton>EDIT PROFILE</RoundButton>
+        <RoundButton>RESET PASSWORD</RoundButton>
       </View>
     );
   }

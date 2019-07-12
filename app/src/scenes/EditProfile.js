@@ -1,10 +1,16 @@
 import React, { Component } from "react";
 import { View, Text, StatusBar, Image, TouchableHighlight } from "react-native";
-import { RoundButton, Spinner, Heading, Input } from "../components";
+import {
+  RoundButton,
+  Spinner,
+  Heading,
+  Input,
+  RoundImage
+} from "../components";
 import style from "../Styles";
 import R from "../R";
 
-export default class Login extends Component {
+export default class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -13,24 +19,33 @@ export default class Login extends Component {
   render() {
     return (
       <View style={style.redContainer}>
-        <StatusBar backgroundColor={R.colors.r2} />
-        <Heading>NeoSTORE</Heading>
+        <RoundImage />
         <Input
           image={R.images.username_icon}
-          placeholder="Current Password"
+          placeholder="First Name"
           placeholderColor={R.colors.b1}
         />
         <Input
           image={R.images.username_icon}
-          placeholder="New Password"
+          placeholder="Last Name"
           placeholderColor={R.colors.b1}
         />
         <Input
-          image={R.images.password_icon}
-          placeholder="Confirm Password"
+          image={R.images.email_icon}
+          placeholder="Email"
           placeholderColor={R.colors.b1}
         />
-        <RoundButton>RESET PASSWORD</RoundButton>
+        <Input
+          image={R.images.cellphone}
+          placeholder="PHONE NUMBER"
+          placeholderColor={R.colors.b1}
+        />
+        <Input
+          image={R.images.dob_icon}
+          placeholder="DOB"
+          placeholderColor={R.colors.b1}
+        />
+        <RoundButton>SUBMIT</RoundButton>
       </View>
     );
   }
