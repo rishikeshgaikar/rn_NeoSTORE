@@ -5,20 +5,20 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  Text
 } from "react-native";
-import style from "../Styles";
 import R from "../R";
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      imgGridData: [
-        { key: R.images.tableicon },
-        { key: R.images.sofaicon },
-        { key: R.images.chairsicon },
-        { key: R.images.cupboardicon }
+      imgGridDataLink: [
+        { key: R.images.tableicon, action: "Tables" },
+        { key: R.images.sofaicon, action: "Sofas" },
+        { key: R.images.chairsicon, action: "Chairs" },
+        { key: R.images.cupboardicon, action: "Cupboards" }
       ],
       imgSliderData: [
         { key: R.images.slider_img1 },
@@ -57,9 +57,12 @@ export default class Home extends Component {
           }}
         >
           <FlatList
-            data={this.state.imgGridData}
+            data={this.state.imgGridDataLink}
             renderItem={({ item }) => (
-              <TouchableOpacity style={{ padding: 8 }}>
+              <TouchableOpacity
+                style={{ padding: 8 }}
+                onPress={() => this.props.navigation.navigate(item.action)}
+              >
                 <Image source={item.key} />
               </TouchableOpacity>
             )}

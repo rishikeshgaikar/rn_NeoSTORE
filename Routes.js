@@ -8,7 +8,11 @@ import {
   ResetPassword,
   UserProfile,
   EditProfile,
-  Home
+  Home,
+  Tables,
+  Sofas,
+  Chairs,
+  Cupboards
 } from "./app/src/scenes";
 import R from "./app/src/R";
 
@@ -55,6 +59,30 @@ const Rootstack = createStackNavigator(
       screen: Home,
       navigationOptions: {
         title: "NeoSTORE"
+      }
+    },
+    Tables: {
+      screen: Tables,
+      navigationOptions: {
+        title: "TABLES"
+      }
+    },
+    Sofas: {
+      screen: Sofas,
+      navigationOptions: {
+        title: "SOFAS"
+      }
+    },
+    Chairs: {
+      screen: Chairs,
+      navigationOptions: {
+        title: "CHAIRS"
+      }
+    },
+    Cupboards: {
+      screen: Cupboards,
+      navigationOptions: {
+        title: "CUPBOARDS"
       }
     }
   },

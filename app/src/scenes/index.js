@@ -5,6 +5,10 @@ import ResetPassword from "./ResetPassword";
 import UserProfile from "./UserProfile";
 import EditProfile from "./EditProfile";
 import Home from "./Home";
+import Tables from "./Tables";
+import Sofas from "./Sofas";
+import Chairs from "./Chairs";
+import Cupboards from "./Cupboards";
 
 export {
   ForgotPassword,
@@ -13,5 +17,9 @@ export {
   ResetPassword,
   UserProfile,
   EditProfile,
-  Home
+  Home,
+  Tables,
+  Sofas,
+  Chairs,
+  Cupboards
 };
