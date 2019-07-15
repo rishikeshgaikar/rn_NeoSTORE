@@ -55,12 +55,12 @@ const Rootstack = createStackNavigator(
     //     title: "EDIT PROFILE"
     //   }
     // },
-    Home: {
-      screen: Home,
-      navigationOptions: {
-        title: "NeoSTORE"
-      }
-    },
+    // Home: {
+    //   screen: Home,
+    //   navigationOptions: {
+    //     title: "NeoSTORE"
+    //   }
+    // },
     Tables: {
       screen: Tables,
       navigationOptions: {
