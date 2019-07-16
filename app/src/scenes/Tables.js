@@ -48,6 +48,12 @@ export default class Tables extends Component {
           renderItem={({ item }) => (
             <View>
               <ListItem
+                onPress={() =>
+                  this.props.navigation.navigate("ItemDetails", {
+                    productID: item.id,
+                    productName: item.name
+                  })
+                }
                 p_image={item.product_images}
                 p_name={item.name}
                 p_producer={item.producer}

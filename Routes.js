@@ -12,7 +12,8 @@ import {
   Tables,
   Sofas,
   Chairs,
-  Cupboards
+  Cupboards,
+  ItemDetails
 } from "./app/src/scenes";
 import R from "./app/src/R";
 
@@ -61,29 +62,32 @@ const Rootstack = createStackNavigator(
     //     title: "NeoSTORE"
     //   }
     // },
-    Tables: {
-      screen: Tables,
-      navigationOptions: {
-        title: "TABLES"
-      }
-    },
-    Sofas: {
-      screen: Sofas,
-      navigationOptions: {
-        title: "SOFAS"
-      }
-    },
-    Chairs: {
-      screen: Chairs,
-      navigationOptions: {
-        title: "CHAIRS"
-      }
-    },
-    Cupboards: {
-      screen: Cupboards,
-      navigationOptions: {
-        title: "CUPBOARDS"
-      }
+    // Tables: {
+    //   screen: Tables,
+    //   navigationOptions: {
+    //     title: "TABLES"
+    //   }
+    // },
+    // Sofas: {
+    //   screen: Sofas,
+    //   navigationOptions: {
+    //     title: "SOFAS"
+    //   }
+    // },
+    // Chairs: {
+    //   screen: Chairs,
+    //   navigationOptions: {
+    //     title: "CHAIRS"
+    //   }
+    // },
+    // Cupboards: {
+    //   screen: Cupboards,
+    //   navigationOptions: {
+    //     title: "CUPBOARDS"
+    //   }
+    // },
+    ItemDetails: {
+      screen: ItemDetails
     }
   },
   {

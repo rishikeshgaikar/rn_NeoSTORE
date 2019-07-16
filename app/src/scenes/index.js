@@ -9,6 +9,7 @@ import Tables from "./Tables";
 import Sofas from "./Sofas";
 import Chairs from "./Chairs";
 import Cupboards from "./Cupboards";
+import ItemDetails from "./ItemDetails";
 
 export {
   ForgotPassword,
@@ -21,5 +22,6 @@ export {
   Tables,
   Sofas,
   Chairs,
-  Cupboards
+  Cupboards,
+  ItemDetails
 };
