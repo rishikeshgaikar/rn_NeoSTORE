@@ -62,12 +62,12 @@ const Rootstack = createStackNavigator(
     //     title: "NeoSTORE"
     //   }
     // },
-    // Tables: {
-    //   screen: Tables,
-    //   navigationOptions: {
-    //     title: "TABLES"
-    //   }
-    // },
+    Tables: {
+      screen: Tables,
+      navigationOptions: {
+        title: "TABLES"
+      }
+    },
     // Sofas: {
     //   screen: Sofas,
     //   navigationOptions: {

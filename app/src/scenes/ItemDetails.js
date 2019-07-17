@@ -1,5 +1,17 @@
 import React, { Component } from "react";
-import { Text, View, ScrollView, Image, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  TouchableHighlight,
+  FlatList,
+  Button,
+  Modal
+} from "react-native";
+import { RoundButton } from "../components";
+import Rating from "../components/Rating";
 
 export default class ItemDetails extends Component {
   constructor() {
@@ -7,16 +19,17 @@ export default class ItemDetails extends Component {
     this.state = {
       dataSource: [],
       productImages: [],
-      bigImage: ""
+      bigImage: "",
+      modalVisible: false
     };
   }
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.getParam("productName", "default product")
+    title: navigation.getParam("productName", "Center Coffee Table")
   });
 
   componentDidMount() {
     const { navigation } = this.props;
-    const product_id = navigation.getParam("productID", "4");
+    const product_id = navigation.getParam("productID", "1");
 
     const fetchConfig = {
       method: "GET",
@@ -52,7 +65,7 @@ export default class ItemDetails extends Component {
           onPress={() => this.setState({ bigImage: test.image })}
         >
           <Image
-            style={{ width: 200, height: 200 }}
+            style={{ width: 100, height: 200 }}
             source={{ uri: test.image }}
           />
         </TouchableOpacity>
@@ -82,25 +95,77 @@ export default class ItemDetails extends Component {
     }
   }
 
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
+
   render() {
-    console.log(this.state.dataSource);
-    console.log(this.state.productImages);
     return (
-      <View>
-        {this.renderBigImage()}
-        <Text>{this.state.dataSource.name}</Text>
-        <Text>{this.state.dataSource.cost}</Text>
-        <Text>{this.state.dataSource.description}</Text>
-        <Text>{this.state.dataSource.producer}</Text>
-        <Text>{this.state.dataSource.rating}</Text>
-        <ScrollView
-          horizontal
-          pagingEnabled
-          snapToAlignment={"center"}
-          showsHorizontalScrollIndicator={true}
-        >
-          {this.renderImages()}
-        </ScrollView>
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 4 }}>
+          <ScrollView nestedScrollEnabled>
+            <Text>{this.state.dataSource.name}</Text>
+            <Text>{this.state.dataSource.cost}</Text>
+            <Text>{this.state.dataSource.description}</Text>
+            <Text>{this.state.dataSource.producer}</Text>
+            <Text>{this.state.dataSource.rating}</Text>
+            {this.renderBigImage()}
+            <ScrollView
+              nestedScrollEnabled
+              horizontal
+              pagingEnabled
+              snapToAlignment={"center"}
+              showsHorizontalScrollIndicator={true}
+            >
+              {this.renderImages()}
+            </ScrollView>
+          </ScrollView>
+        </View>
+        <View style={{ flex: 1 }}>
+          <Button
+            onPress={() => this.setState({ visibleModal: "default" })}
+            title="Buy Now"
+          />
+          <Button
+            onPress={() => {
+              this.setModalVisible(true);
+            }}
+            title="Rating"
+          />
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={this.state.modalVisible}
+          >
+            <View
+              style={{
+                margin: 50,
+                backgroundColor: "#fff"
+              }}
+            >
+              <Image
+                style={{ width: 200, height: 200 }}
+                source={{ uri: this.state.bigImage }}
+              />
+              <Text>{this.state.dataSource.name}</Text>
+              <Rating
+                rating={1}
+                max={5}
+                iconWidth={24}
+                iconHeight={24}
+                iconSelected={require("../../res/images/airbnb-star-selected.png")}
+                iconUnselected={require("../../res/images/airbnb-star-unselected.png")}
+                onRate={rating => this.setState({ rating: rating })}
+              />
+              <Button
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}
+                title="Rating"
+              />
+            </View>
+          </Modal>
+        </View>
       </View>
     );
   }

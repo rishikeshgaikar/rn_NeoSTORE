@@ -62,7 +62,7 @@ export default class Tables extends Component {
               />
             </View>
           )}
-          keyExtractor={({ id }, index) => id}
+          keyExtractor={(item, index) => index.toString()}
         />
       </View>
     );
