@@ -24,6 +24,7 @@ class Rating extends Component {
     if (this.props.onRate) {
       this.props.onRate(rating);
     }
+    this.props.callbackFromParent(rating);
   }
 
   render() {

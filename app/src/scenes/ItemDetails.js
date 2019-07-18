@@ -20,7 +20,8 @@ export default class ItemDetails extends Component {
       dataSource: [],
       productImages: [],
       bigImage: "",
-      modalVisible: false
+      modalVisible: false,
+      ratedByUser: null
     };
   }
   static navigationOptions = ({ navigation }) => ({
@@ -71,17 +72,6 @@ export default class ItemDetails extends Component {
         </TouchableOpacity>
       );
     });
-
-    // this.state.productImages.map(test => {
-    //   const l = test.image;
-    //   console.log(l);
-    //   return <Image style={{ width: 30, height: 30 }} source={{ uri: l }} />;
-    // });
-    // if (this.state.productImages.length > 0) {
-    //   const l = this.state.productImages[0].image;
-    //   console.log(l);
-    //   return <Image style={{ width: 30, height: 30 }} source={{ uri: l }} />;
-    // }
   }
 
   renderBigImage() {
@@ -95,11 +85,50 @@ export default class ItemDetails extends Component {
     }
   }
 
+  buttonClick() {
+    this.setModalVisible(!this.state.modalVisible);
+    console.log("userRating: " + this.state.ratedByUser);
+    this.userRating();
+  }
+
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
+    console.log(this.state.ratedByUser);
+  }
+
+  myCallback = rating => {
+    // console.log("testing" + rating);
+    this.setState({ ratedByUser: rating });
+  };
+
+  userRating() {
+    const { navigation } = this.props;
+    const user_rating = this.state.ratedByUser;
+    const product_id = navigation.getParam("productID", "1");
+    const fetchConfig = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `product_id=${product_id}&rating=${user_rating}`
+    };
+    console.log(fetchConfig);
+    return fetch(
+      `http://staging.php-dev.in:8844/trainingapp/api/products/setRating`,
+      fetchConfig
+    )
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log(responseJson);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   render() {
+    var self = this;
     return (
       <View style={{ flex: 1 }}>
         <View style={{ flex: 4 }}>
@@ -149,6 +178,7 @@ export default class ItemDetails extends Component {
               />
               <Text>{this.state.dataSource.name}</Text>
               <Rating
+                callbackFromParent={this.myCallback}
                 rating={1}
                 max={5}
                 iconWidth={24}
@@ -159,9 +189,9 @@ export default class ItemDetails extends Component {
               />
               <Button
                 onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
+                  this.buttonClick();
                 }}
-                title="Rating"
+                title="Rate"
               />
             </View>
           </Modal>
