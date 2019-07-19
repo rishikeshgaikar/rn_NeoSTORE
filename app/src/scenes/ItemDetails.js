@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { RoundButton } from "../components";
 import Rating from "../components/Rating";
+import { TextInput } from "react-native-gesture-handler";
 
 export default class ItemDetails extends Component {
   constructor() {
@@ -20,8 +21,10 @@ export default class ItemDetails extends Component {
       dataSource: [],
       productImages: [],
       bigImage: "",
-      modalVisible: false,
-      ratedByUser: null
+      ratingModalVisible: false,
+      quantityModalVisible: false,
+      ratedByUser: null,
+      quantity: null
     };
   }
   static navigationOptions = ({ navigation }) => ({
@@ -86,14 +89,18 @@ export default class ItemDetails extends Component {
   }
 
   buttonClick() {
-    this.setModalVisible(!this.state.modalVisible);
+    this.setratingModalVisible(!this.state.ratingModalVisible);
     console.log("userRating: " + this.state.ratedByUser);
     this.userRating();
   }
 
-  setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
-    console.log(this.state.ratedByUser);
+  setratingModalVisible(visible) {
+    this.setState({ ratingModalVisible: visible });
+    // console.log(this.state.ratedByUser);
+  }
+  setquantityModalVisible(visible) {
+    this.setState({ quantityModalVisible: visible });
+    // console.log(this.state.ratedByUser);
   }
 
   myCallback = rating => {
@@ -116,6 +123,33 @@ export default class ItemDetails extends Component {
     console.log(fetchConfig);
     return fetch(
       `http://staging.php-dev.in:8844/trainingapp/api/products/setRating`,
+      fetchConfig
+    )
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log(responseJson);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
+  addToCart() {
+    const { navigation } = this.props;
+    const quantity = this.state.quantity;
+    console.log(this.state.quantity);
+    const product_id = navigation.getParam("productID", "1");
+    const fetchConfig = {
+      method: "POST",
+      headers: {
+        access_token: "5d26f6e5afd42",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `product_id=${product_id}&quantity=${quantity}`
+    };
+    console.log(fetchConfig);
+    return fetch(
+      `http://staging.php-dev.in:8844/trainingapp/api/addToCart`,
       fetchConfig
     )
       .then(response => response.json())
@@ -152,19 +186,21 @@ export default class ItemDetails extends Component {
         </View>
         <View style={{ flex: 1 }}>
           <Button
-            onPress={() => this.setState({ visibleModal: "default" })}
+            onPress={() => {
+              this.setquantityModalVisible(true);
+            }}
             title="Buy Now"
           />
           <Button
             onPress={() => {
-              this.setModalVisible(true);
+              this.setratingModalVisible(true);
             }}
             title="Rating"
           />
           <Modal
             animationType="slide"
             transparent={true}
-            visible={this.state.modalVisible}
+            visible={this.state.ratingModalVisible}
           >
             <View
               style={{
@@ -192,6 +228,47 @@ export default class ItemDetails extends Component {
                   this.buttonClick();
                 }}
                 title="Rate"
+              />
+              <Button
+                onPress={() => {
+                  this.setratingModalVisible(!this.state.ratingModalVisible);
+                }}
+                title="Close"
+              />
+            </View>
+          </Modal>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={this.state.quantityModalVisible}
+          >
+            <View
+              style={{
+                margin: 50,
+                backgroundColor: "#fff"
+              }}
+            >
+              <Image
+                style={{ width: 200, height: 200 }}
+                source={{ uri: this.state.bigImage }}
+              />
+              <Text>{this.state.dataSource.name}</Text>
+
+              <TextInput
+                placeholder="Enter quantity"
+                onChangeText={quantity => this.setState({ quantity: quantity })}
+              />
+
+              <Button onPress={() => this.addToCart()} title="Add to cart" />
+              <Button
+                onPress={() => this.props.navigation.navigate("Cart")}
+                title="View cart"
+              />
+              <Button
+                onPress={() =>
+                  this.setquantityModalVisible(!this.state.quantityModalVisible)
+                }
+                title="Close"
               />
             </View>
           </Modal>

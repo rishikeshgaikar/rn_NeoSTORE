@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
+
 import {
   ForgotPassword,
   Login,
@@ -13,7 +14,11 @@ import {
   Sofas,
   Chairs,
   Cupboards,
-  ItemDetails
+  ItemDetails,
+  Cart,
+  AddressSelection,
+  OrderList,
+  OrderListDetail
 } from "./app/src/scenes";
 import R from "./app/src/R";
 
@@ -62,12 +67,12 @@ const Rootstack = createStackNavigator(
     //     title: "NeoSTORE"
     //   }
     // },
-    Tables: {
-      screen: Tables,
-      navigationOptions: {
-        title: "TABLES"
-      }
-    },
+    // Tables: {
+    //   screen: Tables,
+    //   navigationOptions: {
+    //     title: "TABLES"
+    //   }
+    // },
     // Sofas: {
     //   screen: Sofas,
     //   navigationOptions: {
@@ -86,8 +91,29 @@ const Rootstack = createStackNavigator(
     //     title: "CUPBOARDS"
     //   }
     // },
-    ItemDetails: {
-      screen: ItemDetails
+    // ItemDetails: {
+    //   screen: ItemDetails
+    // },
+    // Cart: {
+    //   screen: Cart,
+    //   navigationOptions: {
+    //     title: "MY CART"
+    //   }
+    // },
+    // AddressSelection: {
+    //   screen: AddressSelection,
+    //   navigationOptions: {
+    //     title: "SELECT ADRESS"
+    //   }
+    // },
+    OrderList: {
+      screen: OrderList,
+      navigationOptions: {
+        title: "OLD ORDERS"
+      }
+    },
+    OrderListDetail: {
+      screen: OrderListDetail
     }
   },
   {
@@ -122,7 +148,6 @@ const HomeStack = createStackNavigator({
     screen: Register
   }
 });
-
 const RootContainer = createAppContainer(Rootstack);
 const HomeContainer = createAppContainer(HomeStack);
 

@@ -10,6 +10,10 @@ import Sofas from "./Sofas";
 import Chairs from "./Chairs";
 import Cupboards from "./Cupboards";
 import ItemDetails from "./ItemDetails";
+import Cart from "./Cart";
+import AddressSelection from "./AddressSelection";
+import OrderList from "./OrderList";
+import OrderListDetail from "./OrderListDetail";
 
 export {
   ForgotPassword,
@@ -23,5 +27,9 @@ export {
   Sofas,
   Chairs,
   Cupboards,
-  ItemDetails
+  ItemDetails,
+  Cart,
+  AddressSelection,
+  OrderList,
+  OrderListDetail
 };
