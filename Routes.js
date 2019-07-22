@@ -5,7 +5,6 @@ import {
   createDrawerNavigator,
   createAppContainer
 } from "react-navigation";
-
 import {
   ForgotPassword,
   Login,
@@ -25,6 +24,7 @@ import {
   OrderListDetail
 } from "./app/src/scenes";
 import R from "./app/src/R";
+import CustomDrawer from "./app/src/components/CustomDrawer";
 
 const Entrystack = createStackNavigator(
   {
@@ -62,7 +62,7 @@ const Entrystack = createStackNavigator(
     }
   }
 );
-const DrawerStack = createDrawerNavigator(
+const MainStack = createStackNavigator(
   {
     Home: {
       screen: Home,
@@ -70,6 +70,13 @@ const DrawerStack = createDrawerNavigator(
         title: "NeoSTORE"
       }
     },
+    Cart: {
+      screen: Cart,
+      navigationOptions: {
+        title: "MY CART"
+      }
+    },
+
     Tables: {
       screen: Tables,
       navigationOptions: {
@@ -94,29 +101,18 @@ const DrawerStack = createDrawerNavigator(
         title: "CUPBOARDS"
       }
     },
-    ItemDetails: {
-      screen: ItemDetails
-    },
-    Cart: {
-      screen: Cart,
-      navigationOptions: {
-        title: "MY CART"
-      }
-    },
-    AddressSelection: {
-      screen: AddressSelection,
-      navigationOptions: {
-        title: "SELECT ADRESS"
-      }
-    },
     OrderList: {
       screen: OrderList,
       navigationOptions: {
         title: "OLD ORDERS"
       }
     },
-    OrderListDetail: {
-      screen: OrderListDetail
+
+    UserProfile: {
+      screen: UserProfile,
+      navigationOptions: {
+        title: "MY ACCOUNT"
+      }
     },
     ResetPassword: {
       screen: ResetPassword,
@@ -124,60 +120,54 @@ const DrawerStack = createDrawerNavigator(
         title: "RESET PASSWORD"
       }
     },
-    UserProfile: {
-      screen: UserProfile,
-      navigationOptions: {
-        title: "MY ACCOUNT"
-      }
-    },
     EditProfile: {
       screen: EditProfile,
       navigationOptions: {
         title: "EDIT PROFILE"
       }
+    },
+    OrderListDetail: {
+      screen: OrderListDetail
+    },
+    AddressSelection: {
+      screen: AddressSelection,
+      navigationOptions: {
+        title: "SELECT ADRESS"
+      }
+    },
+    ItemDetails: {
+      screen: ItemDetails
     }
   },
-  // {
-  //   defaultNavigationOptions: {
-  //     headerStyle: {
-  //       backgroundColor: R.colors.r2
-  //     },
-  //     headerTintColor: R.colors.b1,
-  //     headerTitleStyle: {
-  //       fontWeight: "bold",
-  //       textAlign: "center",
-  //       alignSelf: "center"
-  //     },
-  //     headerRight: <View />
-  //   }
-  // },
   {
-    drawerType: "slide"
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: R.colors.r2
+      },
+      headerTintColor: R.colors.b1,
+      headerTitleStyle: {
+        fontWeight: "bold",
+        textAlign: "center",
+        alignSelf: "center"
+      },
+      headerRight: <View />
+    }
   }
 );
-
-const OtherStack = createStackNavigator();
+const DrawerStack = createDrawerNavigator(
+  {
+    Main: {
+      screen: MainStack
+    }
+  },
+  {
+    drawerType: "slide",
+    contentComponent: CustomDrawer
+  }
+);
 
 const EntryContainer = createAppContainer(Entrystack);
 const DrawerContainer = createAppContainer(DrawerStack);
-const OtherContainer = createAppContainer(OtherStack);
-
-const Rootstack = createStackNavigator(
-  {
-    Entry: {
-      screen: EntryContainer
-    },
-    Main: {
-      screen: DrawerContainer
-    },
-    other: {
-      screen: OtherContainer
-    }
-  },
-  {
-    initialRouteName: "Main"
-  }
-);
 
 const RootContainer = createAppContainer(DrawerStack);
 export { RootContainer };
