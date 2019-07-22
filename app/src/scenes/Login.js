@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, StatusBar, Image, TouchableHighlight } from "react-native";
+import {
+  View,
+  Text,
+  StatusBar,
+  Image,
+  TouchableHighlight,
+  Button
+} from "react-native";
 import { RoundButton, Spinner, Heading, Input } from "../components";
 import style from "../Styles";
 import R from "../R";
@@ -7,10 +14,49 @@ import R from "../R";
 export default class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      dataSource: [],
+      username: "",
+      password: ""
+    };
+  }
+
+  Login() {
+    const username = this.state.username;
+    const password = this.state.password;
+    // const username = "rishi@gmail.com";
+    // const password = "123456";
+    const fetchConfig = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `email=${username}&password=${password}`
+    };
+    return fetch(
+      `http://staging.php-dev.in:8844/trainingapp/api/users/login`,
+      fetchConfig
+    )
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState(
+          {
+            dataSource: responseJson.data
+          },
+
+          function() {}
+        );
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   render() {
+    console.log(this.state.dataSource);
+    console.log(this.state.username);
+    console.log(this.state.password);
     return (
       <View style={style.redContainer}>
         <StatusBar backgroundColor={R.colors.r2} />
@@ -20,13 +66,15 @@ export default class Login extends Component {
             image={R.images.username_icon}
             placeholder="Username"
             placeholderColor={R.colors.b1}
+            onChangeText={username => this.setState({ username })}
           />
           <Input
             image={R.images.password_icon}
             placeholder="Password"
             placeholderColor={R.colors.b1}
+            onChangeText={password => this.setState({ password })}
           />
-          <RoundButton>LOGIN</RoundButton>
+          <RoundButton onPress={() => this.Login()}>LOGIN</RoundButton>
           <TouchableHighlight
             underlayColor="transparent"
             style={{ alignItems: "center" }}

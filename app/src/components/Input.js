@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, Image, TextInput, StyleSheet } from "react-native";
 import R from "../R";
-const Input = ({ image, placeholder, placeholderColor }) => (
+const Input = ({ image, placeholder, placeholderColor, onChangeText }) => (
   <View style={inputStyle.c}>
     <View style={inputStyle.c1}>
       <Image source={image} />
@@ -11,6 +11,7 @@ const Input = ({ image, placeholder, placeholderColor }) => (
         placeholder={placeholder}
         placeholderTextColor={placeholderColor}
         style={inputStyle.textinput}
+        onChangeText={onChangeText}
       />
     </View>
   </View>

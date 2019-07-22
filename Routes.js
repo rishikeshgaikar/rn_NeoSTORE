@@ -169,5 +169,5 @@ const DrawerStack = createDrawerNavigator(
 const EntryContainer = createAppContainer(Entrystack);
 const DrawerContainer = createAppContainer(DrawerStack);
 
-const RootContainer = createAppContainer(DrawerStack);
+const RootContainer = createAppContainer(Entrystack);
 export { RootContainer };

@@ -4,7 +4,7 @@ import R from "../R";
 
 const RoundButton = props => {
   return (
-    <TouchableOpacity style={buttonStyle.buttonBody}>
+    <TouchableOpacity style={buttonStyle.buttonBody} onPress={props.onPress}>
       <Text style={buttonStyle.buttonText}>{props.children}</Text>
     </TouchableOpacity>
   );
