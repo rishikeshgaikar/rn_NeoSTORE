@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { View } from "react-native";
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import {
+  createStackNavigator,
+  createDrawerNavigator,
+  createAppContainer
+} from "react-navigation";
 
 import {
   ForgotPassword,
@@ -22,98 +26,25 @@ import {
 } from "./app/src/scenes";
 import R from "./app/src/R";
 
-const Rootstack = createStackNavigator(
+const Entrystack = createStackNavigator(
   {
-    //first one will be root means first login screen will open
-    // Login: {
-    //   screen: Login,
-    //   navigationOptions: {
-    //     header: null
-    //   }
-    // },
-    // Register: {
-    //   screen: Register,
-    //   navigationOptions: {
-    //     title: "REGISTER"
-    //   }
-    // },
-    // ForgotPassword: {
-    //   screen: ForgotPassword,
-    //   navigationOptions: {
-    //     title: "FOEGOT PASSWORD"
-    //   }
-    // },
-    // ResetPassword: {
-    //   screen: ResetPassword,
-    //   navigationOptions: {
-    //     title: "RESET PASSWORD"
-    //   }
-    // },
-    // UserProfile: {
-    //   screen: UserProfile,
-    //   navigationOptions: {
-    //     title: "MY ACCOUNT"
-    //   }
-    // },
-    // EditProfile: {
-    //   screen: EditProfile,
-    //   navigationOptions: {
-    //     title: "EDIT PROFILE"
-    //   }
-    // },
-    // Home: {
-    //   screen: Home,
-    //   navigationOptions: {
-    //     title: "NeoSTORE"
-    //   }
-    // },
-    // Tables: {
-    //   screen: Tables,
-    //   navigationOptions: {
-    //     title: "TABLES"
-    //   }
-    // },
-    // Sofas: {
-    //   screen: Sofas,
-    //   navigationOptions: {
-    //     title: "SOFAS"
-    //   }
-    // },
-    // Chairs: {
-    //   screen: Chairs,
-    //   navigationOptions: {
-    //     title: "CHAIRS"
-    //   }
-    // },
-    // Cupboards: {
-    //   screen: Cupboards,
-    //   navigationOptions: {
-    //     title: "CUPBOARDS"
-    //   }
-    // },
-    // ItemDetails: {
-    //   screen: ItemDetails
-    // },
-    // Cart: {
-    //   screen: Cart,
-    //   navigationOptions: {
-    //     title: "MY CART"
-    //   }
-    // },
-    // AddressSelection: {
-    //   screen: AddressSelection,
-    //   navigationOptions: {
-    //     title: "SELECT ADRESS"
-    //   }
-    // },
-    OrderList: {
-      screen: OrderList,
+    Login: {
+      screen: Login,
       navigationOptions: {
-        title: "OLD ORDERS"
+        header: null
       }
     },
-    OrderListDetail: {
-      screen: OrderListDetail
+    Register: {
+      screen: Register,
+      navigationOptions: {
+        title: "REGISTER"
+      }
+    },
+    ForgotPassword: {
+      screen: ForgotPassword,
+      navigationOptions: {
+        title: "FOEGOT PASSWORD"
+      }
     }
   },
   {
@@ -130,25 +61,123 @@ const Rootstack = createStackNavigator(
       headerRight: <View />
     }
   }
-
+);
+const DrawerStack = createDrawerNavigator(
+  {
+    Home: {
+      screen: Home,
+      navigationOptions: {
+        title: "NeoSTORE"
+      }
+    },
+    Tables: {
+      screen: Tables,
+      navigationOptions: {
+        title: "TABLES"
+      }
+    },
+    Sofas: {
+      screen: Sofas,
+      navigationOptions: {
+        title: "SOFAS"
+      }
+    },
+    Chairs: {
+      screen: Chairs,
+      navigationOptions: {
+        title: "CHAIRS"
+      }
+    },
+    Cupboards: {
+      screen: Cupboards,
+      navigationOptions: {
+        title: "CUPBOARDS"
+      }
+    },
+    ItemDetails: {
+      screen: ItemDetails
+    },
+    Cart: {
+      screen: Cart,
+      navigationOptions: {
+        title: "MY CART"
+      }
+    },
+    AddressSelection: {
+      screen: AddressSelection,
+      navigationOptions: {
+        title: "SELECT ADRESS"
+      }
+    },
+    OrderList: {
+      screen: OrderList,
+      navigationOptions: {
+        title: "OLD ORDERS"
+      }
+    },
+    OrderListDetail: {
+      screen: OrderListDetail
+    },
+    ResetPassword: {
+      screen: ResetPassword,
+      navigationOptions: {
+        title: "RESET PASSWORD"
+      }
+    },
+    UserProfile: {
+      screen: UserProfile,
+      navigationOptions: {
+        title: "MY ACCOUNT"
+      }
+    },
+    EditProfile: {
+      screen: EditProfile,
+      navigationOptions: {
+        title: "EDIT PROFILE"
+      }
+    }
+  },
   // {
-  //   headerMode: "none",
-  //   navigationOptions: {
-  //     headerVisible: false
+  //   defaultNavigationOptions: {
+  //     headerStyle: {
+  //       backgroundColor: R.colors.r2
+  //     },
+  //     headerTintColor: R.colors.b1,
+  //     headerTitleStyle: {
+  //       fontWeight: "bold",
+  //       textAlign: "center",
+  //       alignSelf: "center"
+  //     },
+  //     headerRight: <View />
   //   }
-  // }
+  // },
+  {
+    drawerType: "slide"
+  }
 );
 
-const HomeStack = createStackNavigator({
-  //first one will be root means first login screen will open
-  Login: {
-    screen: Login
-  },
-  Register: {
-    screen: Register
-  }
-});
-const RootContainer = createAppContainer(Rootstack);
-const HomeContainer = createAppContainer(HomeStack);
+const OtherStack = createStackNavigator();
 
-export { RootContainer, HomeContainer };
+const EntryContainer = createAppContainer(Entrystack);
+const DrawerContainer = createAppContainer(DrawerStack);
+const OtherContainer = createAppContainer(OtherStack);
+
+const Rootstack = createStackNavigator(
+  {
+    Entry: {
+      screen: EntryContainer
+    },
+    Main: {
+      screen: DrawerContainer
+    },
+    other: {
+      screen: OtherContainer
+    }
+  },
+  {
+    initialRouteName: "Main"
+  }
+);
+
+const RootContainer = createAppContainer(DrawerStack);
+export { RootContainer };
