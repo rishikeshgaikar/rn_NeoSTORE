@@ -8,6 +8,7 @@ import {
   Image
 } from "react-native";
 import { RoundImage } from "../components";
+import style from "../Styles";
 import R from "../R";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -37,7 +38,8 @@ export default class CustomDrawer extends Component {
           action: "OrderList"
         }
       ],
-      email: ""
+      email: "",
+      name: ""
     };
   }
 
@@ -56,8 +58,9 @@ export default class CustomDrawer extends Component {
   async getKey() {
     try {
       const email = await AsyncStorage.getItem("@NeoSTORE_email");
-      this.setState({ email: email });
-      console.log("email: " + email);
+      const fname = await AsyncStorage.getItem("@NeoSTORE_fname");
+      const lname = await AsyncStorage.getItem("@NeoSTORE_lname");
+      this.setState({ email: email, name: fname + " " + lname });
     } catch (error) {
       console.log("Error retrieving data" + error);
     }
@@ -71,23 +74,39 @@ export default class CustomDrawer extends Component {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: R.colors.b10 }}>
         <RoundImage />
-        <View>
-          <Text> Username </Text>
-          <Text>User email: {this.state.email}</Text>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <Text
+            style={{
+              color: R.colors.b1,
+              fontFamily: R.fonts.GothamBold,
+              fontSize: 25
+            }}
+          >
+            {this.state.name}
+          </Text>
+          <Text style={{ color: R.colors.b1, fontFamily: R.fonts.GothamBold }}>
+            {this.state.email}
+          </Text>
         </View>
 
         <FlatList
           data={this.state.drawerData}
+          style={{ paddingTop: 20 }}
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate(item.action)}
             >
-              <View style={{ flexDirection: "row" }}>
+              <View style={{ flexDirection: "row", padding: 20 }}>
                 <View style={{ flex: 1 }}>
                   <Image source={item.image} />
                 </View>
                 <View style={{ flex: 5 }}>
-                  <Text>{item.title}</Text>
+                  <Text style={style.whiteText}>{item.title}</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -95,12 +114,12 @@ export default class CustomDrawer extends Component {
         />
 
         <TouchableOpacity onPress={() => this.userLogout()}>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: "row", padding: 20 }}>
             <View style={{ flex: 1 }}>
               <Image source={R.images.logout_icon} />
             </View>
             <View style={{ flex: 5 }}>
-              <Text>Logout</Text>
+              <Text style={style.whiteText}>Logout</Text>
             </View>
           </View>
         </TouchableOpacity>

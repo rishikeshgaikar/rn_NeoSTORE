@@ -10,13 +10,14 @@ const RoundImage = () => (
 const imgStyle = StyleSheet.create({
   imageContainer: {
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    paddingVertical: 20
   },
   imageStyle: {
-    height: 80,
-    width: 80,
+    height: 100,
+    width: 100,
     padding: 20,
-    borderRadius: 40
+    borderRadius: 100
   }
 });
 

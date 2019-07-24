@@ -74,6 +74,8 @@ export default class Login extends Component {
         isLoading: !this.state.isLoading
       }),
         this.saveKey(
+          "" + this.state.dataSource.data.first_name,
+          "" + this.state.dataSource.data.last_name,
           "" + this.state.dataSource.data.email,
           "" + this.state.dataSource.data.access_token
         ),
@@ -99,14 +101,17 @@ export default class Login extends Component {
     }
   }
 
-  async saveKey(value1, value2) {
-    const email = ["@NeoSTORE_email", value1];
-    const access_token = ["@NeoSTORE_at", value2];
+  async saveKey(value1, value2, value3, value4) {
+    const fname = ["@NeoSTORE_fname", value1];
+    const lname = ["@NeoSTORE_lname", value2];
+    const email = ["@NeoSTORE_email", value3];
+    const access_token = ["@NeoSTORE_at", value4];
     try {
-      await AsyncStorage.multiSet([email, access_token]);
+      await AsyncStorage.multiSet([fname, lname, email, access_token]);
     } catch (e) {
       console.log("Error retrieving data" + error);
     }
+
     console.log("Done.");
   }
 

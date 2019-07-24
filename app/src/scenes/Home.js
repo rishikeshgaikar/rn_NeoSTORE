@@ -68,6 +68,7 @@ export default class Home extends Component {
               </TouchableOpacity>
             )}
             numColumns={2}
+            keyExtractor={(item, index) => index.toString()}
           />
         </View>
       </View>
