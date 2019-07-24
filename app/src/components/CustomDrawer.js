@@ -14,6 +14,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 export default class CustomDrawer extends Component {
   constructor() {
     super();
+    this.getKey();
     this.state = {
       drawerData: [
         { image: R.images.shopping_cart, title: "My Cart", action: "Cart" },
@@ -35,7 +36,8 @@ export default class CustomDrawer extends Component {
           title: "My Orders",
           action: "OrderList"
         }
-      ]
+      ],
+      email: ""
     };
   }
 
@@ -51,6 +53,16 @@ export default class CustomDrawer extends Component {
     console.log("Done.");
   }
 
+  async getKey() {
+    try {
+      const email = await AsyncStorage.getItem("@NeoSTORE_email");
+      this.setState({ email: email });
+      console.log("email: " + email);
+    } catch (error) {
+      console.log("Error retrieving data" + error);
+    }
+  }
+
   navigateLogin() {
     this.props.navigation.navigate("SplashScreen");
   }
@@ -61,7 +73,7 @@ export default class CustomDrawer extends Component {
         <RoundImage />
         <View>
           <Text> Username </Text>
-          <Text>User email</Text>
+          <Text>User email: {this.state.email}</Text>
         </View>
 
         <FlatList

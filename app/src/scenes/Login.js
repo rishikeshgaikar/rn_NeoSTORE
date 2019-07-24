@@ -24,11 +24,8 @@ export default class Login extends Component {
   }
 
   Login() {
-    const { navigate } = this.props.navigation;
     const username = this.state.username;
     const password = this.state.password;
-    // const username = "rishi@gmail.com";
-    // const password = "123456";
     const fetchConfig = {
       method: "POST",
       headers: {
@@ -57,14 +54,13 @@ export default class Login extends Component {
       this.setState({
         isLoading: !this.state.isLoading
       }),
-        this.saveKey("email", this.state.dataSource.data.email),
-        this.saveKey("acess_token", this.state.dataSource.data.access_token),
+        this.saveKey(
+          "" + this.state.dataSource.data.email,
+          "" + this.state.dataSource.data.access_token
+        ),
         setTimeout(function() {
-          console.log("THIS IS");
           navigate("Home");
         }, 2000);
-
-      // alert("" + this.state.dataSource.user_msg);
     } else if (this.state.dataSource.status == 401) {
       alert("" + this.state.dataSource.user_msg);
     } else if (this.state.dataSource.status == 400) {
@@ -72,8 +68,6 @@ export default class Login extends Component {
     } else {
       alert("Something Went Wrong");
     }
-
-    console.log("isSuccessFull" + this.state.dataSource.status);
   }
   showSpinner() {
     if (this.state.isLoading) {
@@ -84,6 +78,7 @@ export default class Login extends Component {
   async saveKey(value1, value2) {
     const email = ["@NeoSTORE_email", value1];
     const access_token = ["@NeoSTORE_at", value2];
+    console.log("savekey" + email);
     try {
       await AsyncStorage.multiSet([email, access_token]);
     } catch (e) {
@@ -94,14 +89,10 @@ export default class Login extends Component {
   }
 
   render() {
-    console.log(this.state.dataSource);
-    // console.log(this.state.dataSource.status);
-    // console.log(this.state.username);
-    // console.log(this.state.password);
     return (
       <View style={style.redContainer}>
         <StatusBar backgroundColor={R.colors.r2} />
-        <View style={style.login_c1}>
+        <View style={{ flex: 10, justifyContent: "center" }}>
           <Heading>NeoSTORE</Heading>
           <Input
             image={R.images.username_icon}
@@ -132,7 +123,9 @@ export default class Login extends Component {
           </TouchableHighlight>
           {this.showSpinner()}
         </View>
-        <View style={style.login_c2}>
+        <View
+          style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}
+        >
           <View style={{ flex: 5, padding: 20 }}>
             <Text style={style.whiteText}>DO YOU HAVE AN ACCOUNT ?</Text>
           </View>

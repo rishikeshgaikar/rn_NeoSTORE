@@ -13,15 +13,6 @@ const style = StyleSheet.create({
     fontSize: 16,
     fontStyle: "normal",
     fontFamily: R.fonts.GothamBold
-  },
-  login_c1: {
-    flex: 10,
-    justifyContent: "center"
-  },
-  login_c2: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center"
   }
 });
 

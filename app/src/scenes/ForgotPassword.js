@@ -54,7 +54,7 @@ export default class Login extends Component {
     return (
       <View style={style.redContainer}>
         <StatusBar backgroundColor={R.colors.r2} />
-        <View style={style.login_c1}>
+        <View style={{ flex: 10, justifyContent: "center" }}>
           <Heading>NeoSTORE</Heading>
           <Input
             image={R.images.email_icon}
@@ -62,17 +62,19 @@ export default class Login extends Component {
             placeholderColor={R.colors.b1}
             onChangeText={email => this.setState({ email })}
           />
-
           <RoundButton onPress={() => this.Forgot()}>
             FORGOT PASSWORD
           </RoundButton>
         </View>
-        <View style={style.login_c2}>
+        <View
+          style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}
+        >
           <View style={{ flex: 5, padding: 20 }}>
             <Text style={style.whiteText}>DO YOU HAVE AN ACCOUNT ?</Text>
           </View>
           <View style={{ flex: 1, padding: 10 }}>
             <TouchableHighlight
+              disabled={this.state.isLoading}
               underlayColor="transparent"
               onPress={() => this.props.navigation.navigate("Register")}
             >
