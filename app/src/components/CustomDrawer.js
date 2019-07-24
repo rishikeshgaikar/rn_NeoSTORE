@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { RoundImage } from "../components";
 import R from "../R";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class CustomDrawer extends Component {
   constructor() {
@@ -37,6 +38,23 @@ export default class CustomDrawer extends Component {
       ]
     };
   }
+
+  async userLogout() {
+    try {
+      await AsyncStorage.clear();
+      {
+        this.navigateLogin();
+      }
+    } catch (e) {
+      console.log("Error retrieving data" + e);
+    }
+    console.log("Done.");
+  }
+
+  navigateLogin() {
+    this.props.navigation.navigate("SplashScreen");
+  }
+
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: R.colors.b10 }}>
@@ -45,6 +63,7 @@ export default class CustomDrawer extends Component {
           <Text> Username </Text>
           <Text>User email</Text>
         </View>
+
         <FlatList
           data={this.state.drawerData}
           renderItem={({ item }) => (
@@ -62,6 +81,17 @@ export default class CustomDrawer extends Component {
             </TouchableOpacity>
           )}
         />
+
+        <TouchableOpacity onPress={() => this.userLogout()}>
+          <View style={{ flexDirection: "row" }}>
+            <View style={{ flex: 1 }}>
+              <Image source={R.images.logout_icon} />
+            </View>
+            <View style={{ flex: 5 }}>
+              <Text>Logout</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
       </SafeAreaView>
     );
   }

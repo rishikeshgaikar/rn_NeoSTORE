@@ -10,6 +10,7 @@ import {
 import { RoundButton, Spinner, Heading, Input } from "../components";
 import style from "../Styles";
 import R from "../R";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class Login extends Component {
   constructor(props) {
@@ -17,11 +18,13 @@ export default class Login extends Component {
     this.state = {
       dataSource: [],
       username: "",
-      password: ""
+      password: "",
+      isLoading: false
     };
   }
 
   Login() {
+    const { navigate } = this.props.navigation;
     const username = this.state.username;
     const password = this.state.password;
     // const username = "rishi@gmail.com";
@@ -40,23 +43,61 @@ export default class Login extends Component {
     )
       .then(response => response.json())
       .then(responseJson => {
-        this.setState(
-          {
-            dataSource: responseJson.data
-          },
-
-          function() {}
-        );
+        this.setState({ dataSource: responseJson }, function() {}),
+          this.isSuccessfull();
       })
       .catch(error => {
         console.error(error);
       });
   }
 
+  isSuccessfull() {
+    const { navigate } = this.props.navigation;
+    if (this.state.dataSource.status == 200) {
+      this.setState({
+        isLoading: !this.state.isLoading
+      }),
+        this.saveKey("email", this.state.dataSource.data.email),
+        this.saveKey("acess_token", this.state.dataSource.data.access_token),
+        setTimeout(function() {
+          console.log("THIS IS");
+          navigate("Home");
+        }, 2000);
+
+      // alert("" + this.state.dataSource.user_msg);
+    } else if (this.state.dataSource.status == 401) {
+      alert("" + this.state.dataSource.user_msg);
+    } else if (this.state.dataSource.status == 400) {
+      alert("" + this.state.dataSource.user_msg);
+    } else {
+      alert("Something Went Wrong");
+    }
+
+    console.log("isSuccessFull" + this.state.dataSource.status);
+  }
+  showSpinner() {
+    if (this.state.isLoading) {
+      return <Spinner />;
+    }
+  }
+
+  async saveKey(value1, value2) {
+    const email = ["@NeoSTORE_email", value1];
+    const access_token = ["@NeoSTORE_at", value2];
+    try {
+      await AsyncStorage.multiSet([email, access_token]);
+    } catch (e) {
+      console.log("Error retrieving data" + error);
+    }
+
+    console.log("Done.");
+  }
+
   render() {
     console.log(this.state.dataSource);
-    console.log(this.state.username);
-    console.log(this.state.password);
+    // console.log(this.state.dataSource.status);
+    // console.log(this.state.username);
+    // console.log(this.state.password);
     return (
       <View style={style.redContainer}>
         <StatusBar backgroundColor={R.colors.r2} />
@@ -74,15 +115,22 @@ export default class Login extends Component {
             placeholderColor={R.colors.b1}
             onChangeText={password => this.setState({ password })}
           />
-          <RoundButton onPress={() => this.Login()}>LOGIN</RoundButton>
+          <RoundButton
+            // disabled={this.state.isLoading}
+            onPress={() => this.Login()}
+          >
+            LOGIN
+          </RoundButton>
+
           <TouchableHighlight
             underlayColor="transparent"
             style={{ alignItems: "center" }}
+            disabled={this.state.isLoading}
             onPress={() => this.props.navigation.navigate("ForgotPassword")}
           >
             <Text style={style.whiteText}>FORGOT PASSWORD?</Text>
           </TouchableHighlight>
-          <Spinner />
+          {this.showSpinner()}
         </View>
         <View style={style.login_c2}>
           <View style={{ flex: 5, padding: 20 }}>
@@ -90,6 +138,7 @@ export default class Login extends Component {
           </View>
           <View style={{ flex: 1, padding: 10 }}>
             <TouchableHighlight
+              disabled={this.state.isLoading}
               underlayColor="transparent"
               onPress={() => this.props.navigation.navigate("Register")}
             >

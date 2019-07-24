@@ -3,6 +3,7 @@ import { View } from "react-native";
 import {
   createStackNavigator,
   createDrawerNavigator,
+  createSwitchNavigator,
   createAppContainer
 } from "react-navigation";
 import {
@@ -21,7 +22,8 @@ import {
   Cart,
   AddressSelection,
   OrderList,
-  OrderListDetail
+  OrderListDetail,
+  SplashScreen
 } from "./app/src/scenes";
 import R from "./app/src/R";
 import CustomDrawer from "./app/src/components/CustomDrawer";
@@ -166,8 +168,30 @@ const DrawerStack = createDrawerNavigator(
   }
 );
 
+const SplashStack = createSwitchNavigator(
+  {
+    SplashScreen: {
+      screen: SplashScreen
+    },
+    loginFlow: {
+      screen: Entrystack
+    },
+    homeFlow: {
+      screen: DrawerStack
+    }
+  },
+  {
+    defaultNavigationOptions: {
+      header: null
+    }
+  }
+);
+
 const EntryContainer = createAppContainer(Entrystack);
 const DrawerContainer = createAppContainer(DrawerStack);
+const SplashContainer = createAppContainer(SplashStack);
 
-const RootContainer = createAppContainer(Entrystack);
-export { RootContainer };
+export { EntryContainer, DrawerContainer, SplashContainer };
+
+// const RootContainer = createAppContainer(Entrystack);
+// export { RootContainer };

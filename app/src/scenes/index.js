@@ -14,6 +14,7 @@ import Cart from "./Cart";
 import AddressSelection from "./AddressSelection";
 import OrderList from "./OrderList";
 import OrderListDetail from "./OrderListDetail";
+import SplashScreen from "./SplashScreen";
 
 export {
   ForgotPassword,
@@ -31,5 +32,6 @@ export {
   Cart,
   AddressSelection,
   OrderList,
-  OrderListDetail
+  OrderListDetail,
+  SplashScreen
 };

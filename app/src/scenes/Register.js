@@ -11,6 +11,7 @@ import {
 import { RoundButton, Heading, Input } from "../components";
 import style from "../Styles";
 import R from "../R";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class Login extends Component {
   constructor(props) {
@@ -103,6 +104,16 @@ export default class Login extends Component {
       return <Image source={R.images.uncheck_icon} />;
     }
   }
+  async getKey() {
+    try {
+      const email = await AsyncStorage.getItem("@NeoSTORE_email");
+      const access_token = await AsyncStorage.getItem("@NeoSTORE_at");
+      console.log("email: " + email);
+      console.log("at: " + access_token);
+    } catch (error) {
+      console.log("Error retrieving data" + error);
+    }
+  }
 
   render() {
     console.log(this.state.dataSource);
@@ -112,6 +123,8 @@ export default class Login extends Component {
         <View style={style.redContainer}>
           <StatusBar backgroundColor={R.colors.r2} />
           <Heading>NeoSTORE</Heading>
+
+          <Button title="get data" onPress={() => this.getKey()} />
           <Input
             image={R.images.username_icon}
             placeholder="First Name"

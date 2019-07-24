@@ -16,7 +16,7 @@ const headingStyle = StyleSheet.create({
   textStyle: {
     color: R.colors.b1,
     fontWeight: "bold",
-    fontSize: 30,
+    fontSize: 65,
     fontStyle: "normal",
     fontFamily: R.fonts.GothamBold
   }

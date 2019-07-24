@@ -1,7 +1,13 @@
 import React from "react";
 import { Text, View, Image, TextInput, StyleSheet } from "react-native";
 import R from "../R";
-const Input = ({ image, placeholder, placeholderColor, onChangeText }) => (
+const Input = ({
+  image,
+  placeholder,
+  placeholderColor,
+  onChangeText,
+  error
+}) => (
   <View style={inputStyle.c}>
     <View style={inputStyle.c1}>
       <Image source={image} />
@@ -12,6 +18,7 @@ const Input = ({ image, placeholder, placeholderColor, onChangeText }) => (
         placeholderTextColor={placeholderColor}
         style={inputStyle.textinput}
         onChangeText={onChangeText}
+        autoCapitalize="none"
       />
     </View>
   </View>
@@ -20,7 +27,7 @@ const Input = ({ image, placeholder, placeholderColor, onChangeText }) => (
 const inputStyle = StyleSheet.create({
   textinput: {
     color: R.colors.b1,
-    fontSize: 30,
+    fontSize: 20,
     fontStyle: "normal",
     fontFamily: R.fonts.GothamBold
   },
@@ -39,6 +46,12 @@ const inputStyle = StyleSheet.create({
   },
   c2: {
     flex: 5
+  },
+  errorText: {
+    color: R.colors.b1,
+    fontSize: 20,
+    fontStyle: "normal",
+    fontFamily: R.fonts.GothamBold
   }
 });
 
