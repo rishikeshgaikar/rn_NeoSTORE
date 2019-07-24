@@ -16,7 +16,8 @@ export default class Login extends Component {
     super(props);
     this.state = {
       dataSource: [],
-      email: ""
+      email: "",
+      text: false
     };
   }
 
@@ -35,22 +36,46 @@ export default class Login extends Component {
     )
       .then(response => response.json())
       .then(responseJson => {
-        this.setState(
-          {
-            dataSource: responseJson
-          },
-
-          function() {}
-        );
+        this.setState({ dataSource: responseJson }, function() {});
+        this.isSuccessfull();
       })
       .catch(error => {
         console.error(error);
       });
   }
 
+  isSuccessfull() {
+    const { navigate } = this.props.navigation;
+    if (this.state.dataSource.status == 200) {
+      this.setState({ text: true });
+      this.changeMSG();
+    } else if (this.state.dataSource.status == 401) {
+      alert("" + this.state.dataSource.user_msg);
+    } else if (this.state.dataSource.status == 400) {
+      alert("" + this.state.dataSource.user_msg);
+    } else {
+      alert("Something Went Wrong");
+    }
+  }
+
+  changeMSG() {
+    if (this.state.text) {
+      return (
+        <Text style={style.whiteText}>
+          Kindly go back to login page and login with new password sent on your
+          email.
+        </Text>
+      );
+    } else {
+      return (
+        <Text style={style.whiteText}>
+          Your new password will be sent on your email.
+        </Text>
+      );
+    }
+  }
+
   render() {
-    console.log(this.state.dataSource);
-    console.log(this.state.email);
     return (
       <View style={style.redContainer}>
         <StatusBar backgroundColor={R.colors.r2} />
@@ -65,6 +90,7 @@ export default class Login extends Component {
           <RoundButton onPress={() => this.Forgot()}>
             FORGOT PASSWORD
           </RoundButton>
+          <View style={{ paddingHorizontal: 40 }}>{this.changeMSG()}</View>
         </View>
         <View
           style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}

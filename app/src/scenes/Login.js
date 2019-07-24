@@ -107,7 +107,7 @@ export default class Login extends Component {
             onChangeText={password => this.setState({ password })}
           />
           <RoundButton
-            // disabled={this.state.isLoading}
+            disabled={this.state.isLoading}
             onPress={() => this.Login()}
           >
             LOGIN

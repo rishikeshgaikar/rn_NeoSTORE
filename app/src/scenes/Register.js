@@ -8,7 +8,7 @@ import {
   ScrollView,
   Image
 } from "react-native";
-import { RoundButton, Heading, Input } from "../components";
+import { RoundButton, Heading, Input, Spinner } from "../components";
 import style from "../Styles";
 import R from "../R";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -27,43 +27,87 @@ export default class Login extends Component {
       phone_no: "",
       M: R.images.chkn,
       F: R.images.chkn,
-      checkButtonCondition: false
+      checkButtonCondition: false,
+      isLoading: false
     };
   }
 
   Register() {
-    const first_name = this.state.first_name;
-    const last_name = this.state.last_name;
-    const email = this.state.email;
-    const password = this.state.password;
-    const confirm_password = this.state.confirm_password;
-    const gender = this.state.gender;
-    const phone_no = this.state.phone_no;
+    if (this.state.checkButtonCondition) {
+      const first_name = this.state.first_name;
+      const last_name = this.state.last_name;
+      const email = this.state.email;
+      const password = this.state.password;
+      const confirm_password = this.state.confirm_password;
+      const gender = this.state.gender;
+      const phone_no = this.state.phone_no;
 
-    const fetchConfig = {
-      method: "POST",
-      headers: {
-        // Accept: "application/json",
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `first_name=${first_name}&last_name=${last_name}&email=${email}&password=${password}&confirm_password=${confirm_password}&phone_no=${phone_no}&gender=${gender}`
-    };
-    return fetch(
-      `http://staging.php-dev.in:8844/trainingapp/api/users/register`,
-      fetchConfig
-    )
-      .then(response => response.json())
-      .then(responseJson => {
-        this.setState(
-          {
-            dataSource: responseJson
-          },
-          function() {}
-        );
-      })
-      .catch(error => {
-        console.error(error);
-      });
+      const fetchConfig = {
+        method: "POST",
+        headers: {
+          // Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `first_name=${first_name}&last_name=${last_name}&email=${email}&password=${password}&confirm_password=${confirm_password}&phone_no=${phone_no}&gender=${gender}`
+      };
+      return fetch(
+        `http://staging.php-dev.in:8844/trainingapp/api/users/register`,
+        fetchConfig
+      )
+        .then(response => response.json())
+        .then(responseJson => {
+          this.setState({ dataSource: responseJson }, function() {}),
+            this.isSuccessfull();
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    } else {
+      alert("Please Check Terms & Conditions");
+    }
+  }
+
+  isSuccessfull() {
+    const { navigate } = this.props.navigation;
+    if (this.state.dataSource.status == 200) {
+      this.setState({
+        isLoading: !this.state.isLoading
+      }),
+        this.saveKey(
+          "" + this.state.dataSource.data.email,
+          "" + this.state.dataSource.data.access_token
+        ),
+        setTimeout(function() {
+          navigate("Home");
+        }, 2000);
+    } else if (this.state.dataSource.status == 401) {
+      alert("" + this.state.dataSource.user_msg);
+    } else if (this.state.dataSource.status == 400) {
+      alert("" + this.state.dataSource.user_msg);
+    } else {
+      alert("Something Went Wrong");
+    }
+  }
+
+  showSpinner() {
+    if (this.state.isLoading) {
+      return (
+        <View style={{ height: 200 }}>
+          <Spinner />
+        </View>
+      );
+    }
+  }
+
+  async saveKey(value1, value2) {
+    const email = ["@NeoSTORE_email", value1];
+    const access_token = ["@NeoSTORE_at", value2];
+    try {
+      await AsyncStorage.multiSet([email, access_token]);
+    } catch (e) {
+      console.log("Error retrieving data" + error);
+    }
+    console.log("Done.");
   }
 
   changeCheckButton() {
@@ -92,9 +136,6 @@ export default class Login extends Component {
           F: R.images.chkn
         });
     }
-
-    console.log(n);
-    console.log(this.state.gender);
   }
 
   checkButtonImage() {
@@ -106,10 +147,15 @@ export default class Login extends Component {
   }
 
   render() {
-    console.log(this.state.dataSource);
-    console.log(this.state.gender);
     return (
-      <ScrollView contentContainerStyle={style.redContainer}>
+      <ScrollView
+        contentContainerStyle={{
+          justifyContent: "center",
+          backgroundColor: R.colors.r2,
+          height: "100%"
+        }}
+      >
+        <View />
         <StatusBar backgroundColor={R.colors.r2} />
         <Heading>NeoSTORE</Heading>
         <Input
@@ -187,7 +233,13 @@ export default class Login extends Component {
           </TouchableOpacity>
           <Text style={style.whiteText}>I agree Terms & Conditions.</Text>
         </View>
-        <RoundButton onPress={() => this.Register()}>REGISTER</RoundButton>
+        <RoundButton
+          disabled={this.state.isLoading}
+          onPress={() => this.Register()}
+        >
+          REGISTER
+        </RoundButton>
+        {this.showSpinner()}
       </ScrollView>
     );
   }
