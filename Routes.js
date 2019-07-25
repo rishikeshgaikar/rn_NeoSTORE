@@ -14,16 +14,13 @@ import {
   UserProfile,
   EditProfile,
   Home,
-  Tables,
-  Sofas,
-  Chairs,
-  Cupboards,
   ItemDetails,
   Cart,
   AddressSelection,
   OrderList,
   OrderListDetail,
-  SplashScreen
+  SplashScreen,
+  ProductList
 } from "./app/src/scenes";
 import R from "./app/src/R";
 import CustomDrawer from "./app/src/components/CustomDrawer";
@@ -78,30 +75,8 @@ const MainStack = createStackNavigator(
         title: "MY CART"
       }
     },
-
-    Tables: {
-      screen: Tables,
-      navigationOptions: {
-        title: "TABLES"
-      }
-    },
-    Sofas: {
-      screen: Sofas,
-      navigationOptions: {
-        title: "SOFAS"
-      }
-    },
-    Chairs: {
-      screen: Chairs,
-      navigationOptions: {
-        title: "CHAIRS"
-      }
-    },
-    Cupboards: {
-      screen: Cupboards,
-      navigationOptions: {
-        title: "CUPBOARDS"
-      }
+    ProductList: {
+      screen: ProductList
     },
     OrderList: {
       screen: OrderList,

@@ -9,16 +9,17 @@ import {
   Text
 } from "react-native";
 import R from "../R";
+import { YellowBox } from "react-native";
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       imgGridDataLink: [
-        { key: R.images.tableicon, action: "Tables", value: "1" },
-        { key: R.images.sofaicon, action: "Sofas", value: "2" },
-        { key: R.images.chairsicon, action: "Chairs", value: "3" },
-        { key: R.images.cupboardicon, action: "Cupboards", value: "4" }
+        { key: R.images.tableicon, pcName: "Tables", value: "1" },
+        { key: R.images.sofaicon, pcName: "Sofas", value: "3" },
+        { key: R.images.chairsicon, pcName: "Chairs", value: "2" },
+        { key: R.images.cupboardicon, pcName: "Cupboards", value: "4" }
       ],
       imgSliderData: [
         { key: R.images.slider_img1 },
@@ -30,6 +31,7 @@ export default class Home extends Component {
   }
 
   render() {
+    YellowBox.ignoreWarnings(["Warning: componentWillUpdate is deprecated"]);
     return (
       <View style={{ flex: 1, flexDirection: "column" }}>
         <StatusBar backgroundColor={R.colors.r2} />
@@ -42,6 +44,7 @@ export default class Home extends Component {
           >
             {this.state.imgSliderData.map(image => (
               <Image
+                key={image.key}
                 style={{ width: 393, height: "100%" }}
                 source={image.key}
               />
@@ -60,15 +63,21 @@ export default class Home extends Component {
             data={this.state.imgGridDataLink}
             renderItem={({ item }) => (
               <TouchableOpacity
+                key={item.key}
                 style={{ padding: 8 }}
-                // onPress={() => this.props.navigation.navigate(item.action)}
-                onPress={() => this.props.navigation.toggleDrawer()}
+                onPress={() =>
+                  this.props.navigation.navigate("ProductList", {
+                    pcID: item.value,
+                    pcName: item.pcName
+                  })
+                }
+                // onPress={() => this.props.navigation.toggleDrawer()}
               >
                 <Image source={item.key} />
               </TouchableOpacity>
             )}
-            numColumns={2}
             keyExtractor={(item, index) => index.toString()}
+            numColumns={2}
           />
         </View>
       </View>

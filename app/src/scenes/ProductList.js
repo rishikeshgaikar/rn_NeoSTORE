@@ -2,16 +2,20 @@ import React, { Component } from "react";
 import { Image, View, FlatList } from "react-native";
 import ListItem from "../components/ListItem";
 
-export default class Tables extends Component {
+export default class ProductList extends Component {
   constructor() {
     super();
     this.state = {
       dataSource: []
     };
   }
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.getParam("pcName", "Table")
+  });
 
   componentDidMount() {
-    const product_category_id = "1";
+    const product_id = this.props.navigation.getParam("pcID", "1");
+    const product_category_id = product_id;
     const limit = "10";
     const page = "1";
     const fetchConfig = {
