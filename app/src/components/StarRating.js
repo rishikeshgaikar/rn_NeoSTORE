@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Image, StyleSheet, View, Text } from "react-native";
 import R from "../R";
 
-export default class StarRating extends Component {
+class StarRating extends Component {
   constructor(props) {
     super(props);
   }
@@ -139,4 +139,4 @@ export default class StarRating extends Component {
   }
 }
 
-const styles = StyleSheet.create({});
+export { StarRating };

@@ -42,7 +42,8 @@ class Rating extends Component {
           <Image
             style={{
               height: this.state.iconHeight,
-              width: this.state.iconWidth
+              width: this.state.iconWidth,
+              margin: 10
             }}
             source={
               this.state.rating >= i
@@ -59,4 +60,4 @@ class Rating extends Component {
   }
 }
 
-export default Rating;
+export { Rating };

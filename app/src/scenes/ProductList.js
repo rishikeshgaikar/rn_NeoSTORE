@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Image, View, FlatList, TouchableOpacity, Text } from "react-native";
-import StarRating from "../components/StarRating";
+import { StarRating } from "../components";
 import R from "../R";
 
 export default class ProductList extends Component {
