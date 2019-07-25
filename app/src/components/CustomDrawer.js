@@ -19,13 +19,33 @@ export default class CustomDrawer extends Component {
     this.state = {
       drawerData: [
         { image: R.images.shopping_cart, title: "My Cart", action: "Cart" },
-        { image: R.images.tables_icon, title: "Tables", action: "Tables" },
-        { image: R.images.sofa_icon, title: "Sofas", action: "Sofas" },
-        { image: R.images.chair_icon, title: "Chairs", action: "Chairs" },
+        {
+          image: R.images.tables_icon,
+          title: "Tables",
+          action: "ProductList",
+          value: "1",
+          pcName: "Tables"
+        },
+        {
+          image: R.images.sofa_icon,
+          title: "Sofas",
+          action: "ProductList",
+          value: "3",
+          pcName: "Sofas"
+        },
+        {
+          image: R.images.chair_icon,
+          title: "Chairs",
+          action: "ProductList",
+          value: "2",
+          pcName: "Chairs"
+        },
         {
           image: R.images.cupboard_icon,
           title: "Cupboards",
-          action: "Cupboards"
+          action: "ProductList",
+          value: "4",
+          pcName: "Cupboards"
         },
         {
           image: R.images.username_icon,
@@ -99,7 +119,12 @@ export default class CustomDrawer extends Component {
           style={{ paddingTop: 20 }}
           renderItem={({ item }) => (
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate(item.action)}
+              onPress={() =>
+                this.props.navigation.navigate(item.action, {
+                  pcID: item.value,
+                  pcName: item.pcName
+                })
+              }
             >
               <View style={{ flexDirection: "row", padding: 20 }}>
                 <View style={{ flex: 1 }}>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, FlatList, Image } from "react-native";
+import R from "../R";
 
 export default class OrderListDetail extends Component {
   constructor() {
@@ -21,7 +22,7 @@ export default class OrderListDetail extends Component {
     const fetchConfig = {
       method: "GET",
       headers: {
-        access_token: "5d26f6e5afd42",
+        access_token: "5d36e102b8e67",
         "Content-Type": "application/x-www-form-urlencoded"
       }
     };
@@ -49,31 +50,83 @@ export default class OrderListDetail extends Component {
     console.log(this.state.dataSource);
     return (
       <View>
-        <Text>Shipping Address: {this.state.address}</Text>
+        <Text
+          style={{ fontFamily: R.fonts.GothamBook, fontSize: 15, padding: 10 }}
+        >
+          Shipping Address: {this.state.address}
+        </Text>
 
         <FlatList
           data={this.state.dataSource}
           renderItem={({ item }) => (
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row", margin: 10 }}>
               <View style={{ flex: 1 }}>
                 <Image
-                  style={{ height: 50, width: 50 }}
+                  style={{ height: 70, width: 70 }}
                   source={{ uri: item.prod_image }}
                 />
               </View>
-              <View style={{ flex: 4 }}>
-                <Text>{item.prod_name}</Text>
-                <Text>{item.prod_cat_name}</Text>
-                <Text>{item.quantity}</Text>
+              <View style={{ flex: 2, paddingLeft: 15 }}>
+                <Text
+                  style={{
+                    fontFamily: R.fonts.GothamBook,
+                    fontSize: 15,
+                    fontWeight: "bold"
+                  }}
+                >
+                  {item.prod_name}
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: R.fonts.GothamBook,
+                    fontStyle: "italic"
+                  }}
+                >
+                  Category: {item.prod_cat_name}
+                </Text>
+                <Text>Quantity: {item.quantity}</Text>
               </View>
-              <View style={{ flex: 1 }}>
-                <Text>{item.total}</Text>
+              <View style={{ flex: 1, paddingTop: 30 }}>
+                <Text
+                  style={{
+                    fontFamily: R.fonts.GothamBook,
+                    fontSize: 15,
+                    color: R.colors.r2,
+                    fontWeight: "bold"
+                  }}
+                >
+                  Rs. {item.total}
+                </Text>
               </View>
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
         />
-        <Text>Total:{this.state.cost}</Text>
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <View style={{ flex: 4, paddingLeft: 20 }}>
+            <Text
+              style={{
+                fontFamily: R.fonts.GothamBook,
+                fontSize: 20,
+                fontWeight: "bold"
+              }}
+            >
+              Grand Total:
+            </Text>
+          </View>
+          <View style={{ flex: 2, paddingLeft: 20 }}>
+            <Text
+              style={{
+                fontFamily: R.fonts.GothamBook,
+                fontSize: 20,
+                fontWeight: "bold",
+                color: R.colors.r2
+              }}
+            >
+              Rs. {this.state.cost}
+            </Text>
+          </View>
+        </View>
       </View>
     );
   }

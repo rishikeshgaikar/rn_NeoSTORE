@@ -150,7 +150,7 @@ export default class ItemDetails extends Component {
     const fetchConfig = {
       method: "POST",
       headers: {
-        access_token: "5d26f6e5afd42",
+        access_token: "5d36e102b8e67",
         "Content-Type": "application/x-www-form-urlencoded"
       },
       body: `product_id=${product_id}&quantity=${quantity}`

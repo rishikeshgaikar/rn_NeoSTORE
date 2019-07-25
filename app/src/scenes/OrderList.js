@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, FlatList } from "react-native";
+import R from "../R";
 
 export default class OrderList extends Component {
   constructor() {
@@ -13,7 +14,7 @@ export default class OrderList extends Component {
     const fetchConfig = {
       method: "GET",
       headers: {
-        access_token: "5d26f6e5afd42",
+        access_token: "5d36e102b8e67",
         "Content-Type": "application/x-www-form-urlencoded"
       }
     };
@@ -50,14 +51,32 @@ export default class OrderList extends Component {
                   OrderID: item.id
                 })
               }
+              style={{ margin: 10 }}
             >
               <View style={{ flexDirection: "row" }}>
                 <View style={{ flex: 5 }}>
-                  <Text>Order Id: {item.id}</Text>
-                  <Text>Order Date{item.created}</Text>
+                  <Text
+                    style={{ fontFamily: R.fonts.GothamBook, fontSize: 20 }}
+                  >
+                    Order Id: {item.id}
+                  </Text>
+                  <Text
+                    style={{ fontFamily: R.fonts.GothamBook, fontSize: 15 }}
+                  >
+                    Date: {item.created}
+                  </Text>
                 </View>
-                <View style={{ flex: 1 }}>
-                  <Text>{item.cost}</Text>
+                <View style={{ flex: 2 }}>
+                  <Text
+                    style={{
+                      fontFamily: R.fonts.GothamBook,
+                      color: R.colors.r2,
+                      fontSize: 20,
+                      fontWeight: "bold"
+                    }}
+                  >
+                    Rs.{item.cost}
+                  </Text>
                 </View>
               </View>
             </TouchableOpacity>

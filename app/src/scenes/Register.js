@@ -160,7 +160,6 @@ export default class Login extends Component {
           height: "100%"
         }}
       >
-        <View />
         <StatusBar backgroundColor={R.colors.r2} />
         <Heading>NeoSTORE</Heading>
         <Input

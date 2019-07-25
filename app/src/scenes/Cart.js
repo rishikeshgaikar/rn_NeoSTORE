@@ -1,6 +1,15 @@
 import React, { Component } from "react";
-import { Text, View, Button, FlatList, Image } from "react-native";
-import { SwipeListView, SwipeRow } from "react-native-swipe-list-view";
+import {
+  Text,
+  View,
+  Button,
+  FlatList,
+  Image,
+  TouchableOpacity,
+  ImageBackground
+} from "react-native";
+import R from "../R";
+import { RedButton } from "../components";
 
 export default class Cart extends Component {
   constructor() {
@@ -17,7 +26,7 @@ export default class Cart extends Component {
     const fetchConfig = {
       method: "GET",
       headers: {
-        access_token: "5d26f6e5afd42",
+        access_token: "5d36e102b8e67",
         "Content-Type": "application/x-www-form-urlencoded"
       }
     };
@@ -49,7 +58,7 @@ export default class Cart extends Component {
     const fetchConfig = {
       method: "POST",
       headers: {
-        access_token: "5d26f6e5afd42",
+        access_token: "5d36e102b8e67",
         "Content-Type": "application/x-www-form-urlencoded"
       },
       body: `product_id=${product_id}&quantity=${quantity}`
@@ -76,7 +85,7 @@ export default class Cart extends Component {
     const fetchConfig = {
       method: "POST",
       headers: {
-        access_token: "5d26f6e5afd42",
+        access_token: "5d36e102b8e67",
         "Content-Type": "application/x-www-form-urlencoded"
       },
       body: `product_id=${product_id}`
@@ -114,36 +123,89 @@ export default class Cart extends Component {
           <FlatList
             data={this.state.dataSource}
             renderItem={({ item }) => (
-              <View style={{ flexDirection: "row" }}>
-                <View style={{ flex: 1 }}>
+              <View style={{ flexDirection: "row", marginVertical: 15 }}>
+                <View style={{ flex: 1, padding: 30 }}>
                   <Image
-                    style={{ width: 50, height: 50 }}
+                    style={{ width: 75, height: 75 }}
                     source={{ uri: item.product.product_images }}
                   />
                 </View>
                 <View style={{ flex: 4 }}>
-                  <Text>{item.product.name}</Text>
-                  <Text>{item.product.product_id}</Text>
-                  <Text>{item.product.product_category}</Text>
                   <View style={{ flexDirection: "row" }}>
+                    <View style={{ flex: 4 }}>
+                      <Text
+                        style={{
+                          fontFamily: R.fonts.GothamBook,
+                          fontSize: 20,
+                          fontWeight: "bold"
+                        }}
+                      >
+                        {item.product.name}
+                      </Text>
+                      <Text style={{ fontStyle: "italic" }}>
+                        Category: {item.product.product_category}
+                      </Text>
+                    </View>
                     <View style={{ flex: 2 }}>
-                      <Text>{item.quantity}</Text>
-                      <Button
-                        title="<edit>"
+                      <TouchableOpacity
+                        onPress={() => this.deleteCart(item.product.id)}
+                      >
+                        <Image
+                          style={{
+                            height: 60,
+                            width: 60,
+                            paddingTop: 40
+                          }}
+                          source={R.images.delete}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+
+                  <View style={{ flexDirection: "row" }}>
+                    <View style={{ flex: 4 }}>
+                      <TouchableOpacity
                         onPress={() =>
                           this.editCart(
                             item.product.id,
                             this.state.editCartQuantity
                           )
                         }
-                      />
-                      <Button
-                        title="<delete>"
-                        onPress={() => this.deleteCart(item.product.id)}
-                      />
+                      >
+                        <ImageBackground
+                          source={R.images.select_button}
+                          style={{ width: 75, height: 50 }}
+                        >
+                          <View
+                            style={{
+                              position: "absolute",
+                              top: 0,
+                              left: 0,
+                              right: 30,
+                              bottom: 5,
+                              justifyContent: "center",
+                              alignItems: "center"
+                            }}
+                          >
+                            <Text style={{ fontWeight: "bold", fontSize: 17 }}>
+                              {item.quantity}
+                            </Text>
+                          </View>
+                        </ImageBackground>
+                      </TouchableOpacity>
                     </View>
-                    <View style={{ flex: 4 }}>
-                      <Text>{item.product.cost}</Text>
+                    <View style={{ flex: 3 }}>
+                      <Text
+                        style={{
+                          color: R.colors.r2,
+                          fontSize: 20,
+                          fontFamily: R.fonts.GothamBook,
+                          fontWeight: "bold",
+                          paddingTop: 10
+                        }}
+                      >
+                        Rs. {item.product.cost}
+                      </Text>
                     </View>
                   </View>
                 </View>
@@ -152,15 +214,56 @@ export default class Cart extends Component {
             keyExtractor={(item, index) => index.toString()}
           />
         </View>
-        <View style={{ flex: 1 }}>
-          <Text> Total items: {this.state.cartCount} </Text>
-          <Text> Total price: {this.state.cartTotal} </Text>
+        <View style={{ flex: 1, marginHorizontal: 20, flexDirection: "row" }}>
+          <View style={{ flex: 4, paddingLeft: 20 }}>
+            <Text
+              style={{
+                fontFamily: R.fonts.GothamBook,
+                fontSize: 20,
+                fontWeight: "bold"
+              }}
+            >
+              Total items:
+            </Text>
+            <Text
+              style={{
+                fontFamily: R.fonts.GothamBook,
+                fontSize: 20,
+                fontWeight: "bold"
+              }}
+            >
+              Grand Total:
+            </Text>
+          </View>
+          <View style={{ flex: 2, paddingLeft: 20 }}>
+            <Text
+              style={{
+                fontFamily: R.fonts.GothamBook,
+                fontSize: 20,
+                fontWeight: "bold",
+                color: R.colors.r2
+              }}
+            >
+              {this.state.cartCount}
+            </Text>
+            <Text
+              style={{
+                fontFamily: R.fonts.GothamBook,
+                fontSize: 20,
+                fontWeight: "bold",
+                color: R.colors.r2
+              }}
+            >
+              Rs. {this.state.cartTotal}
+            </Text>
+          </View>
         </View>
-        <View style={{ flex: 1 }}>
-          <Button
-            title=" order now"
+        <View style={{ flex: 1, marginHorizontal: 20 }}>
+          <RedButton
             onPress={() => this.props.navigation.navigate("AddressSelection")}
-          />
+          >
+            ORDER NOW
+          </RedButton>
         </View>
       </View>
     );
