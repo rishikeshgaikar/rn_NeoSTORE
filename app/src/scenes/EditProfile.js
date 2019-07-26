@@ -9,11 +9,13 @@ import {
 } from "../components";
 import style from "../Styles";
 import R from "../R";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      access_token: "",
       dataSource: [],
       first_name: "",
       last_name: "",
@@ -24,7 +26,8 @@ export default class EditProfile extends Component {
     };
   }
 
-  updateUser() {
+  async updateUser() {
+    const token = await AsyncStorage.getItem("@NeoSTORE_at");
     const first_name = this.state.first_name;
     const last_name = this.state.last_name;
     const email = this.state.email;
@@ -34,7 +37,7 @@ export default class EditProfile extends Component {
     const fetchConfig = {
       method: "POST",
       headers: {
-        access_token: "5d36e102b8e67",
+        access_token: token,
         "Content-Type": "application/x-www-form-urlencoded"
       },
       body: `first_name=${first_name}&last_name=${last_name}&email=${email}&dob=${dob}&profile_pic={"test.png"}&phone_no=${phone_no}`

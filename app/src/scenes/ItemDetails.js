@@ -11,11 +11,13 @@ import {
 } from "react-native";
 import { RedButton, Rating, StarRating } from "../components";
 import R from "../R";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class ItemDetails extends Component {
   constructor() {
     super();
     this.state = {
+      access_token: "",
       dataSource: [],
       productImages: [],
       bigImage: "",
@@ -24,6 +26,18 @@ export default class ItemDetails extends Component {
       ratedByUser: null,
       quantity: null
     };
+  }
+
+  async getKey() {
+    try {
+      const at = await AsyncStorage.getItem("@NeoSTORE_at");
+      if (at != null) {
+        this.setState({ access_token: at });
+        this.componentDidMount();
+      }
+    } catch (error) {
+      console.log("Error retrieving data" + error);
+    }
   }
   static navigationOptions = ({ navigation }) => ({
     title: navigation.getParam("productName", "Center Coffee Table")
@@ -142,7 +156,8 @@ export default class ItemDetails extends Component {
       });
   }
 
-  addToCart() {
+  async addToCart() {
+    const token = await AsyncStorage.getItem("@NeoSTORE_at");
     const { navigation } = this.props;
     const quantity = this.state.quantity;
     console.log(this.state.quantity);
@@ -150,7 +165,7 @@ export default class ItemDetails extends Component {
     const fetchConfig = {
       method: "POST",
       headers: {
-        access_token: "5d36e102b8e67",
+        access_token: token,
         "Content-Type": "application/x-www-form-urlencoded"
       },
       body: `product_id=${product_id}&quantity=${quantity}`

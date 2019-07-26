@@ -1,28 +1,32 @@
 import React, { Component } from "react";
 import { Text, View, FlatList, Image } from "react-native";
 import R from "../R";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class OrderListDetail extends Component {
   constructor() {
     super();
     this.state = {
+      access_token: "",
       dataSource: [],
       address: "",
       cost: ""
     };
   }
+
   static navigationOptions = ({ navigation }) => ({
     title: "OrderID: " + navigation.getParam("OrderID", "2016")
   });
 
-  componentDidMount() {
+  async componentDidMount() {
+    const token = await AsyncStorage.getItem("@NeoSTORE_at");
     const { navigation } = this.props;
     const order_id = navigation.getParam("OrderID", "2016");
 
     const fetchConfig = {
       method: "GET",
       headers: {
-        access_token: "5d36e102b8e67",
+        access_token: token,
         "Content-Type": "application/x-www-form-urlencoded"
       }
     };

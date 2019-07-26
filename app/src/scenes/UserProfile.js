@@ -17,36 +17,40 @@ import {
 } from "../components";
 import style from "../Styles";
 import R from "../R";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      access_token: "",
       dataSource: []
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const token = await AsyncStorage.getItem("@NeoSTORE_at");
+    console.log(token);
     const fetchConfig = {
       method: "GET",
       headers: {
-        access_token: "5d36e102b8e67",
+        access_token: token,
         "Content-Type": "application/x-www-form-urlencoded"
       }
     };
+    console.log(fetchConfig);
     return fetch(
       `http://staging.php-dev.in:8844/trainingapp/api/users/getUserData`,
       fetchConfig
     )
       .then(response => response.json())
       .then(responseJson => {
-        this.setState(
-          {
-            dataSource: responseJson.data.user_data
-          },
-
-          function() {}
-        );
+        this.setState({
+          dataSource: responseJson.data.user_data
+        });
+        // console.log(responseJson);
+        // console.log(responseJson.data);
+        // console.log(responseJson.data.user_data);
       })
       .catch(error => {
         console.error(error);
@@ -54,6 +58,7 @@ export default class UserProfile extends Component {
   }
 
   render() {
+    console.log(this.state.dataSource);
     return (
       <ScrollView
         contentContainerStyle={{

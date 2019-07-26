@@ -10,11 +10,13 @@ import {
 } from "react-native";
 import R from "../R";
 import { RedButton } from "../components";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class Cart extends Component {
   constructor() {
     super();
     this.state = {
+      access_token: "",
       dataSource: [],
       cartCount: "",
       cartTotal: "",
@@ -22,11 +24,14 @@ export default class Cart extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const token = await AsyncStorage.getItem("@NeoSTORE_at");
+    this.setState({ access_token: token });
+    console.log(token);
     const fetchConfig = {
       method: "GET",
       headers: {
-        access_token: "5d36e102b8e67",
+        access_token: token,
         "Content-Type": "application/x-www-form-urlencoded"
       }
     };
@@ -57,7 +62,7 @@ export default class Cart extends Component {
     const fetchConfig = {
       method: "POST",
       headers: {
-        access_token: "5d36e102b8e67",
+        access_token: this.state.access_token,
         "Content-Type": "application/x-www-form-urlencoded"
       },
       body: `product_id=${product_id}&quantity=${quantity}`
@@ -83,7 +88,7 @@ export default class Cart extends Component {
     const fetchConfig = {
       method: "POST",
       headers: {
-        access_token: "5d36e102b8e67",
+        access_token: this.state.access_token,
         "Content-Type": "application/x-www-form-urlencoded"
       },
       body: `product_id=${product_id}`
@@ -107,10 +112,6 @@ export default class Cart extends Component {
   }
 
   render() {
-    console.log(this.state.dataSource);
-    console.log(this.state.cartCount);
-    console.log(this.state.cartTotal);
-
     if (this.state.cartCount > 0) {
       return (
         <View style={{ flex: 1 }}>

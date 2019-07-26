@@ -15,7 +15,6 @@ import AsyncStorage from "@react-native-community/async-storage";
 export default class CustomDrawer extends Component {
   constructor() {
     super();
-    this.getKey();
     this.state = {
       drawerData: [
         { image: R.images.shopping_cart, title: "My Cart", action: "Cart" },
@@ -61,6 +60,7 @@ export default class CustomDrawer extends Component {
       email: "",
       name: ""
     };
+    this.getKey();
   }
 
   async userLogout() {

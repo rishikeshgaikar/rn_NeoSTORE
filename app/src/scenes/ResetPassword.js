@@ -3,11 +3,13 @@ import { View, Text, StatusBar, Image, TouchableHighlight } from "react-native";
 import { RoundButton, Spinner, Heading, Input } from "../components";
 import style from "../Styles";
 import R from "../R";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      access_token: "",
       pass: "",
       confirmPass: "",
       isLoading: false,
@@ -15,15 +17,16 @@ export default class Login extends Component {
     };
   }
 
-  resetPass() {
+  async resetPass() {
     const oldPass = "1";
     const pass = this.state.pass;
     const confirmPass = this.state.confirmPass;
+    const token = await AsyncStorage.getItem("@NeoSTORE_at");
 
     const fetchConfig = {
       method: "POST",
       headers: {
-        access_token: "5d36e102b8e67",
+        access_token: token,
         "Content-Type": "application/x-www-form-urlencoded"
       },
       body: `old_password=${oldPass}&password=${pass}&confirm_password=${confirmPass}`

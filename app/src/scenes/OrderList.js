@@ -1,20 +1,24 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, FlatList } from "react-native";
 import R from "../R";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class OrderList extends Component {
   constructor() {
     super();
     this.state = {
+      access_token: "",
       dataSource: []
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const token = await AsyncStorage.getItem("@NeoSTORE_at");
     const fetchConfig = {
       method: "GET",
       headers: {
-        access_token: "5d36e102b8e67",
+        access_token: token,
+        // access_token: "5d36e102b8e67",
         "Content-Type": "application/x-www-form-urlencoded"
       }
     };

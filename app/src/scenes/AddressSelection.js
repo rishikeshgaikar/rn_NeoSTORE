@@ -2,22 +2,25 @@ import React, { Component } from "react";
 import { View, Text, Button, TextInput } from "react-native";
 import { RedButton } from "../components";
 import R from "../R";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class AddressSelection extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      access_token: "",
       address: "",
       dataSource: []
     };
   }
-
-  orderNow() {
+  async orderNow() {
     const address = this.state.address;
+    const token = await AsyncStorage.getItem("@NeoSTORE_at");
+    console.log(token);
     const fetchConfig = {
       method: "POST",
       headers: {
-        access_token: "5d36e102b8e67",
+        access_token: token,
         "Content-Type": "application/x-www-form-urlencoded"
       },
       body: `address=${address}`
