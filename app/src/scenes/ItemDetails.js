@@ -28,21 +28,6 @@ export default class ItemDetails extends Component {
     };
   }
 
-  async getKey() {
-    try {
-      const at = await AsyncStorage.getItem("@NeoSTORE_at");
-      if (at != null) {
-        this.setState({ access_token: at });
-        this.componentDidMount();
-      }
-    } catch (error) {
-      console.log("Error retrieving data" + error);
-    }
-  }
-  static navigationOptions = ({ navigation }) => ({
-    title: navigation.getParam("productName", "Center Coffee Table")
-  });
-
   componentDidMount() {
     const { navigation } = this.props;
     const product_id = navigation.getParam("productID", "1");
@@ -110,10 +95,15 @@ export default class ItemDetails extends Component {
     }
   }
 
-  buttonClick() {
+  ratebuttonClick() {
     this.setratingModalVisible(!this.state.ratingModalVisible);
     console.log("userRating: " + this.state.ratedByUser);
     this.userRating();
+  }
+
+  bnbuttonClick() {
+    this.setquantityModalVisible(!this.state.quantityModalVisible);
+    this.addToCart();
   }
 
   setratingModalVisible(visible) {
@@ -302,7 +292,7 @@ export default class ItemDetails extends Component {
                 <View style={{ width: "80%" }}>
                   <RedButton
                     onPress={() => {
-                      this.buttonClick();
+                      this.ratebuttonClick();
                     }}
                   >
                     RATE
@@ -361,7 +351,7 @@ export default class ItemDetails extends Component {
                   }}
                 />
                 <View style={{ width: "80%" }}>
-                  <RedButton onPress={() => this.addToCart()}>
+                  <RedButton onPress={() => this.bnbuttonClick()}>
                     ADD TO CART
                   </RedButton>
                 </View>

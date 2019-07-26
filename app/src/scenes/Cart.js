@@ -3,10 +3,12 @@ import {
   Text,
   View,
   Button,
+  Modal,
   FlatList,
   Image,
   TouchableOpacity,
-  ImageBackground
+  ImageBackground,
+  TextInput
 } from "react-native";
 import R from "../R";
 import { RedButton } from "../components";
@@ -20,7 +22,9 @@ export default class Cart extends Component {
       dataSource: [],
       cartCount: "",
       cartTotal: "",
-      editCartQuantity: 10
+      tempProductId: "",
+      editCartQuantity: "",
+      quantityModalVisible: false
     };
   }
 
@@ -57,8 +61,10 @@ export default class Cart extends Component {
   }
 
   editCart(id) {
-    const product_id = id;
-    const quantity = "5";
+    const product_id = this.state.tempProductId;
+    console.log("Editcart" + product_id);
+    const quantity = this.state.editCartQuantity;
+    console.log("editcart" + quantity);
     const fetchConfig = {
       method: "POST",
       headers: {
@@ -111,6 +117,25 @@ export default class Cart extends Component {
       });
   }
 
+  setquantityModalVisible(visible) {
+    this.setState({ quantityModalVisible: visible });
+    // console.log(this.state.ratedByUser);
+  }
+
+  ecb(n, id) {
+    this.setquantityModalVisible(n);
+    console.log(n);
+    console.log(id);
+    this.setState({ tempProductId: id });
+    console.log("ecd" + this.state.tempProductId);
+    console.log("ecd" + this.state.editCartQuantity);
+  }
+
+  callEdit() {
+    this.setquantityModalVisible(false);
+    this.editCart();
+  }
+
   render() {
     if (this.state.cartCount > 0) {
       return (
@@ -161,12 +186,9 @@ export default class Cart extends Component {
                     <View style={{ flexDirection: "row" }}>
                       <View style={{ flex: 4 }}>
                         <TouchableOpacity
-                          onPress={() =>
-                            this.editCart(
-                              item.product.id,
-                              this.state.editCartQuantity
-                            )
-                          }
+                          onPress={() => {
+                            this.ecb(true, item.product_id);
+                          }}
                         >
                           <ImageBackground
                             source={R.images.select_button}
@@ -211,6 +233,53 @@ export default class Cart extends Component {
               )}
               keyExtractor={(item, index) => index.toString()}
             />
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={this.state.quantityModalVisible}
+            >
+              <View style={{ flex: 1 }}>
+                <View
+                  opacity={0.5}
+                  style={{ flex: 5, backgroundColor: "#000" }}
+                >
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.setquantityModalVisible(
+                        !this.state.quantityModalVisible
+                      )
+                    }
+                    style={{ flex: 1 }}
+                  />
+                </View>
+                <View
+                  style={{
+                    // flex: 2,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "#fff",
+                    height: 200
+                  }}
+                >
+                  <TextInput
+                    placeholder="Enter quantity"
+                    onChangeText={quantity =>
+                      this.setState({ editCartQuantity: quantity })
+                    }
+                    style={{
+                      fontSize: 20,
+                      fontFamily: R.fonts.GothamBook,
+                      padding: 20
+                    }}
+                  />
+                  <View style={{ width: "80%" }}>
+                    <RedButton onPress={() => this.callEdit()}>
+                      ADD TO CART
+                    </RedButton>
+                  </View>
+                </View>
+              </View>
+            </Modal>
           </View>
           <View style={{ flex: 1, marginHorizontal: 20, flexDirection: "row" }}>
             <View style={{ flex: 4, paddingLeft: 20 }}>
