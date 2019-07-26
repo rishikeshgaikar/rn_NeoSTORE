@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, TextInput } from "react-native";
+import { RedButton } from "../components";
+import R from "../R";
 
 export default class AddressSelection extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: "Neosoft Prabhadevi"
+      address: "",
+      dataSource: []
     };
   }
 
@@ -24,17 +27,66 @@ export default class AddressSelection extends Component {
       fetchConfig
     )
       .then(response => response.json())
-      .then(responseJson => console.log(responseJson))
+      .then(responseJson => {
+        this.setState({ dataSource: responseJson }, function() {}),
+          this.isSuccessfull();
+      })
       .catch(error => {
         console.error(error);
       });
-    console.log("pressed");
+  }
+  isSuccessfull() {
+    const { navigate } = this.props.navigation;
+    if (this.state.dataSource.status == 200) {
+      setTimeout(function() {
+        navigate("Home");
+      }, 2000);
+      alert("" + this.state.dataSource.user_msg);
+    } else if (this.state.dataSource.status == 401) {
+      alert("" + this.state.dataSource.user_msg);
+    } else if (this.state.dataSource.status == 400) {
+      alert("" + this.state.dataSource.user_msg);
+    } else {
+      alert("Something Went Wrong");
+    }
   }
 
   render() {
+    console.log(this.state.dataSource);
     return (
       <View>
-        <Button title="Place order" onPress={() => this.orderNow()} />
+        <Text
+          style={{
+            marginHorizontal: 20,
+            fontFamily: R.fonts.GothamBook,
+            fontSize: 20,
+            marginTop: 20
+          }}
+        >
+          Enter Delivery address
+        </Text>
+        <View
+          style={{
+            marginTop: 10,
+            marginHorizontal: 20,
+            flexDirection: "row",
+            borderRadius: 4,
+            borderWidth: 2,
+            borderColor: R.colors.b9
+          }}
+        >
+          <TextInput
+            placeholder="Enter Address"
+            onChangeText={address => this.setState({ address })}
+            multiline={true}
+            numberOfLines={5}
+            textAlignVertical="top"
+          />
+        </View>
+
+        <View style={{ marginHorizontal: 10 }}>
+          <RedButton onPress={() => this.orderNow()}>PLACE ORDER</RedButton>
+        </View>
       </View>
     );
   }
