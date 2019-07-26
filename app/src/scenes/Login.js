@@ -129,10 +129,10 @@ export default class Login extends Component {
         <View
           style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}
         >
-          <View style={{ flex: 4, padding: 20 }}>
+          <View style={{ flex: 5, padding: 20 }}>
             <Text style={style.whiteText}>DO YOU HAVE AN ACCOUNT ?</Text>
           </View>
-          <View style={{ flex: 2, padding: 10 }}>
+          <View style={{ flex: 1, padding: 10 }}>
             <TouchableHighlight
               disabled={this.state.isLoading}
               underlayColor="transparent"
