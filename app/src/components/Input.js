@@ -6,7 +6,8 @@ const Input = ({
   placeholder,
   placeholderColor,
   onChangeText,
-  error
+  secureTextEntry,
+  keyboardType
 }) => (
   <View style={inputStyle.c}>
     <View style={inputStyle.c1}>
@@ -19,6 +20,8 @@ const Input = ({
         style={inputStyle.textinput}
         onChangeText={onChangeText}
         autoCapitalize="none"
+        secureTextEntry={secureTextEntry}
+        keyboardType={keyboardType}
       />
     </View>
   </View>

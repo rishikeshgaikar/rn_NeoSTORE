@@ -86,27 +86,38 @@ export default class Login extends Component {
             placeholder="Email"
             placeholderColor={R.colors.b1}
             onChangeText={email => this.setState({ email })}
+            keyboardType="email-address"
           />
           <RoundButton onPress={() => this.Forgot()}>
             FORGOT PASSWORD
           </RoundButton>
           <View style={{ paddingHorizontal: 40 }}>{this.changeMSG()}</View>
         </View>
-        <View
-          style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}
-        >
-          <View style={{ flex: 5, padding: 20 }}>
-            <Text style={style.whiteText}>DO YOU HAVE AN ACCOUNT ?</Text>
-          </View>
-          <View style={{ flex: 1, padding: 10 }}>
-            <TouchableHighlight
-              disabled={this.state.isLoading}
-              underlayColor="transparent"
-              onPress={() => this.props.navigation.navigate("Register")}
+        <View style={{ flex: 1 }}>
+          <TouchableHighlight
+            disabled={this.state.isLoading}
+            underlayColor="transparent"
+            onPress={() => this.props.navigation.navigate("Register")}
+          >
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "center",
+                padding: 20
+              }}
             >
-              <Image source={R.images.Plus} />
-            </TouchableHighlight>
-          </View>
+              <View style={{ flex: 8 }}>
+                <Text style={style.whiteText}>DO YOU HAVE AN ACCOUNT ?</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Image
+                  source={R.images.Plus}
+                  style={{ height: 20, width: 20 }}
+                />
+              </View>
+            </View>
+          </TouchableHighlight>
         </View>
       </View>
     );

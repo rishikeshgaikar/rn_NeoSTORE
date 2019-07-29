@@ -107,12 +107,14 @@ export default class EditProfile extends Component {
           placeholder="Email"
           placeholderColor={R.colors.b1}
           onChangeText={email => this.setState({ email })}
+          keyboardType="email-address"
         />
         <Input
           image={R.images.cellphone}
           placeholder="PHONE NUMBER"
           placeholderColor={R.colors.b1}
           onChangeText={phone_no => this.setState({ phone_no })}
+          keyboardType="number-pad"
         />
         <Input
           image={R.images.dob_icon}

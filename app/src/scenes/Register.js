@@ -153,98 +153,100 @@ export default class Login extends Component {
 
   render() {
     return (
-      <ScrollView
-        contentContainerStyle={{
-          justifyContent: "center",
-          backgroundColor: R.colors.r2,
-          height: "100%"
-        }}
-      >
+      <View style={style.redContainer}>
         <StatusBar backgroundColor={R.colors.r2} />
-        <Heading>NeoSTORE</Heading>
-        <Input
-          image={R.images.username_icon}
-          placeholder="First Name"
-          placeholderColor={R.colors.b1}
-          onChangeText={first_name => this.setState({ first_name })}
-        />
-        <Input
-          image={R.images.username_icon}
-          placeholder="Last Name"
-          placeholderColor={R.colors.b1}
-          onChangeText={last_name => this.setState({ last_name })}
-        />
-        <Input
-          image={R.images.email_icon}
-          placeholder="Email"
-          placeholderColor={R.colors.b1}
-          onChangeText={email => this.setState({ email })}
-        />
-        <Input
-          image={R.images.password_icon}
-          placeholder="Password"
-          placeholderColor={R.colors.b1}
-          onChangeText={password => this.setState({ password })}
-        />
-        <Input
-          image={R.images.password_icon}
-          placeholder="Confirm Password"
-          placeholderColor={R.colors.b1}
-          onChangeText={confirm_password => this.setState({ confirm_password })}
-        />
-        <View
-          style={{
-            flexDirection: "row",
-            paddingHorizontal: 30,
-            paddingTop: 20,
-            paddingBottom: 10
-          }}
-        >
-          <Text style={style.whiteText}>Gender</Text>
-          <TouchableOpacity
-            style={{ paddingHorizontal: 20 }}
-            onPress={() => this.changeRadioButton(0)}
+        <ScrollView>
+          <Heading>NeoSTORE</Heading>
+          <Input
+            image={R.images.username_icon}
+            placeholder="First Name"
+            placeholderColor={R.colors.b1}
+            onChangeText={first_name => this.setState({ first_name })}
+          />
+          <Input
+            image={R.images.username_icon}
+            placeholder="Last Name"
+            placeholderColor={R.colors.b1}
+            onChangeText={last_name => this.setState({ last_name })}
+          />
+          <Input
+            image={R.images.email_icon}
+            placeholder="Email"
+            placeholderColor={R.colors.b1}
+            onChangeText={email => this.setState({ email })}
+            keyboardType="email-address"
+          />
+          <Input
+            image={R.images.password_icon}
+            placeholder="Password"
+            placeholderColor={R.colors.b1}
+            onChangeText={password => this.setState({ password })}
+            secureTextEntry={true}
+          />
+          <Input
+            image={R.images.password_icon}
+            placeholder="Confirm Password"
+            placeholderColor={R.colors.b1}
+            onChangeText={confirm_password =>
+              this.setState({ confirm_password })
+            }
+            secureTextEntry={true}
+          />
+          <View
+            style={{
+              flexDirection: "row",
+              paddingHorizontal: 30,
+              paddingTop: 20,
+              paddingBottom: 10
+            }}
           >
-            <Image source={this.state.M} />
-          </TouchableOpacity>
-          <Text style={style.whiteText}>MALE</Text>
-          <TouchableOpacity
-            style={{ paddingHorizontal: 20 }}
-            onPress={() => this.changeRadioButton(1)}
+            <Text style={style.whiteText}>Gender</Text>
+            <TouchableOpacity
+              style={{ paddingHorizontal: 20 }}
+              onPress={() => this.changeRadioButton(0)}
+            >
+              <Image source={this.state.M} />
+            </TouchableOpacity>
+            <Text style={style.whiteText}>MALE</Text>
+            <TouchableOpacity
+              style={{ paddingHorizontal: 20 }}
+              onPress={() => this.changeRadioButton(1)}
+            >
+              <Image source={this.state.F} />
+            </TouchableOpacity>
+            <Text style={style.whiteText}>FEMALE</Text>
+          </View>
+          <Input
+            image={R.images.cellphone}
+            placeholder="Phone Number"
+            placeholderColor={R.colors.b1}
+            onChangeText={phone_no => this.setState({ phone_no })}
+            keyboardType="number-pad"
+          />
+          <View
+            style={{
+              flexDirection: "row",
+              paddingHorizontal: 30,
+              paddingTop: 20
+            }}
           >
-            <Image source={this.state.F} />
-          </TouchableOpacity>
-          <Text style={style.whiteText}>FEMALE</Text>
-        </View>
-        <Input
-          image={R.images.cellphone}
-          placeholder="Phone Number"
-          placeholderColor={R.colors.b1}
-          onChangeText={phone_no => this.setState({ phone_no })}
-        />
-        <View
-          style={{
-            flexDirection: "row",
-            paddingHorizontal: 30,
-            paddingTop: 20
-          }}
-        >
-          <TouchableOpacity
-            style={{ paddingRight: 10 }}
-            onPress={() => this.changeCheckButton()}
+            <TouchableOpacity
+              style={{ paddingRight: 10 }}
+              onPress={() => this.changeCheckButton()}
+            >
+              {this.checkButtonImage()}
+            </TouchableOpacity>
+            <Text style={style.whiteText}>I agree Terms & Conditions.</Text>
+          </View>
+          <RoundButton
+            disabled={this.state.isLoading}
+            onPress={() => this.Register()}
           >
-            {this.checkButtonImage()}
-          </TouchableOpacity>
-          <Text style={style.whiteText}>I agree Terms & Conditions.</Text>
-        </View>
-        <RoundButton
-          disabled={this.state.isLoading}
-          onPress={() => this.Register()}
-        >
-          REGISTER
-        </RoundButton>
-        {this.showSpinner()}
-      </ScrollView>
+            REGISTER
+          </RoundButton>
+          {this.showSpinner()}
+        </ScrollView>
+      </View>
     );
   }
 }

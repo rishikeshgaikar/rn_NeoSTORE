@@ -11,6 +11,7 @@ import { RoundButton, Spinner, Heading, Input } from "../components";
 import style from "../Styles";
 import R from "../R";
 import AsyncStorage from "@react-native-community/async-storage";
+import {} from "react-native-gesture-handler";
 
 export default class Login extends Component {
   constructor(props) {
@@ -102,12 +103,14 @@ export default class Login extends Component {
             placeholder="Username"
             placeholderColor={R.colors.b1}
             onChangeText={username => this.setState({ username })}
+            keyboardType="email-address"
           />
           <Input
             image={R.images.password_icon}
             placeholder="Password"
             placeholderColor={R.colors.b1}
             onChangeText={password => this.setState({ password })}
+            secureTextEntry={true}
           />
           <RoundButton
             disabled={this.state.isLoading}
@@ -126,21 +129,31 @@ export default class Login extends Component {
           </TouchableHighlight>
           {this.showSpinner()}
         </View>
-        <View
-          style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}
-        >
-          <View style={{ flex: 5, padding: 20 }}>
-            <Text style={style.whiteText}>DO YOU HAVE AN ACCOUNT ?</Text>
-          </View>
-          <View style={{ flex: 1, padding: 10 }}>
-            <TouchableHighlight
-              disabled={this.state.isLoading}
-              underlayColor="transparent"
-              onPress={() => this.props.navigation.navigate("Register")}
+        <View style={{ flex: 1 }}>
+          <TouchableHighlight
+            disabled={this.state.isLoading}
+            underlayColor="transparent"
+            onPress={() => this.props.navigation.navigate("Register")}
+          >
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "center",
+                padding: 20
+              }}
             >
-              <Image source={R.images.Plus} />
-            </TouchableHighlight>
-          </View>
+              <View style={{ flex: 8 }}>
+                <Text style={style.whiteText}>DO YOU HAVE AN ACCOUNT ?</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Image
+                  source={R.images.Plus}
+                  style={{ height: 20, width: 20 }}
+                />
+              </View>
+            </View>
+          </TouchableHighlight>
         </View>
       </View>
     );

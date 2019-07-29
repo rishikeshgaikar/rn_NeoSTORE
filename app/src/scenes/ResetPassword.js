@@ -85,18 +85,21 @@ export default class Login extends Component {
           placeholder="Current Password"
           placeholderColor={R.colors.b1}
           onChangeText={oldPass => this.setState({ oldPass })}
+          secureTextEntry={true}
         />
         <Input
           image={R.images.username_icon}
           placeholder="New Password"
           placeholderColor={R.colors.b1}
           onChangeText={pass => this.setState({ pass })}
+          secureTextEntry={true}
         />
         <Input
           image={R.images.password_icon}
           placeholder="Confirm Password"
           placeholderColor={R.colors.b1}
           onChangeText={confirmPass => this.setState({ confirmPass })}
+          secureTextEntry={true}
         />
         <RoundButton onPress={() => this.resetPass()}>
           RESET PASSWORD
