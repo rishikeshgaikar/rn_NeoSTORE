@@ -6,12 +6,24 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  Text
+  Text,
+  Button
 } from "react-native";
 import R from "../R";
 import { YellowBox } from "react-native";
 
 export default class Home extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft: (
+      <TouchableOpacity
+        style={{ paddingLeft: 20 }}
+        onPress={() => navigation.toggleDrawer()}
+      >
+        <Image source={R.images.menu_icon} />
+      </TouchableOpacity>
+    )
+  });
+
   constructor(props) {
     super(props);
     this.state = {
