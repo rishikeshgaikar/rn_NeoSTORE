@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   Text,
   View,
-  Button,
   Modal,
   FlatList,
   Image,
@@ -13,6 +12,7 @@ import {
 import R from "../R";
 import { RedButton } from "../components";
 import AsyncStorage from "@react-native-community/async-storage";
+import { api } from "../api";
 
 export default class Cart extends Component {
   constructor() {
@@ -28,22 +28,36 @@ export default class Cart extends Component {
     };
   }
 
-  async componentDidMount() {
-    const token = await AsyncStorage.getItem("@NeoSTORE_at");
-    this.setState({ access_token: token });
-    console.log(token);
+  componentDidMount() {
+    this.getToken()
+      .then(() => {
+        this.showCart();
+      })
+      .catch(error => {
+        console.log("Promise is rejected with error: " + error);
+      });
+  }
+
+  async getToken() {
+    try {
+      const aToken = await AsyncStorage.getItem("@NeoSTORE_at");
+      this.setState({ access_token: aToken });
+      return aToken;
+    } catch (error) {
+      console.log(error.message);
+    }
+    return;
+  }
+
+  showCart() {
+    const url = "cart";
     const fetchConfig = {
       method: "GET",
       headers: {
-        access_token: token,
-        "Content-Type": "application/x-www-form-urlencoded"
+        access_token: this.state.access_token
       }
     };
-    return fetch(
-      `http://staging.php-dev.in:8844/trainingapp/api/cart`,
-      fetchConfig
-    )
-      .then(response => response.json())
+    api(url, fetchConfig)
       .then(responseJson => {
         this.setState(
           {
@@ -51,7 +65,6 @@ export default class Cart extends Component {
             cartCount: responseJson.count,
             cartTotal: responseJson.total
           },
-
           function() {}
         );
       })
@@ -62,9 +75,7 @@ export default class Cart extends Component {
 
   editCart(id) {
     const product_id = this.state.tempProductId;
-    console.log("Editcart" + product_id);
     const quantity = this.state.editCartQuantity;
-    console.log("editcart" + quantity);
     const fetchConfig = {
       method: "POST",
       headers: {
@@ -73,22 +84,20 @@ export default class Cart extends Component {
       },
       body: `product_id=${product_id}&quantity=${quantity}`
     };
-    return fetch(
-      `http://staging.php-dev.in:8844/trainingapp/api/editCart`,
-      fetchConfig
-    )
-      .then(response => response.json())
+    const url = "editCart";
+    api(url, fetchConfig)
       .then(responseJson => {
         console.log(responseJson);
         if (responseJson.status == 200) {
           console.log(responseJson.status);
-          this.componentDidMount();
+          this.showCart();
         }
       })
       .catch(error => {
         console.error(error);
       });
   }
+
   deleteCart(id) {
     const product_id = id;
     const fetchConfig = {
@@ -99,17 +108,13 @@ export default class Cart extends Component {
       },
       body: `product_id=${product_id}`
     };
-
-    return fetch(
-      `http://staging.php-dev.in:8844/trainingapp/api/deleteCart`,
-      fetchConfig
-    )
-      .then(response => response.json())
+    const url = "deleteCart";
+    api(url, fetchConfig)
       .then(responseJson => {
         console.log(responseJson);
         if (responseJson.status == 200) {
           console.log(responseJson.status);
-          this.componentDidMount();
+          this.showCart();
         }
       })
       .catch(error => {
@@ -119,7 +124,6 @@ export default class Cart extends Component {
 
   setquantityModalVisible(visible) {
     this.setState({ quantityModalVisible: visible });
-    // console.log(this.state.ratedByUser);
   }
 
   ecb(n, id) {
