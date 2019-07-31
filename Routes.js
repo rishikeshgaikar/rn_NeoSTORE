@@ -131,6 +131,17 @@ const MainStack = createStackNavigator(
     }
   }
 );
+
+MainStack.navigationOptions = ({ navigation }) => {
+  let drawerLockMode = "unlocked";
+  if (navigation.state.index > 0) {
+    drawerLockMode = "locked-closed";
+  }
+  return {
+    drawerLockMode
+  };
+};
+
 const DrawerStack = createDrawerNavigator(
   {
     Main: {
@@ -138,7 +149,7 @@ const DrawerStack = createDrawerNavigator(
     }
   },
   {
-    drawerType: "slide",
+    drawerType: "front",
     contentComponent: CustomDrawer
   }
 );

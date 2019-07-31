@@ -44,6 +44,7 @@ export default class Home extends Component {
 
   render() {
     YellowBox.ignoreWarnings(["Warning: componentWillUpdate is deprecated"]);
+    YellowBox.ignoreWarnings(["VirtualizedList: missing keys for items"]);
     return (
       <View style={{ flex: 1, flexDirection: "column" }}>
         <StatusBar backgroundColor={R.colors.r2} />
