@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Text, View, TouchableOpacity, FlatList } from "react-native";
 import R from "../R";
 import AsyncStorage from "@react-native-community/async-storage";
+import { api } from "../api";
 
 export default class OrderList extends Component {
   constructor() {
@@ -13,21 +14,10 @@ export default class OrderList extends Component {
   }
 
   async componentDidMount() {
-    const token = await AsyncStorage.getItem("@NeoSTORE_at");
-    const fetchConfig = {
-      method: "GET",
-      headers: {
-        access_token: token,
-        // access_token: "5d36e102b8e67",
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    };
-    console.log(fetchConfig);
-    return fetch(
-      `http://staging.php-dev.in:8844/trainingapp/api/orderList`,
-      fetchConfig
-    )
-      .then(response => response.json())
+    const at = await AsyncStorage.getItem("@NeoSTORE_at");
+    const method = "GET";
+    const url = "orderList";
+    return api(url, method, at, null)
       .then(responseJson => {
         this.setState(
           {

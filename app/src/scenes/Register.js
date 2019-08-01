@@ -12,6 +12,7 @@ import { RoundButton, Heading, Input, Spinner } from "../components";
 import style from "../Styles";
 import R from "../R";
 import AsyncStorage from "@react-native-community/async-storage";
+import { api } from "../api";
 
 export default class Login extends Component {
   constructor(props) {
@@ -41,20 +42,10 @@ export default class Login extends Component {
       const confirm_password = this.state.confirm_password;
       const gender = this.state.gender;
       const phone_no = this.state.phone_no;
-
-      const fetchConfig = {
-        method: "POST",
-        headers: {
-          // Accept: "application/json",
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: `first_name=${first_name}&last_name=${last_name}&email=${email}&password=${password}&confirm_password=${confirm_password}&phone_no=${phone_no}&gender=${gender}`
-      };
-      return fetch(
-        `http://staging.php-dev.in:8844/trainingapp/api/users/register`,
-        fetchConfig
-      )
-        .then(response => response.json())
+      const method = "POST";
+      const body = `first_name=${first_name}&last_name=${last_name}&email=${email}&password=${password}&confirm_password=${confirm_password}&phone_no=${phone_no}&gender=${gender}`;
+      const url = "users/register";
+      return api(url, method, null, body)
         .then(responseJson => {
           this.setState({ dataSource: responseJson }, function() {}),
             this.isSuccessfull();

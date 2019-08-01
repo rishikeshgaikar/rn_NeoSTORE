@@ -12,6 +12,7 @@ import {
 import { RedButton, Rating, StarRating } from "../components";
 import R from "../R";
 import AsyncStorage from "@react-native-community/async-storage";
+import { api } from "../api";
 
 export default class ItemDetails extends Component {
   constructor() {
@@ -31,19 +32,9 @@ export default class ItemDetails extends Component {
   componentDidMount() {
     const { navigation } = this.props;
     const product_id = navigation.getParam("productID", "1");
-
-    const fetchConfig = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    };
-    return fetch(
-      `http://staging.php-dev.in:8844/trainingapp/api/products/getDetail?product_id=${product_id}`,
-      fetchConfig
-    )
-      .then(response => response.json())
+    const method = "GET";
+    const url = `products/getDetail?product_id=${product_id}`;
+    return api(url, method, null, null)
       .then(responseJson => {
         this.setState(
           {
@@ -124,20 +115,10 @@ export default class ItemDetails extends Component {
     const { navigation } = this.props;
     const user_rating = this.state.ratedByUser;
     const product_id = navigation.getParam("productID", "1");
-    const fetchConfig = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `product_id=${product_id}&rating=${user_rating}`
-    };
-    console.log(fetchConfig);
-    return fetch(
-      `http://staging.php-dev.in:8844/trainingapp/api/products/setRating`,
-      fetchConfig
-    )
-      .then(response => response.json())
+    const method = "POST";
+    const body = `product_id=${product_id}&rating=${user_rating}`;
+    const url = "products/setRating";
+    return api(url, method, null, body)
       .then(responseJson => {
         console.log(responseJson);
       })
@@ -147,25 +128,15 @@ export default class ItemDetails extends Component {
   }
 
   async addToCart() {
-    const token = await AsyncStorage.getItem("@NeoSTORE_at");
+    const at = await AsyncStorage.getItem("@NeoSTORE_at");
     const { navigation } = this.props;
     const quantity = this.state.quantity;
     console.log(this.state.quantity);
     const product_id = navigation.getParam("productID", "1");
-    const fetchConfig = {
-      method: "POST",
-      headers: {
-        access_token: token,
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `product_id=${product_id}&quantity=${quantity}`
-    };
-    console.log(fetchConfig);
-    return fetch(
-      `http://staging.php-dev.in:8844/trainingapp/api/addToCart`,
-      fetchConfig
-    )
-      .then(response => response.json())
+    const method = "POST";
+    const body = `product_id=${product_id}&quantity=${quantity}`;
+    const url = "addToCart";
+    return api(url, method, at, body)
       .then(responseJson => {
         console.log(responseJson);
       })

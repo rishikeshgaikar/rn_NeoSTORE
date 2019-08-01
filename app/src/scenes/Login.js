@@ -11,7 +11,7 @@ import { RoundButton, Spinner, Heading, Input } from "../components";
 import style from "../Styles";
 import R from "../R";
 import AsyncStorage from "@react-native-community/async-storage";
-import {} from "react-native-gesture-handler";
+import { api } from "../api";
 
 export default class Login extends Component {
   constructor(props) {
@@ -27,19 +27,10 @@ export default class Login extends Component {
   Login() {
     const username = this.state.username;
     const password = this.state.password;
-    const fetchConfig = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `email=${username}&password=${password}`
-    };
-    return fetch(
-      `http://staging.php-dev.in:8844/trainingapp/api/users/login`,
-      fetchConfig
-    )
-      .then(response => response.json())
+    const method = "POST";
+    const body = `email=${username}&password=${password}`;
+    const url = "users/login";
+    return api(url, method, null, body)
       .then(responseJson => {
         this.setState({ dataSource: responseJson }, function() {}),
           this.isSuccessfull();

@@ -10,6 +10,7 @@ import {
 import style from "../Styles";
 import R from "../R";
 import AsyncStorage from "@react-native-community/async-storage";
+import { api } from "../api";
 
 export default class EditProfile extends Component {
   constructor(props) {
@@ -27,26 +28,17 @@ export default class EditProfile extends Component {
   }
 
   async updateUser() {
-    const token = await AsyncStorage.getItem("@NeoSTORE_at");
     const first_name = this.state.first_name;
     const last_name = this.state.last_name;
     const email = this.state.email;
     const phone_no = this.state.phone_no;
     const dob = this.state.dob;
+    const at = await AsyncStorage.getItem("@NeoSTORE_at");
+    const method = "POST";
+    const url = "users/update";
+    const body = `first_name=${first_name}&last_name=${last_name}&email=${email}&dob=${dob}&profile_pic={"test.png"}&phone_no=${phone_no}`;
 
-    const fetchConfig = {
-      method: "POST",
-      headers: {
-        access_token: token,
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `first_name=${first_name}&last_name=${last_name}&email=${email}&dob=${dob}&profile_pic={"test.png"}&phone_no=${phone_no}`
-    };
-    return fetch(
-      `http://staging.php-dev.in:8844/trainingapp/api/users/update`,
-      fetchConfig
-    )
-      .then(response => response.json())
+    return api(url, method, at, body)
       .then(responseJson => {
         this.setState({ dataSource: responseJson }, function() {}),
           this.isSuccessfull();

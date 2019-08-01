@@ -4,6 +4,7 @@ import { RoundButton, Spinner, Heading, Input } from "../components";
 import style from "../Styles";
 import R from "../R";
 import AsyncStorage from "@react-native-community/async-storage";
+import { api } from "../api";
 
 export default class Login extends Component {
   constructor(props) {
@@ -21,21 +22,11 @@ export default class Login extends Component {
     const oldPass = "1";
     const pass = this.state.pass;
     const confirmPass = this.state.confirmPass;
-    const token = await AsyncStorage.getItem("@NeoSTORE_at");
-
-    const fetchConfig = {
-      method: "POST",
-      headers: {
-        access_token: token,
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `old_password=${oldPass}&password=${pass}&confirm_password=${confirmPass}`
-    };
-    return fetch(
-      `http://staging.php-dev.in:8844/trainingapp/api/users/change`,
-      fetchConfig
-    )
-      .then(response => response.json())
+    const at = await AsyncStorage.getItem("@NeoSTORE_at");
+    const method = "POST";
+    const body = `old_password=${oldPass}&password=${pass}&confirm_password=${confirmPass}`;
+    const url = "users/change";
+    return api(url, method, at, body)
       .then(responseJson => {
         this.setState({ dataSource: responseJson }, function() {}),
           this.isSuccessfull();

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Image, View, FlatList, TouchableOpacity, Text } from "react-native";
 import { StarRating } from "../components";
 import R from "../R";
+import { api } from "../api";
 
 export default class ProductList extends Component {
   constructor() {
@@ -19,18 +20,9 @@ export default class ProductList extends Component {
     const product_category_id = product_id;
     const limit = "10";
     const page = "1";
-    const fetchConfig = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    };
-    return fetch(
-      `http://staging.php-dev.in:8844/trainingapp/api/products/getList?product_category_id=${product_category_id}&limit=${limit}&page=${page}`,
-      fetchConfig
-    )
-      .then(response => response.json())
+    const method = "GET";
+    const url = `products/getList?product_category_id=${product_category_id}&limit=${limit}&page=${page}`;
+    return api(url, method, null, null)
       .then(responseJson => {
         this.setState(
           {

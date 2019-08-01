@@ -18,6 +18,7 @@ import {
 import style from "../Styles";
 import R from "../R";
 import AsyncStorage from "@react-native-community/async-storage";
+import { api } from "../api";
 
 export default class UserProfile extends Component {
   constructor(props) {
@@ -29,28 +30,14 @@ export default class UserProfile extends Component {
   }
 
   async componentDidMount() {
-    const token = await AsyncStorage.getItem("@NeoSTORE_at");
-    console.log(token);
-    const fetchConfig = {
-      method: "GET",
-      headers: {
-        access_token: token,
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    };
-    console.log(fetchConfig);
-    return fetch(
-      `http://staging.php-dev.in:8844/trainingapp/api/users/getUserData`,
-      fetchConfig
-    )
-      .then(response => response.json())
+    const at = await AsyncStorage.getItem("@NeoSTORE_at");
+    const method = "GET";
+    const url = "users/getUserData";
+    return api(url, method, at, null)
       .then(responseJson => {
         this.setState({
           dataSource: responseJson.data.user_data
         });
-        // console.log(responseJson);
-        // console.log(responseJson.data);
-        // console.log(responseJson.data.user_data);
       })
       .catch(error => {
         console.error(error);

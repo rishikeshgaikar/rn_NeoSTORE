@@ -10,31 +10,24 @@ import {
 import { RoundButton, Heading, Input } from "../components";
 import style from "../Styles";
 import R from "../R";
+import { api } from "../api";
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dataSource: [],
-      email: "",
-      text: false
+      email: ""
     };
   }
 
   Forgot() {
     const email = this.state.email;
-    const fetchConfig = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `email=${email}`
-    };
-    return fetch(
-      `http://staging.php-dev.in:8844/trainingapp/api/users/forgot`,
-      fetchConfig
-    )
-      .then(response => response.json())
+    const body = `email=${email}`;
+    const url = "users/forgot";
+    const method = "POST";
+
+    return api(url, method, null, body)
       .then(responseJson => {
         this.setState({ dataSource: responseJson }, function() {});
         this.isSuccessfull();
@@ -47,8 +40,10 @@ export default class Login extends Component {
   isSuccessfull() {
     const { navigate } = this.props.navigation;
     if (this.state.dataSource.status == 200) {
-      this.setState({ text: true });
-      this.changeMSG();
+      setTimeout(function() {
+        navigate("Home");
+      }, 2000);
+      alert("" + this.state.dataSource.user_msg);
     } else if (this.state.dataSource.status == 401) {
       alert("" + this.state.dataSource.user_msg);
     } else if (this.state.dataSource.status == 400) {
@@ -58,24 +53,8 @@ export default class Login extends Component {
     }
   }
 
-  changeMSG() {
-    if (this.state.text) {
-      return (
-        <Text style={style.whiteText}>
-          Kindly go back to login page and login with new password sent on your
-          email.
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={style.whiteText}>
-          Your new password will be sent on your email.
-        </Text>
-      );
-    }
-  }
-
   render() {
+    console.log(this.state.dataSource);
     return (
       <View style={style.redContainer}>
         <StatusBar backgroundColor={R.colors.r2} />
@@ -91,7 +70,6 @@ export default class Login extends Component {
           <RoundButton onPress={() => this.Forgot()}>
             FORGOT PASSWORD
           </RoundButton>
-          <View style={{ paddingHorizontal: 40 }}>{this.changeMSG()}</View>
         </View>
         <View style={{ flex: 1 }}>
           <TouchableHighlight

@@ -50,14 +50,7 @@ export default class Cart extends Component {
   }
 
   showCart() {
-    const url = "cart";
-    const fetchConfig = {
-      method: "GET",
-      headers: {
-        access_token: this.state.access_token
-      }
-    };
-    api(url, fetchConfig)
+    api("cart", "GET", this.state.access_token, null)
       .then(responseJson => {
         this.setState(
           {
@@ -73,19 +66,14 @@ export default class Cart extends Component {
       });
   }
 
-  editCart(id) {
+  editCart() {
     const product_id = this.state.tempProductId;
     const quantity = this.state.editCartQuantity;
-    const fetchConfig = {
-      method: "POST",
-      headers: {
-        access_token: this.state.access_token,
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `product_id=${product_id}&quantity=${quantity}`
-    };
+    const body = `product_id=${product_id}&quantity=${quantity}`;
+    const at = this.state.access_token;
+    const method = "POST";
     const url = "editCart";
-    api(url, fetchConfig)
+    api(url, method, at, body)
       .then(responseJson => {
         console.log(responseJson);
         if (responseJson.status == 200) {
@@ -100,16 +88,11 @@ export default class Cart extends Component {
 
   deleteCart(id) {
     const product_id = id;
-    const fetchConfig = {
-      method: "POST",
-      headers: {
-        access_token: this.state.access_token,
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `product_id=${product_id}`
-    };
+    const body = `product_id=${product_id}`;
+    const at = this.state.access_token;
+    const method = "POST";
     const url = "deleteCart";
-    api(url, fetchConfig)
+    api(url, method, at, body)
       .then(responseJson => {
         console.log(responseJson);
         if (responseJson.status == 200) {

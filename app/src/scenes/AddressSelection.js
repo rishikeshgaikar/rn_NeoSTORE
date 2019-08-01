@@ -3,6 +3,7 @@ import { View, Text, Button, TextInput } from "react-native";
 import { RedButton } from "../components";
 import R from "../R";
 import AsyncStorage from "@react-native-community/async-storage";
+import { api } from "../api";
 
 export default class AddressSelection extends Component {
   constructor(props) {
@@ -15,21 +16,11 @@ export default class AddressSelection extends Component {
   }
   async orderNow() {
     const address = this.state.address;
-    const token = await AsyncStorage.getItem("@NeoSTORE_at");
-    console.log(token);
-    const fetchConfig = {
-      method: "POST",
-      headers: {
-        access_token: token,
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `address=${address}`
-    };
-    return fetch(
-      `http://staging.php-dev.in:8844/trainingapp/api/order`,
-      fetchConfig
-    )
-      .then(response => response.json())
+    const at = await AsyncStorage.getItem("@NeoSTORE_at");
+    const url = "order";
+    const method = "POST";
+    const body = `address=${address}`;
+    return api(url, method, at, body)
       .then(responseJson => {
         this.setState({ dataSource: responseJson }, function() {}),
           this.isSuccessfull();
