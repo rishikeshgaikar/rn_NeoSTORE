@@ -1,8 +1,6 @@
 import AsyncStorage from "@react-native-community/async-storage";
 export default async function api(url, m, b) {
   const token = await AsyncStorage.getItem("@NeoSTORE_at");
-  console.log(aToken);
-
   const endurl = url.trim();
   var body_value = null;
   if (b != null) {
