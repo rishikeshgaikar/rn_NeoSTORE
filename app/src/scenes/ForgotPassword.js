@@ -27,7 +27,7 @@ export default class Login extends Component {
     const url = "users/forgot";
     const method = "POST";
 
-    return api(url, method, null, body)
+    return api(url, method, body)
       .then(responseJson => {
         this.setState({ dataSource: responseJson }, function() {});
         this.isSuccessfull();

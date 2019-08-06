@@ -1,22 +1,25 @@
-const api = (url, m, at, b) => {
+import AsyncStorage from "@react-native-community/async-storage";
+export default async function api(url, m, b) {
+  const token = await AsyncStorage.getItem("@NeoSTORE_at");
+  console.log(aToken);
+
   const endurl = url.trim();
-  var w = null;
+  var body_value = null;
   if (b != null) {
-    w = b.trim();
+    body_value = b.trim();
   }
   const fetchConfig = {
     method: m,
     headers: {
-      access_token: at,
+      access_token: token,
       "Content-Type": "application/x-www-form-urlencoded"
     },
-    body: w
+    body: body_value
   };
   console.log(endurl, fetchConfig);
-  return fetch(
+  const res = await fetch(
     `http://staging.php-dev.in:8844/trainingapp/api/${endurl}`,
     fetchConfig
-  ).then(res => res.json());
-};
-
-export { api };
+  );
+  return await res.json();
+}

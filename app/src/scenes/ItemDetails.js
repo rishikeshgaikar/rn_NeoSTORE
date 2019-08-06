@@ -12,7 +12,7 @@ import {
 import { RedButton, Rating, StarRating } from "../components";
 import R from "../R";
 import AsyncStorage from "@react-native-community/async-storage";
-import { api } from "../api";
+import api from "../api";
 
 export default class ItemDetails extends Component {
   constructor() {
@@ -34,7 +34,7 @@ export default class ItemDetails extends Component {
     const product_id = navigation.getParam("productID", "1");
     const method = "GET";
     const url = `products/getDetail?product_id=${product_id}`;
-    return api(url, method, null, null)
+    return api(url, method, null)
       .then(responseJson => {
         this.setState(
           {
@@ -118,7 +118,7 @@ export default class ItemDetails extends Component {
     const method = "POST";
     const body = `product_id=${product_id}&rating=${user_rating}`;
     const url = "products/setRating";
-    return api(url, method, null, body)
+    return api(url, method, body)
       .then(responseJson => {
         console.log(responseJson);
       })
@@ -127,8 +127,7 @@ export default class ItemDetails extends Component {
       });
   }
 
-  async addToCart() {
-    const at = await AsyncStorage.getItem("@NeoSTORE_at");
+  addToCart() {
     const { navigation } = this.props;
     const quantity = this.state.quantity;
     console.log(this.state.quantity);
@@ -136,7 +135,7 @@ export default class ItemDetails extends Component {
     const method = "POST";
     const body = `product_id=${product_id}&quantity=${quantity}`;
     const url = "addToCart";
-    return api(url, method, at, body)
+    return api(url, method, body)
       .then(responseJson => {
         console.log(responseJson);
       })

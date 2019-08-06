@@ -19,13 +19,12 @@ export default class OrderListDetail extends Component {
     title: "OrderID: " + navigation.getParam("OrderID", "2016")
   });
 
-  async componentDidMount() {
-    const at = await AsyncStorage.getItem("@NeoSTORE_at");
+  componentDidMount() {
     const { navigation } = this.props;
     const order_id = navigation.getParam("OrderID", "2016");
     const method = "GET";
     const url = `orderDetail?order_id=${order_id}`;
-    return api(url, method, at, null)
+    return api(url, method, null)
       .then(responseJson => {
         this.setState(
           {

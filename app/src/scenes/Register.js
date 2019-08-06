@@ -12,7 +12,7 @@ import { RoundButton, Heading, Input, Spinner } from "../components";
 import style from "../Styles";
 import R from "../R";
 import AsyncStorage from "@react-native-community/async-storage";
-import { api } from "../api";
+import api from "../api";
 
 export default class Login extends Component {
   constructor(props) {
@@ -45,7 +45,7 @@ export default class Login extends Component {
       const method = "POST";
       const body = `first_name=${first_name}&last_name=${last_name}&email=${email}&password=${password}&confirm_password=${confirm_password}&phone_no=${phone_no}&gender=${gender}`;
       const url = "users/register";
-      return api(url, method, null, body)
+      return api(url, method, body)
         .then(responseJson => {
           this.setState({ dataSource: responseJson }, function() {}),
             this.isSuccessfull();

@@ -27,18 +27,17 @@ export default class EditProfile extends Component {
     };
   }
 
-  async updateUser() {
+  updateUser() {
     const first_name = this.state.first_name;
     const last_name = this.state.last_name;
     const email = this.state.email;
     const phone_no = this.state.phone_no;
     const dob = this.state.dob;
-    const at = await AsyncStorage.getItem("@NeoSTORE_at");
     const method = "POST";
     const url = "users/update";
     const body = `first_name=${first_name}&last_name=${last_name}&email=${email}&dob=${dob}&profile_pic={"test.png"}&phone_no=${phone_no}`;
 
-    return api(url, method, at, body)
+    return api(url, method, body)
       .then(responseJson => {
         this.setState({ dataSource: responseJson }, function() {}),
           this.isSuccessfull();

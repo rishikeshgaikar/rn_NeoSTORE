@@ -13,11 +13,10 @@ export default class OrderList extends Component {
     };
   }
 
-  async componentDidMount() {
-    const at = await AsyncStorage.getItem("@NeoSTORE_at");
+  componentDidMount() {
     const method = "GET";
     const url = "orderList";
-    return api(url, method, at, null)
+    return api(url, method, null)
       .then(responseJson => {
         this.setState(
           {

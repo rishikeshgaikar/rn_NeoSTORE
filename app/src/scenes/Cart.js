@@ -12,7 +12,7 @@ import {
 import R from "../R";
 import { RedButton } from "../components";
 import AsyncStorage from "@react-native-community/async-storage";
-import { api } from "../api";
+import api from "../api";
 
 export default class Cart extends Component {
   constructor() {
@@ -29,28 +29,13 @@ export default class Cart extends Component {
   }
 
   componentDidMount() {
-    this.getToken()
-      .then(() => {
-        this.showCart();
-      })
-      .catch(error => {
-        console.log("Promise is rejected with error: " + error);
-      });
-  }
-
-  async getToken() {
-    try {
-      const aToken = await AsyncStorage.getItem("@NeoSTORE_at");
-      this.setState({ access_token: aToken });
-      return aToken;
-    } catch (error) {
-      console.log(error.message);
-    }
-    return;
+    this.showCart();
   }
 
   showCart() {
-    api("cart", "GET", this.state.access_token, null)
+    const url = "cart";
+    const method = "GET";
+    return api(url, method, null)
       .then(responseJson => {
         this.setState(
           {
@@ -70,10 +55,9 @@ export default class Cart extends Component {
     const product_id = this.state.tempProductId;
     const quantity = this.state.editCartQuantity;
     const body = `product_id=${product_id}&quantity=${quantity}`;
-    const at = this.state.access_token;
     const method = "POST";
     const url = "editCart";
-    api(url, method, at, body)
+    api(url, method, body)
       .then(responseJson => {
         console.log(responseJson);
         if (responseJson.status == 200) {
@@ -89,10 +73,9 @@ export default class Cart extends Component {
   deleteCart(id) {
     const product_id = id;
     const body = `product_id=${product_id}`;
-    const at = this.state.access_token;
     const method = "POST";
     const url = "deleteCart";
-    api(url, method, at, body)
+    api(url, method, body)
       .then(responseJson => {
         console.log(responseJson);
         if (responseJson.status == 200) {

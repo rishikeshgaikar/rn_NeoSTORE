@@ -18,15 +18,15 @@ export default class Login extends Component {
     };
   }
 
-  async resetPass() {
+  resetPass() {
     const oldPass = "1";
     const pass = this.state.pass;
     const confirmPass = this.state.confirmPass;
-    const at = await AsyncStorage.getItem("@NeoSTORE_at");
+
     const method = "POST";
     const body = `old_password=${oldPass}&password=${pass}&confirm_password=${confirmPass}`;
     const url = "users/change";
-    return api(url, method, at, body)
+    return api(url, method, body)
       .then(responseJson => {
         this.setState({ dataSource: responseJson }, function() {}),
           this.isSuccessfull();

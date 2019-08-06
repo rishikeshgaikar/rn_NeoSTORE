@@ -18,7 +18,7 @@ import {
 import style from "../Styles";
 import R from "../R";
 import AsyncStorage from "@react-native-community/async-storage";
-import { api } from "../api";
+import api from "../api";
 
 export default class UserProfile extends Component {
   constructor(props) {
@@ -29,11 +29,10 @@ export default class UserProfile extends Component {
     };
   }
 
-  async componentDidMount() {
-    const at = await AsyncStorage.getItem("@NeoSTORE_at");
+  componentDidMount() {
     const method = "GET";
     const url = "users/getUserData";
-    return api(url, method, at, null)
+    return api(url, method, null)
       .then(responseJson => {
         this.setState({
           dataSource: responseJson.data.user_data

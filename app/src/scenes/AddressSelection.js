@@ -14,13 +14,12 @@ export default class AddressSelection extends Component {
       dataSource: []
     };
   }
-  async orderNow() {
+  orderNow() {
     const address = this.state.address;
-    const at = await AsyncStorage.getItem("@NeoSTORE_at");
     const url = "order";
     const method = "POST";
     const body = `address=${address}`;
-    return api(url, method, at, body)
+    return api(url, method, body)
       .then(responseJson => {
         this.setState({ dataSource: responseJson }, function() {}),
           this.isSuccessfull();
