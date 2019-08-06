@@ -39,6 +39,7 @@ const images = {
   user_male: require("./images/user_male.png"),
   username_icon: require("./images/username_icon.png"),
   empty_cart: require("./images/empty_cart.png"),
+  Header_cart: require("./images/header_shopping_cart.png"),
   slider_img1: require("./images/slider_img1.jpg"),
   slider_img2: require("./images/slider_img2.jpg"),
   slider_img3: require("./images/slider_img3.jpg"),

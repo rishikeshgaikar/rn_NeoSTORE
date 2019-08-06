@@ -24,7 +24,9 @@ export default class Cart extends Component {
       cartTotal: "",
       tempProductId: "",
       editCartQuantity: "",
-      quantityModalVisible: false
+      quantityModalVisible: false,
+      pickerValue: "",
+      pickerdefaultvalue: "1"
     };
   }
 

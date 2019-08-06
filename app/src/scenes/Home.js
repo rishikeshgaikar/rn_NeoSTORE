@@ -21,6 +21,14 @@ export default class Home extends Component {
       >
         <Image source={R.images.menu_icon} />
       </TouchableOpacity>
+    ),
+    headerRight: (
+      <TouchableOpacity
+        style={{ paddingRight: 20 }}
+        onPress={() => navigation.navigate("Cart")}
+      >
+        <Image source={R.images.Header_cart} />
+      </TouchableOpacity>
     )
   });
 

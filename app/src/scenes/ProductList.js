@@ -12,7 +12,15 @@ export default class ProductList extends Component {
     };
   }
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.getParam("pcName", "Table")
+    title: navigation.getParam("pcName", "Table"),
+    headerRight: (
+      <TouchableOpacity
+        style={{ paddingRight: 20 }}
+        onPress={() => navigation.navigate("Cart")}
+      >
+        <Image source={R.images.Header_cart} />
+      </TouchableOpacity>
+    )
   });
 
   componentDidMount() {

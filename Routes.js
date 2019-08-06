@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, Button, TouchableOpacity } from "react-native";
 import {
   createStackNavigator,
   createDrawerNavigator,
@@ -47,6 +47,7 @@ const Entrystack = createStackNavigator(
     }
   },
   {
+    headerLayoutPreset: "center",
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: R.colors.r2
@@ -117,6 +118,7 @@ const MainStack = createStackNavigator(
     }
   },
   {
+    headerLayoutPreset: "center",
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: R.colors.r2
@@ -126,8 +128,7 @@ const MainStack = createStackNavigator(
         fontWeight: "bold",
         textAlign: "center",
         alignSelf: "center"
-      },
-      headerRight: <View />
+      }
     }
   }
 );

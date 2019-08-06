@@ -28,6 +28,18 @@ export default class ItemDetails extends Component {
       quantity: null
     };
   }
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.getParam("productName", "Center Coffee Table"),
+    headerRight: (
+      <TouchableOpacity
+        style={{ paddingRight: 20 }}
+        onPress={() => navigation.navigate("Cart")}
+      >
+        <Image source={R.images.Header_cart} />
+      </TouchableOpacity>
+    )
+  });
+
 
   componentDidMount() {
     const { navigation } = this.props;
