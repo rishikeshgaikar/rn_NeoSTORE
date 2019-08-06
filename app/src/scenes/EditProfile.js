@@ -10,7 +10,7 @@ import {
 import style from "../Styles";
 import R from "../R";
 import AsyncStorage from "@react-native-community/async-storage";
-import { api } from "../api";
+import api from "../api";
 
 export default class EditProfile extends Component {
   constructor(props) {

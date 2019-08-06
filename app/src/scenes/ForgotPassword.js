@@ -10,7 +10,7 @@ import {
 import { RoundButton, Heading, Input } from "../components";
 import style from "../Styles";
 import R from "../R";
-import { api } from "../api";
+import api from "../api";
 
 export default class Login extends Component {
   constructor(props) {

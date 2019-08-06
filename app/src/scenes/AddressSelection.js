@@ -3,7 +3,7 @@ import { View, Text, Button, TextInput } from "react-native";
 import { RedButton } from "../components";
 import R from "../R";
 import AsyncStorage from "@react-native-community/async-storage";
-import { api } from "../api";
+import api from "../api";
 
 export default class AddressSelection extends Component {
   constructor(props) {
