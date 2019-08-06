@@ -1,142 +1,23 @@
-import React, { Component } from "react";
-import { Image, StyleSheet, View, Text } from "react-native";
+import React from "react";
+import { View, Image } from "react-native";
 import R from "../R";
 
-class StarRating extends Component {
-  constructor(props) {
-    super(props);
+const StarRating = ({ count }) => {
+  var elements = [];
+  for (i = 0; i < count; i++) {
+    elements.push(
+      <Image source={R.images.star_check} style={{ height: 16, width: 16 }} />
+    );
   }
-  render() {
-    switch (this.props.count) {
-      case 1:
-        return (
-          <View style={{ flex: 2, flexDirection: "row" }}>
-            <Image
-              source={R.images.star_check}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_unchek}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_unchek}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_unchek}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_unchek}
-              style={{ height: 16, width: 16 }}
-            />
-          </View>
-        );
-      case 2:
-        return (
-          <View style={{ flex: 2, flexDirection: "row" }}>
-            <Image
-              source={R.images.star_check}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_check}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_unchek}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_unchek}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_unchek}
-              style={{ height: 16, width: 16 }}
-            />
-          </View>
-        );
-      case 3:
-        return (
-          <View style={{ flex: 2, flexDirection: "row" }}>
-            <Image
-              source={R.images.star_check}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_check}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_check}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_unchek}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_unchek}
-              style={{ height: 16, width: 16 }}
-            />
-          </View>
-        );
-      case 4:
-        return (
-          <View style={{ flex: 2, flexDirection: "row" }}>
-            <Image
-              source={R.images.star_check}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_check}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_check}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_check}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_unchek}
-              style={{ height: 16, width: 16 }}
-            />
-          </View>
-        );
-      case 5:
-        return (
-          <View style={{ flex: 2, flexDirection: "row" }}>
-            <Image
-              source={R.images.star_check}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_check}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_check}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_check}
-              style={{ height: 16, width: 16 }}
-            />
-            <Image
-              source={R.images.star_check}
-              style={{ height: 16, width: 16 }}
-            />
-          </View>
-        );
-      default:
-        return <Text>Rating not available</Text>;
-    }
-  }
-}
 
+  for (j = count; j < 5; j++) {
+    elements.push(
+      <Image source={R.images.star_unchek} style={{ height: 16, width: 16 }} />
+    );
+  }
+
+  return elements.map(item => {
+    return <View>{item}</View>;
+  });
+};
 export { StarRating };
