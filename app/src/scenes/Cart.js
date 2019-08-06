@@ -2,16 +2,13 @@ import React, { Component } from "react";
 import {
   Text,
   View,
-  Modal,
   FlatList,
   Image,
   TouchableOpacity,
-  ImageBackground,
-  TextInput
+  Picker
 } from "react-native";
 import R from "../R";
 import { RedButton } from "../components";
-import AsyncStorage from "@react-native-community/async-storage";
 import api from "../api";
 
 export default class Cart extends Component {
@@ -22,11 +19,7 @@ export default class Cart extends Component {
       dataSource: [],
       cartCount: "",
       cartTotal: "",
-      tempProductId: "",
-      editCartQuantity: "",
-      quantityModalVisible: false,
-      pickerValue: "",
-      pickerdefaultvalue: "1"
+      pickerValue: null
     };
   }
 
@@ -53,9 +46,9 @@ export default class Cart extends Component {
       });
   }
 
-  editCart() {
-    const product_id = this.state.tempProductId;
-    const quantity = this.state.editCartQuantity;
+  editCart(id, quant) {
+    const product_id = id;
+    const quantity = quant;
     const body = `product_id=${product_id}&quantity=${quantity}`;
     const method = "POST";
     const url = "editCart";
@@ -90,22 +83,33 @@ export default class Cart extends Component {
       });
   }
 
-  setquantityModalVisible(visible) {
-    this.setState({ quantityModalVisible: visible });
-  }
+  renderPicker(itemId, itemQuant, iVal) {
+    return (
+      <Picker
+        style={{ width: 100, height: 50 }}
+        selectedValue={
+          this.state["pickValue" + iVal] == null
+            ? itemQuant
+            : this.state["pickValue" + iVal]
+        }
+        onValueChange={value => {
+          this.setState({ ["pickValue" + iVal]: value });
+          console.log("selected value" + value);
+          console.log("itemid:" + itemId);
 
-  ecb(n, id) {
-    this.setquantityModalVisible(n);
-    console.log(n);
-    console.log(id);
-    this.setState({ tempProductId: id });
-    console.log("ecd" + this.state.tempProductId);
-    console.log("ecd" + this.state.editCartQuantity);
-  }
-
-  callEdit() {
-    this.setquantityModalVisible(false);
-    this.editCart();
+          this.editCart(itemId, value);
+        }}
+      >
+        {/* <Picker.Item label={itemQuant.toString()} quantity value={itemQuant} /> */}
+        <Picker.Item label="1" value={1} />
+        <Picker.Item label="2" value={2} />
+        <Picker.Item label="3" value={3} />
+        <Picker.Item label="4" value={4} />
+        <Picker.Item label="5" value={5} />
+        <Picker.Item label="6" value={6} />
+        <Picker.Item label="7" value={7} />
+      </Picker>
+    );
   }
 
   render() {
@@ -115,7 +119,8 @@ export default class Cart extends Component {
           <View style={{ flex: 9 }}>
             <FlatList
               data={this.state.dataSource}
-              renderItem={({ item }) => (
+              extraData={{ value: [this.state.pickerValue] }}
+              renderItem={({ item, index }) => (
                 <View style={{ flexDirection: "row", marginVertical: 15 }}>
                   <View style={{ flex: 1, padding: 30 }}>
                     <Image
@@ -157,34 +162,11 @@ export default class Cart extends Component {
 
                     <View style={{ flexDirection: "row" }}>
                       <View style={{ flex: 4 }}>
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.ecb(true, item.product_id);
-                          }}
-                        >
-                          <ImageBackground
-                            source={R.images.select_button}
-                            style={{ width: 75, height: 50 }}
-                          >
-                            <View
-                              style={{
-                                position: "absolute",
-                                top: 0,
-                                left: 0,
-                                right: 30,
-                                bottom: 5,
-                                justifyContent: "center",
-                                alignItems: "center"
-                              }}
-                            >
-                              <Text
-                                style={{ fontWeight: "bold", fontSize: 17 }}
-                              >
-                                {item.quantity}
-                              </Text>
-                            </View>
-                          </ImageBackground>
-                        </TouchableOpacity>
+                        {this.renderPicker(
+                          item.product_id,
+                          item.quantity,
+                          index
+                        )}
                       </View>
                       <View style={{ flex: 3 }}>
                         <Text
@@ -205,53 +187,6 @@ export default class Cart extends Component {
               )}
               keyExtractor={(item, index) => index.toString()}
             />
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={this.state.quantityModalVisible}
-            >
-              <View style={{ flex: 1 }}>
-                <View
-                  opacity={0.5}
-                  style={{ flex: 5, backgroundColor: "#000" }}
-                >
-                  <TouchableOpacity
-                    onPress={() =>
-                      this.setquantityModalVisible(
-                        !this.state.quantityModalVisible
-                      )
-                    }
-                    style={{ flex: 1 }}
-                  />
-                </View>
-                <View
-                  style={{
-                    // flex: 2,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: "#fff",
-                    height: 200
-                  }}
-                >
-                  <TextInput
-                    placeholder="Enter quantity"
-                    onChangeText={quantity =>
-                      this.setState({ editCartQuantity: quantity })
-                    }
-                    style={{
-                      fontSize: 20,
-                      fontFamily: R.fonts.GothamBook,
-                      padding: 20
-                    }}
-                  />
-                  <View style={{ width: "80%" }}>
-                    <RedButton onPress={() => this.callEdit()}>
-                      ADD TO CART
-                    </RedButton>
-                  </View>
-                </View>
-              </View>
-            </Modal>
           </View>
           <View style={{ flex: 1, marginHorizontal: 20, flexDirection: "row" }}>
             <View style={{ flex: 4, paddingLeft: 20 }}>
