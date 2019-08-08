@@ -7,3 +7,4 @@ export * from "./RedButton";
 export * from "./RoundImage";
 export * from "./Spinner";
 export * from "./StarRating";
+export * from "./ImageCarousel";

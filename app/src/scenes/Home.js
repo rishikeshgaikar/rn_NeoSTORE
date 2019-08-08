@@ -10,6 +10,7 @@ import {
   Button
 } from "react-native";
 import R from "../R";
+import { ImageCarousel } from "../components";
 import { YellowBox } from "react-native";
 
 export default class Home extends Component {
@@ -57,20 +58,7 @@ export default class Home extends Component {
       <View style={{ flex: 1, flexDirection: "column" }}>
         <StatusBar backgroundColor={R.colors.r2} />
         <View style={{ flex: 2 }}>
-          <ScrollView
-            horizontal
-            pagingEnabled
-            snapToAlignment={"center"}
-            showsHorizontalScrollIndicator={true}
-          >
-            {this.state.imgSliderData.map(image => (
-              <Image
-                key={image.key}
-                style={{ width: 393, height: "100%" }}
-                source={image.key}
-              />
-            ))}
-          </ScrollView>
+          <ImageCarousel image={this.state.imgSliderData} />
         </View>
 
         <View
