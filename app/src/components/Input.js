@@ -1,6 +1,6 @@
-import React from "react";
-import { Text, View, Image, TextInput, StyleSheet } from "react-native";
-import R from "../R";
+import React from 'react';
+import { Text, View, Image, TextInput, StyleSheet } from 'react-native';
+import R from '../R';
 const Input = ({
   image,
   placeholder,
@@ -19,7 +19,7 @@ const Input = ({
         placeholderTextColor={placeholderColor}
         style={inputStyle.textinput}
         onChangeText={onChangeText}
-        autoCapitalize="none"
+        autoCapitalize='none'
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
       />
@@ -31,21 +31,22 @@ const inputStyle = StyleSheet.create({
   textinput: {
     color: R.colors.b1,
     fontSize: 20,
-    fontStyle: "normal",
-    fontFamily: R.fonts.GothamBold
+    fontStyle: 'normal',
+    fontFamily: R.fonts.GothamBold,
+    paddingVertical: 10
   },
   c: {
     marginTop: 10,
     marginHorizontal: 30,
-    flexDirection: "row",
+    flexDirection: 'row',
     borderRadius: 4,
     borderWidth: 2,
     borderColor: R.colors.b1
   },
   c1: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   c2: {
     flex: 5
@@ -53,7 +54,7 @@ const inputStyle = StyleSheet.create({
   errorText: {
     color: R.colors.b1,
     fontSize: 20,
-    fontStyle: "normal",
+    fontStyle: 'normal',
     fontFamily: R.fonts.GothamBold
   }
 });
