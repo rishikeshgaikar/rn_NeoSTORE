@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { View, Button, TouchableOpacity } from "react-native";
+import React, { Component } from 'react';
+import { View, Button, TouchableOpacity } from 'react-native';
 import {
   createStackNavigator,
   createDrawerNavigator,
   createSwitchNavigator,
   createAppContainer
-} from "react-navigation";
+} from 'react-navigation';
 import {
   ForgotPassword,
   Login,
@@ -21,9 +21,9 @@ import {
   OrderListDetail,
   SplashScreen,
   ProductList
-} from "./app/src/scenes";
-import R from "./app/src/R";
-import CustomDrawer from "./app/src/components/CustomDrawer";
+} from './app/src/scenes';
+import R from './app/src/R';
+import CustomDrawer from './app/src/components/CustomDrawer';
 
 const Entrystack = createStackNavigator(
   {
@@ -36,27 +36,27 @@ const Entrystack = createStackNavigator(
     Register: {
       screen: Register,
       navigationOptions: {
-        title: "REGISTER"
+        title: 'REGISTER'
       }
     },
     ForgotPassword: {
       screen: ForgotPassword,
       navigationOptions: {
-        title: "FOEGOT PASSWORD"
+        title: 'FOEGOT PASSWORD'
       }
     }
   },
   {
-    headerLayoutPreset: "center",
+    headerLayoutPreset: 'center',
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: R.colors.r2
       },
       headerTintColor: R.colors.b1,
       headerTitleStyle: {
-        fontWeight: "bold",
-        textAlign: "center",
-        alignSelf: "center"
+        fontWeight: 'bold',
+        textAlign: 'center',
+        alignSelf: 'center'
       },
       headerRight: <View />
     }
@@ -67,13 +67,13 @@ const MainStack = createStackNavigator(
     Home: {
       screen: Home,
       navigationOptions: {
-        title: "NeoSTORE"
+        title: 'NeoSTORE'
       }
     },
     Cart: {
       screen: Cart,
       navigationOptions: {
-        title: "MY CART"
+        title: 'MY CART'
       }
     },
     ProductList: {
@@ -82,26 +82,26 @@ const MainStack = createStackNavigator(
     OrderList: {
       screen: OrderList,
       navigationOptions: {
-        title: "OLD ORDERS"
+        title: 'OLD ORDERS'
       }
     },
 
     UserProfile: {
       screen: UserProfile,
       navigationOptions: {
-        title: "MY ACCOUNT"
+        title: 'MY ACCOUNT'
       }
     },
     ResetPassword: {
       screen: ResetPassword,
       navigationOptions: {
-        title: "RESET PASSWORD"
+        title: 'RESET PASSWORD'
       }
     },
     EditProfile: {
       screen: EditProfile,
       navigationOptions: {
-        title: "EDIT PROFILE"
+        title: 'EDIT PROFILE'
       }
     },
     OrderListDetail: {
@@ -110,7 +110,7 @@ const MainStack = createStackNavigator(
     AddressSelection: {
       screen: AddressSelection,
       navigationOptions: {
-        title: "SELECT ADRESS"
+        title: 'SELECT ADRESS'
       }
     },
     ItemDetails: {
@@ -118,25 +118,26 @@ const MainStack = createStackNavigator(
     }
   },
   {
-    headerLayoutPreset: "center",
+    headerLayoutPreset: 'center',
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: R.colors.r2
       },
+      headerBackTitle: null,
       headerTintColor: R.colors.b1,
       headerTitleStyle: {
-        fontWeight: "bold",
-        textAlign: "center",
-        alignSelf: "center"
+        fontWeight: 'bold',
+        textAlign: 'center',
+        alignSelf: 'center'
       }
     }
   }
 );
 
 MainStack.navigationOptions = ({ navigation }) => {
-  let drawerLockMode = "unlocked";
+  let drawerLockMode = 'unlocked';
   if (navigation.state.index > 0) {
-    drawerLockMode = "locked-closed";
+    drawerLockMode = 'locked-closed';
   }
   return {
     drawerLockMode
@@ -150,7 +151,7 @@ const DrawerStack = createDrawerNavigator(
     }
   },
   {
-    drawerType: "front",
+    drawerType: 'front',
     contentComponent: CustomDrawer
   }
 );
