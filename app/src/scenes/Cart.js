@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -6,19 +6,20 @@ import {
   Image,
   TouchableOpacity,
   Picker
-} from "react-native";
-import R from "../R";
-import { RedButton } from "../components";
-import api from "../api";
+} from 'react-native';
+import R from '../R';
+import { RedButton } from '../components';
+import api from '../api';
+import InputSpinner from 'react-native-input-spinner';
 
 export default class Cart extends Component {
   constructor() {
     super();
     this.state = {
-      access_token: "",
+      access_token: '',
       dataSource: [],
-      cartCount: "",
-      cartTotal: "",
+      cartCount: '',
+      cartTotal: '',
       pickerValue: null
     };
   }
@@ -28,8 +29,8 @@ export default class Cart extends Component {
   }
 
   showCart() {
-    const url = "cart";
-    const method = "GET";
+    const url = 'cart';
+    const method = 'GET';
     return api(url, method, null)
       .then(responseJson => {
         this.setState(
@@ -50,8 +51,8 @@ export default class Cart extends Component {
     const product_id = id;
     const quantity = quant;
     const body = `product_id=${product_id}&quantity=${quantity}`;
-    const method = "POST";
-    const url = "editCart";
+    const method = 'POST';
+    const url = 'editCart';
     api(url, method, body)
       .then(responseJson => {
         console.log(responseJson);
@@ -68,8 +69,8 @@ export default class Cart extends Component {
   deleteCart(id) {
     const product_id = id;
     const body = `product_id=${product_id}`;
-    const method = "POST";
-    const url = "deleteCart";
+    const method = 'POST';
+    const url = 'deleteCart';
     api(url, method, body)
       .then(responseJson => {
         console.log(responseJson);
@@ -85,30 +86,31 @@ export default class Cart extends Component {
 
   renderPicker(itemId, itemQuant, iVal) {
     return (
-      <Picker
-        style={{ width: 100, height: 50 }}
-        selectedValue={
-          this.state["pickValue" + iVal] == null
+      <InputSpinner
+        max={8}
+        min={1}
+        step={1}
+        value={
+          this.state['pickValue' + iVal] == null
             ? itemQuant
-            : this.state["pickValue" + iVal]
+            : this.state['pickValue' + iVal]
         }
-        onValueChange={value => {
-          this.setState({ ["pickValue" + iVal]: value });
-          console.log("selected value" + value);
-          console.log("itemid:" + itemId);
-
+        onChange={value => {
+          this.setState({ ['pickValue' + iVal]: value });
+          console.log('selected value' + value);
+          console.log('itemid:' + itemId);
           this.editCart(itemId, value);
         }}
-      >
-        {/* <Picker.Item label={itemQuant.toString()} quantity value={itemQuant} /> */}
-        <Picker.Item label="1" value={1} />
-        <Picker.Item label="2" value={2} />
-        <Picker.Item label="3" value={3} />
-        <Picker.Item label="4" value={4} />
-        <Picker.Item label="5" value={5} />
-        <Picker.Item label="6" value={6} />
-        <Picker.Item label="7" value={7} />
-      </Picker>
+        onMax={() => {
+          alert('Maxximum 8 items are allowed.');
+        }}
+        onMin={() => {
+          alert('Atleast 1 item should be Selected.');
+        }}
+        style={{ height: 80, width: 130, paddingTop: 10 }}
+        buttonStyle={{ height: 40, width: 40 }}
+        inputStyle={{ fontSize: 18, fontFamily: R.fonts.GothamBook }}
+      />
     );
   }
 
@@ -121,7 +123,7 @@ export default class Cart extends Component {
               data={this.state.dataSource}
               extraData={{ value: [this.state.pickerValue] }}
               renderItem={({ item, index }) => (
-                <View style={{ flexDirection: "row", marginVertical: 15 }}>
+                <View style={{ flexDirection: 'row', marginVertical: 15 }}>
                   <View style={{ flex: 1, padding: 30 }}>
                     <Image
                       style={{ width: 75, height: 75 }}
@@ -129,18 +131,18 @@ export default class Cart extends Component {
                     />
                   </View>
                   <View style={{ flex: 4 }}>
-                    <View style={{ flexDirection: "row" }}>
+                    <View style={{ flexDirection: 'row' }}>
                       <View style={{ flex: 4 }}>
                         <Text
                           style={{
                             fontFamily: R.fonts.GothamBook,
                             fontSize: 20,
-                            fontWeight: "bold"
+                            fontWeight: 'bold'
                           }}
                         >
                           {item.product.name}
                         </Text>
-                        <Text style={{ fontStyle: "italic" }}>
+                        <Text style={{ fontStyle: 'italic' }}>
                           Category: {item.product.product_category}
                         </Text>
                       </View>
@@ -160,7 +162,7 @@ export default class Cart extends Component {
                       </View>
                     </View>
 
-                    <View style={{ flexDirection: "row" }}>
+                    <View style={{ flexDirection: 'row' }}>
                       <View style={{ flex: 4 }}>
                         {this.renderPicker(
                           item.product_id,
@@ -174,7 +176,7 @@ export default class Cart extends Component {
                             color: R.colors.r2,
                             fontSize: 20,
                             fontFamily: R.fonts.GothamBook,
-                            fontWeight: "bold",
+                            fontWeight: 'bold',
                             paddingTop: 10
                           }}
                         >
@@ -188,13 +190,13 @@ export default class Cart extends Component {
               keyExtractor={(item, index) => index.toString()}
             />
           </View>
-          <View style={{ flex: 1, marginHorizontal: 20, flexDirection: "row" }}>
+          <View style={{ flex: 1, marginHorizontal: 20, flexDirection: 'row' }}>
             <View style={{ flex: 4, paddingLeft: 20 }}>
               <Text
                 style={{
                   fontFamily: R.fonts.GothamBook,
                   fontSize: 20,
-                  fontWeight: "bold"
+                  fontWeight: 'bold'
                 }}
               >
                 Total items:
@@ -203,7 +205,7 @@ export default class Cart extends Component {
                 style={{
                   fontFamily: R.fonts.GothamBook,
                   fontSize: 20,
-                  fontWeight: "bold"
+                  fontWeight: 'bold'
                 }}
               >
                 Grand Total:
@@ -214,7 +216,7 @@ export default class Cart extends Component {
                 style={{
                   fontFamily: R.fonts.GothamBook,
                   fontSize: 20,
-                  fontWeight: "bold",
+                  fontWeight: 'bold',
                   color: R.colors.r2
                 }}
               >
@@ -224,7 +226,7 @@ export default class Cart extends Component {
                 style={{
                   fontFamily: R.fonts.GothamBook,
                   fontSize: 20,
-                  fontWeight: "bold",
+                  fontWeight: 'bold',
                   color: R.colors.r2
                 }}
               >
@@ -234,7 +236,7 @@ export default class Cart extends Component {
           </View>
           <View style={{ flex: 1, marginHorizontal: 20 }}>
             <RedButton
-              onPress={() => this.props.navigation.navigate("AddressSelection")}
+              onPress={() => this.props.navigation.navigate('AddressSelection')}
             >
               ORDER NOW
             </RedButton>
@@ -244,7 +246,7 @@ export default class Cart extends Component {
     } else {
       return (
         <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         >
           <Image source={R.images.empty_cart} />
           <Text

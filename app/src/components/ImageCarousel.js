@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { StyleSheet, View, ScrollView, Dimensions, Image } from "react-native";
-import R from "../R";
+import React, { Component } from 'react';
+import { StyleSheet, View, ScrollView, Dimensions, Image } from 'react-native';
+import R from '../R';
 
-const DEVICE_WIDTH = Dimensions.get("window").width;
+const DEVICE_WIDTH = Dimensions.get('window').width;
 
 class ImageCarousel extends Component {
   scrollRef = React.createRef();
@@ -55,13 +55,13 @@ class ImageCarousel extends Component {
   render() {
     const images = this.props.image;
     const il = this.props.image.length - 1;
-    console.log("Length: " + il);
-    console.log(images);
+    // console.log("Length: " + il);
+    // console.log(images);
     const { selectedIndex } = this.state;
-    console.log(selectedIndex);
+    // console.log(selectedIndex);
 
     return (
-      <View style={{ height: "100%", width: "100%" }}>
+      <View style={{ height: '100%', width: '100%' }}>
         <ScrollView
           horizontal
           pagingEnabled
@@ -97,17 +97,17 @@ class ImageCarousel extends Component {
 
 const styles = StyleSheet.create({
   backgroundImage: {
-    height: "100%",
-    width: Dimensions.get("window").width
+    height: '100%',
+    width: Dimensions.get('window').width
   },
   circleDiv: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 15,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
     height: 10
   },
   whiteCircle: {
