@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -8,43 +8,43 @@ import {
   Button,
   Modal,
   TextInput
-} from "react-native";
-import { RedButton, Rating, StarRating } from "../components";
-import R from "../R";
-import AsyncStorage from "@react-native-community/async-storage";
-import api from "../api";
+} from 'react-native';
+import { RedButton, Rating, StarRating } from '../components';
+import R from '../R';
+import AsyncStorage from '@react-native-community/async-storage';
+import api from '../api';
+import InputSpinner from 'react-native-input-spinner';
 
 export default class ItemDetails extends Component {
   constructor() {
     super();
     this.state = {
-      access_token: "",
+      access_token: '',
       dataSource: [],
       productImages: [],
-      bigImage: "",
+      bigImage: '',
       ratingModalVisible: false,
       quantityModalVisible: false,
       ratedByUser: null,
-      quantity: null
+      quantity: '1'
     };
   }
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.getParam("productName", "Center Coffee Table"),
+    title: navigation.getParam('productName', 'Center Coffee Table'),
     headerRight: (
       <TouchableOpacity
         style={{ paddingRight: 20 }}
-        onPress={() => navigation.navigate("Cart")}
+        onPress={() => navigation.navigate('Cart')}
       >
         <Image source={R.images.Header_cart} />
       </TouchableOpacity>
     )
   });
 
-
   componentDidMount() {
     const { navigation } = this.props;
-    const product_id = navigation.getParam("productID", "1");
-    const method = "GET";
+    const product_id = navigation.getParam('productID', '1');
+    const method = 'GET';
     const url = `products/getDetail?product_id=${product_id}`;
     return api(url, method, null)
       .then(responseJson => {
@@ -84,8 +84,8 @@ export default class ItemDetails extends Component {
       return (
         <View
           style={{
-            justifyContent: "center",
-            alignItems: "center",
+            justifyContent: 'center',
+            alignItems: 'center',
             padding: 15
           }}
         >
@@ -100,7 +100,7 @@ export default class ItemDetails extends Component {
 
   ratebuttonClick() {
     this.setratingModalVisible(!this.state.ratingModalVisible);
-    console.log("userRating: " + this.state.ratedByUser);
+    console.log('userRating: ' + this.state.ratedByUser);
     this.userRating();
   }
 
@@ -126,10 +126,10 @@ export default class ItemDetails extends Component {
   userRating() {
     const { navigation } = this.props;
     const user_rating = this.state.ratedByUser;
-    const product_id = navigation.getParam("productID", "1");
-    const method = "POST";
+    const product_id = navigation.getParam('productID', '1');
+    const method = 'POST';
     const body = `product_id=${product_id}&rating=${user_rating}`;
-    const url = "products/setRating";
+    const url = 'products/setRating';
     return api(url, method, body)
       .then(responseJson => {
         console.log(responseJson);
@@ -143,10 +143,10 @@ export default class ItemDetails extends Component {
     const { navigation } = this.props;
     const quantity = this.state.quantity;
     console.log(this.state.quantity);
-    const product_id = navigation.getParam("productID", "1");
-    const method = "POST";
+    const product_id = navigation.getParam('productID', '1');
+    const method = 'POST';
     const body = `product_id=${product_id}&quantity=${quantity}`;
-    const url = "addToCart";
+    const url = 'addToCart';
     return api(url, method, body)
       .then(responseJson => {
         console.log(responseJson);
@@ -166,10 +166,10 @@ export default class ItemDetails extends Component {
               <Text style={{ fontFamily: R.fonts.GothamBook, fontSize: 20 }}>
                 {this.state.dataSource.name}
               </Text>
-              <Text style={{ fontStyle: "italic" }}>
+              <Text style={{ fontStyle: 'italic' }}>
                 {this.state.dataSource.producer}
               </Text>
-              <View style={{ flex: 1, flexDirection: "row" }}>
+              <View style={{ flex: 1, flexDirection: 'row' }}>
                 <View style={{ flex: 5 }}>
                   <Text
                     style={{
@@ -188,7 +188,7 @@ export default class ItemDetails extends Component {
                 nestedScrollEnabled
                 horizontal
                 pagingEnabled
-                snapToAlignment={"center"}
+                snapToAlignment={'center'}
                 showsHorizontalScrollIndicator={true}
               >
                 {this.renderImages()}
@@ -196,7 +196,7 @@ export default class ItemDetails extends Component {
               <Text
                 style={{
                   fontFamily: R.fonts.GothamBook,
-                  fontWeight: "bold",
+                  fontWeight: 'bold',
                   fontSize: 20
                 }}
               >
@@ -206,7 +206,7 @@ export default class ItemDetails extends Component {
             </View>
           </ScrollView>
         </View>
-        <View style={{ flex: 1, flexDirection: "row" }}>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
           <View style={{ flex: 1 }}>
             <RedButton
               onPress={() => {
@@ -226,12 +226,12 @@ export default class ItemDetails extends Component {
             </RedButton>
           </View>
           <Modal
-            animationType="slide"
+            animationType='slide'
             transparent={true}
             visible={this.state.ratingModalVisible}
           >
             <View style={{ flex: 1 }}>
-              <View opacity={0.5} style={{ flex: 5, backgroundColor: "#000" }}>
+              <View opacity={0.5} style={{ flex: 5, backgroundColor: '#000' }}>
                 <TouchableOpacity
                   onPress={() =>
                     this.setratingModalVisible(!this.state.ratingModalVisible)
@@ -242,9 +242,9 @@ export default class ItemDetails extends Component {
               <View
                 style={{
                   // flex: 2,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "#fff",
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: '#fff',
                   height: 400
                 }}
               >
@@ -267,11 +267,11 @@ export default class ItemDetails extends Component {
                   max={5}
                   iconWidth={24}
                   iconHeight={24}
-                  iconSelected={require("../../res/images/airbnb-star-selected.png")}
-                  iconUnselected={require("../../res/images/airbnb-star-unselected.png")}
+                  iconSelected={require('../../res/images/airbnb-star-selected.png')}
+                  iconUnselected={require('../../res/images/airbnb-star-unselected.png')}
                   onRate={rating => this.setState({ rating: rating })}
                 />
-                <View style={{ width: "80%" }}>
+                <View style={{ width: '80%' }}>
                   <RedButton
                     onPress={() => {
                       this.ratebuttonClick();
@@ -284,12 +284,12 @@ export default class ItemDetails extends Component {
             </View>
           </Modal>
           <Modal
-            animationType="slide"
+            animationType='slide'
             transparent={true}
             visible={this.state.quantityModalVisible}
           >
             <View style={{ flex: 1 }}>
-              <View opacity={0.5} style={{ flex: 5, backgroundColor: "#000" }}>
+              <View opacity={0.5} style={{ flex: 5, backgroundColor: '#000' }}>
                 <TouchableOpacity
                   onPress={() =>
                     this.setquantityModalVisible(
@@ -302,10 +302,10 @@ export default class ItemDetails extends Component {
               <View
                 style={{
                   // flex: 2,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "#fff",
-                  height: 400
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: '#fff',
+                  height: 440
                 }}
               >
                 <Text
@@ -321,8 +321,8 @@ export default class ItemDetails extends Component {
                   style={{ width: 200, height: 200 }}
                   source={{ uri: this.state.bigImage }}
                 />
-                <TextInput
-                  placeholder="Enter quantity"
+                {/* <TextInput
+                  placeholder='Enter quantity'
                   onChangeText={quantity =>
                     this.setState({ quantity: quantity })
                   }
@@ -331,8 +331,24 @@ export default class ItemDetails extends Component {
                     fontFamily: R.fonts.GothamBook,
                     padding: 20
                   }}
+                /> */}
+                <InputSpinner
+                  max={8}
+                  min={1}
+                  step={1}
+                  value={this.state.quantity}
+                  onChange={quantity => this.setState({ quantity: quantity })}
+                  onMax={() => {
+                    alert('Maxximum 8 items are allowed.');
+                  }}
+                  onMin={() => {
+                    alert('Atleast 1 item should be Selected.');
+                  }}
+                  style={{ paddingVertical: 20 }}
+                  // buttonStyle={{ height: 40, width: 40 }}
+                  // inputStyle={{ fontSize: 18, fontFamily: R.fonts.GothamBook }}
                 />
-                <View style={{ width: "80%" }}>
+                <View style={{ width: '80%' }}>
                   <RedButton onPress={() => this.bnbuttonClick()}>
                     ADD TO CART
                   </RedButton>
