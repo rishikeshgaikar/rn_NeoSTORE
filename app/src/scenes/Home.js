@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   View,
   StatusBar,
@@ -8,10 +8,10 @@ import {
   ScrollView,
   Text,
   Button
-} from "react-native";
-import R from "../R";
-import { ImageCarousel } from "../components";
-import { YellowBox } from "react-native";
+} from 'react-native';
+import R from '../R';
+import { ImageCarousel } from '../components';
+import { YellowBox } from 'react-native';
 
 export default class Home extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -26,7 +26,7 @@ export default class Home extends Component {
     headerRight: (
       <TouchableOpacity
         style={{ paddingRight: 20 }}
-        onPress={() => navigation.navigate("Cart")}
+        onPress={() => navigation.navigate('Cart')}
       >
         <Image source={R.images.Header_cart} />
       </TouchableOpacity>
@@ -37,10 +37,10 @@ export default class Home extends Component {
     super(props);
     this.state = {
       imgGridDataLink: [
-        { key: R.images.tableicon, pcName: "Tables", value: "1" },
-        { key: R.images.sofaicon, pcName: "Sofas", value: "3" },
-        { key: R.images.chairsicon, pcName: "Chairs", value: "2" },
-        { key: R.images.cupboardicon, pcName: "Cupboards", value: "4" }
+        { key: R.images.tableicon, pcName: 'Tables', value: '1' },
+        { key: R.images.sofaicon, pcName: 'Sofas', value: '3' },
+        { key: R.images.chairsicon, pcName: 'Chairs', value: '2' },
+        { key: R.images.cupboardicon, pcName: 'Cupboards', value: '4' }
       ],
       imgSliderData: [
         { key: R.images.slider_img1 },
@@ -52,10 +52,10 @@ export default class Home extends Component {
   }
 
   render() {
-    YellowBox.ignoreWarnings(["Warning: componentWillUpdate is deprecated"]);
-    YellowBox.ignoreWarnings(["VirtualizedList: missing keys for items"]);
+    YellowBox.ignoreWarnings(['Warning: componentWillUpdate is deprecated']);
+    YellowBox.ignoreWarnings(['VirtualizedList: missing keys for items']);
     return (
-      <View style={{ flex: 1, flexDirection: "column" }}>
+      <View style={{ flex: 1, flexDirection: 'column' }}>
         <StatusBar backgroundColor={R.colors.r2} />
         <View style={{ flex: 2 }}>
           <ImageCarousel image={this.state.imgSliderData} />
@@ -64,8 +64,8 @@ export default class Home extends Component {
         <View
           style={{
             flex: 3,
-            justifyContent: "center",
-            alignItems: "center"
+            justifyContent: 'center',
+            alignItems: 'center'
           }}
         >
           <FlatList
@@ -75,7 +75,7 @@ export default class Home extends Component {
                 key={item.key}
                 style={{ padding: 8 }}
                 onPress={() =>
-                  this.props.navigation.navigate("ProductList", {
+                  this.props.navigation.navigate('ProductList', {
                     pcID: item.value,
                     pcName: item.pcName
                   })

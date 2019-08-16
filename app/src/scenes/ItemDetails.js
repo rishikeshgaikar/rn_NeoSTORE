@@ -11,9 +11,9 @@ import {
 } from 'react-native';
 import { RedButton, Rating, StarRating } from '../components';
 import R from '../R';
-import AsyncStorage from '@react-native-community/async-storage';
 import api from '../api';
 import InputSpinner from 'react-native-input-spinner';
+import CartContext from '../context/CartContext';
 
 export default class ItemDetails extends Component {
   constructor() {
@@ -349,9 +349,18 @@ export default class ItemDetails extends Component {
                   // inputStyle={{ fontSize: 18, fontFamily: R.fonts.GothamBook }}
                 />
                 <View style={{ width: '80%' }}>
-                  <RedButton onPress={() => this.bnbuttonClick()}>
-                    ADD TO CART
-                  </RedButton>
+                  <CartContext.Consumer>
+                    {contextValue => (
+                      <RedButton
+                        onPress={() => {
+                          this.bnbuttonClick();
+                          contextValue.onPlus();
+                        }}
+                      >
+                        ADD TO CART
+                      </RedButton>
+                    )}
+                  </CartContext.Consumer>
                 </View>
               </View>
             </View>

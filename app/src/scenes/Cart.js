@@ -11,6 +11,7 @@ import R from '../R';
 import { RedButton } from '../components';
 import api from '../api';
 import InputSpinner from 'react-native-input-spinner';
+import CartContext from '../context/CartContext';
 
 export default class Cart extends Component {
   constructor() {
@@ -147,18 +148,25 @@ export default class Cart extends Component {
                         </Text>
                       </View>
                       <View style={{ flex: 2 }}>
-                        <TouchableOpacity
-                          onPress={() => this.deleteCart(item.product.id)}
-                        >
-                          <Image
-                            style={{
-                              height: 60,
-                              width: 60,
-                              paddingTop: 40
-                            }}
-                            source={R.images.delete}
-                          />
-                        </TouchableOpacity>
+                        <CartContext.Consumer>
+                          {contextValue => (
+                            <TouchableOpacity
+                              onPress={() => {
+                                this.deleteCart(item.product.id);
+                                contextValue.onMinus();
+                              }}
+                            >
+                              <Image
+                                style={{
+                                  height: 60,
+                                  width: 60,
+                                  paddingTop: 40
+                                }}
+                                source={R.images.delete}
+                              />
+                            </TouchableOpacity>
+                          )}
+                        </CartContext.Consumer>
                       </View>
                     </View>
 

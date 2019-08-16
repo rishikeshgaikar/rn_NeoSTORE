@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -6,59 +6,61 @@ import {
   FlatList,
   TouchableOpacity,
   Image
-} from "react-native";
-import { RoundImage } from "../components";
-import style from "../Styles";
-import R from "../R";
-import AsyncStorage from "@react-native-community/async-storage";
+} from 'react-native';
+import { RoundImage } from '../components';
+import style from '../Styles';
+import R from '../R';
+import AsyncStorage from '@react-native-community/async-storage';
+import CartCount from './CartCount';
 
 export default class CustomDrawer extends Component {
   constructor() {
     super();
     this.state = {
       drawerData: [
-        { image: R.images.shopping_cart, title: "My Cart", action: "Cart" },
         {
           image: R.images.tables_icon,
-          title: "Tables",
-          action: "ProductList",
-          value: "1",
-          pcName: "Tables"
+          title: 'Tables',
+          action: 'ProductList',
+          value: '1',
+          pcName: 'Tables'
         },
         {
           image: R.images.sofa_icon,
-          title: "Sofas",
-          action: "ProductList",
-          value: "3",
-          pcName: "Sofas"
+          title: 'Sofas',
+          action: 'ProductList',
+          value: '3',
+          pcName: 'Sofas'
         },
         {
           image: R.images.chair_icon,
-          title: "Chairs",
-          action: "ProductList",
-          value: "2",
-          pcName: "Chairs"
+          title: 'Chairs',
+          action: 'ProductList',
+          value: '2',
+          pcName: 'Chairs'
         },
         {
           image: R.images.cupboard_icon,
-          title: "Cupboards",
-          action: "ProductList",
-          value: "4",
-          pcName: "Cupboards"
+          title: 'Cupboards',
+          action: 'ProductList',
+          value: '4',
+          pcName: 'Cupboards'
         },
         {
           image: R.images.username_icon,
-          title: "My Account",
-          action: "UserProfile"
+          title: 'My Account',
+          action: 'UserProfile'
         },
         {
           image: R.images.myorders_icon,
-          title: "My Orders",
-          action: "OrderList"
+          title: 'My Orders',
+          action: 'OrderList'
         }
       ],
-      email: "",
-      name: ""
+      at: '',
+      email: '',
+      name: '',
+      count: ''
     };
     this.getKey();
   }
@@ -70,24 +72,24 @@ export default class CustomDrawer extends Component {
         this.navigateLogin();
       }
     } catch (e) {
-      console.log("Error retrieving data" + e);
+      console.log('Error retrieving data' + e);
     }
-    console.log("Done.");
+    console.log('Done.');
   }
 
   async getKey() {
     try {
-      const email = await AsyncStorage.getItem("@NeoSTORE_email");
-      const fname = await AsyncStorage.getItem("@NeoSTORE_fname");
-      const lname = await AsyncStorage.getItem("@NeoSTORE_lname");
-      this.setState({ email: email, name: fname + " " + lname });
+      const email = await AsyncStorage.getItem('@NeoSTORE_email');
+      const fname = await AsyncStorage.getItem('@NeoSTORE_fname');
+      const lname = await AsyncStorage.getItem('@NeoSTORE_lname');
+      this.setState({ email: email, name: fname + ' ' + lname });
     } catch (error) {
-      console.log("Error retrieving data" + error);
+      console.log('Error retrieving data' + error);
     }
   }
 
   navigateLogin() {
-    this.props.navigation.navigate("SplashScreen");
+    this.props.navigation.navigate('SplashScreen');
   }
 
   render() {
@@ -96,8 +98,8 @@ export default class CustomDrawer extends Component {
         <RoundImage />
         <View
           style={{
-            justifyContent: "center",
-            alignItems: "center"
+            justifyContent: 'center',
+            alignItems: 'center'
           }}
         >
           <Text
@@ -113,10 +115,24 @@ export default class CustomDrawer extends Component {
             {this.state.email}
           </Text>
         </View>
-
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Cart')}
+        >
+          <View style={{ flexDirection: 'row', padding: 20 }}>
+            <View style={{ flex: 1 }}>
+              <Image source={R.images.shopping_cart} />
+            </View>
+            <View style={{ flex: 6 }}>
+              <Text style={style.whiteText}>My Cart</Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <CartCount />
+            </View>
+          </View>
+        </TouchableOpacity>
         <FlatList
           data={this.state.drawerData}
-          style={{ paddingTop: 20 }}
+          // style={{ paddingTop: 20 }}
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() =>
@@ -126,7 +142,7 @@ export default class CustomDrawer extends Component {
                 })
               }
             >
-              <View style={{ flexDirection: "row", padding: 20 }}>
+              <View style={{ flexDirection: 'row', padding: 20 }}>
                 <View style={{ flex: 1 }}>
                   <Image source={item.image} />
                 </View>
@@ -139,7 +155,7 @@ export default class CustomDrawer extends Component {
         />
 
         <TouchableOpacity onPress={() => this.userLogout()}>
-          <View style={{ flexDirection: "row", padding: 20 }}>
+          <View style={{ flexDirection: 'row', padding: 20 }}>
             <View style={{ flex: 1 }}>
               <Image source={R.images.logout_icon} />
             </View>
