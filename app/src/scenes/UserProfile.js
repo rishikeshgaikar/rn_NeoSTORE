@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -7,31 +7,44 @@ import {
   TouchableHighlight,
   ScrollView,
   StyleSheet
-} from "react-native";
+} from 'react-native';
 import {
   RoundButton,
   Spinner,
   Heading,
   Input,
   RoundImage
-} from "../components";
-import style from "../Styles";
-import R from "../R";
-import AsyncStorage from "@react-native-community/async-storage";
-import api from "../api";
+} from '../components';
+import style from '../Styles';
+import R from '../R';
+import AsyncStorage from '@react-native-community/async-storage';
+import api from '../api';
 
 export default class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      access_token: "",
+      access_token: '',
       dataSource: []
     };
   }
 
   componentDidMount() {
-    const method = "GET";
-    const url = "users/getUserData";
+    this.willFocusSubscription = this.props.navigation.addListener(
+      'willFocus',
+      () => {
+        this.getData();
+      }
+    );
+  }
+
+  componentWillUnmount() {
+    this.willFocusSubscription.remove();
+  }
+
+  getData() {
+    const method = 'GET';
+    const url = 'users/getUserData';
     return api(url, method, null)
       .then(responseJson => {
         this.setState({
@@ -48,9 +61,9 @@ export default class UserProfile extends Component {
     return (
       <ScrollView
         contentContainerStyle={{
-          justifyContent: "center",
+          justifyContent: 'center',
           backgroundColor: R.colors.r2,
-          height: "100%"
+          height: '100%'
         }}
       >
         <RoundImage />
@@ -96,12 +109,12 @@ export default class UserProfile extends Component {
         </View>
 
         <RoundButton
-          onPress={() => this.props.navigation.navigate("EditProfile")}
+          onPress={() => this.props.navigation.navigate('EditProfile')}
         >
           EDIT PROFILE
         </RoundButton>
         <RoundButton
-          onPress={() => this.props.navigation.navigate("ResetPassword")}
+          onPress={() => this.props.navigation.navigate('ResetPassword')}
         >
           RESET PASSWORD
         </RoundButton>
@@ -114,21 +127,21 @@ const inputStyle = StyleSheet.create({
   textinput: {
     color: R.colors.b1,
     fontSize: 20,
-    fontStyle: "normal",
+    fontStyle: 'normal',
     fontFamily: R.fonts.GothamBold
   },
   c: {
     marginTop: 10,
     marginHorizontal: 30,
-    flexDirection: "row",
+    flexDirection: 'row',
     borderRadius: 4,
     borderWidth: 2,
     borderColor: R.colors.b1
   },
   c1: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingVertical: 8
   },
   c2: {

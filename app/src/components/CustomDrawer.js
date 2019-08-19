@@ -12,6 +12,7 @@ import style from '../Styles';
 import R from '../R';
 import AsyncStorage from '@react-native-community/async-storage';
 import CartCount from './CartCount';
+import CartContext from '../context/CartContext';
 
 export default class CustomDrawer extends Component {
   constructor() {
@@ -102,18 +103,31 @@ export default class CustomDrawer extends Component {
             alignItems: 'center'
           }}
         >
-          <Text
-            style={{
-              color: R.colors.b1,
-              fontFamily: R.fonts.GothamBold,
-              fontSize: 25
+          <CartContext.Consumer>
+            {contextValue => {
+              return (
+                <React.Fragment>
+                  <Text
+                    style={{
+                      color: R.colors.b1,
+                      fontFamily: R.fonts.GothamBold,
+                      fontSize: 25
+                    }}
+                  >
+                    {contextValue.state.name}
+                  </Text>
+                  <Text
+                    style={{
+                      color: R.colors.b1,
+                      fontFamily: R.fonts.GothamBold
+                    }}
+                  >
+                    {contextValue.state.email}
+                  </Text>
+                </React.Fragment>
+              );
             }}
-          >
-            {this.state.name}
-          </Text>
-          <Text style={{ color: R.colors.b1, fontFamily: R.fonts.GothamBold }}>
-            {this.state.email}
-          </Text>
+          </CartContext.Consumer>
         </View>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Cart')}
