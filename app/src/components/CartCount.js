@@ -18,9 +18,9 @@ const CartCount = ({ params }) => {
           return (
             <Text
               style={{
-                fontSize: 20,
+                fontSize: 18,
                 paddingHorizontal: 10,
-                paddingTop: 2
+                paddingVertical: 3
               }}
             >
               {contextValue.state.count}

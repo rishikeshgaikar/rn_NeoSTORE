@@ -8,7 +8,6 @@ import {
   Image
 } from 'react-native';
 import { RoundImage } from '../components';
-import style from '../Styles';
 import R from '../R';
 import AsyncStorage from '@react-native-community/async-storage';
 import CartCount from './CartCount';
@@ -20,50 +19,66 @@ export default class CustomDrawer extends Component {
     this.state = {
       drawerData: [
         {
+          image: R.images.shopping_cart_icon,
+          title: ' My Cart',
+          action: 'Cart',
+          cartCount: '1'
+        },
+        {
           image: R.images.tables_icon,
           title: 'Tables',
           action: 'ProductList',
           value: '1',
-          pcName: 'Tables'
+          pcName: 'Tables',
+          cartCount: '0'
         },
         {
           image: R.images.sofa_icon,
           title: 'Sofas',
           action: 'ProductList',
           value: '3',
-          pcName: 'Sofas'
+          pcName: 'Sofas',
+          cartCount: '0'
         },
         {
           image: R.images.chair_icon,
           title: 'Chairs',
           action: 'ProductList',
           value: '2',
-          pcName: 'Chairs'
+          pcName: 'Chairs',
+          cartCount: '0'
         },
         {
           image: R.images.cupboard_icon,
           title: 'Cupboards',
           action: 'ProductList',
           value: '4',
-          pcName: 'Cupboards'
+          pcName: 'Cupboards',
+          cartCount: '0'
         },
         {
-          image: R.images.username_icon,
+          image: R.images.user_icon,
           title: 'My Account',
-          action: 'UserProfile'
+          action: 'UserProfile',
+          cartCount: '0'
         },
         {
           image: R.images.myorders_icon,
           title: 'My Orders',
-          action: 'OrderList'
+          action: 'OrderList',
+          cartCount: '0'
+        },
+        {
+          image: R.images.logout_icon,
+          title: 'Logout',
+          action: '',
+          cartCount: '0'
         }
       ],
-      at: '',
       email: '',
       name: '',
       count: ''
     };
-    this.getKey();
   }
 
   async userLogout() {
@@ -78,19 +93,18 @@ export default class CustomDrawer extends Component {
     console.log('Done.');
   }
 
-  async getKey() {
-    try {
-      const email = await AsyncStorage.getItem('@NeoSTORE_email');
-      const fname = await AsyncStorage.getItem('@NeoSTORE_fname');
-      const lname = await AsyncStorage.getItem('@NeoSTORE_lname');
-      this.setState({ email: email, name: fname + ' ' + lname });
-    } catch (error) {
-      console.log('Error retrieving data' + error);
-    }
-  }
-
   navigateLogin() {
     this.props.navigation.navigate('SplashScreen');
+  }
+
+  displayCartCount(cc) {
+    if (cc == 1) {
+      return (
+        <View style={{ flex: 1, paddingTop: 5 }}>
+          <CartCount />
+        </View>
+      );
+    }
   }
 
   render() {
@@ -119,7 +133,8 @@ export default class CustomDrawer extends Component {
                   <Text
                     style={{
                       color: R.colors.b1,
-                      fontFamily: R.fonts.GothamBold
+                      fontSize: 20,
+                      paddingVertical: 5
                     }}
                   >
                     {contextValue.state.email}
@@ -129,55 +144,47 @@ export default class CustomDrawer extends Component {
             }}
           </CartContext.Consumer>
         </View>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Cart')}
-        >
-          <View style={{ flexDirection: 'row', padding: 20 }}>
-            <View style={{ flex: 1 }}>
-              <Image source={R.images.shopping_cart} />
-            </View>
-            <View style={{ flex: 6 }}>
-              <Text style={style.whiteText}>My Cart</Text>
-            </View>
-            <View style={{ flex: 1 }}>
-              <CartCount />
-            </View>
-          </View>
-        </TouchableOpacity>
+
         <FlatList
           data={this.state.drawerData}
-          // style={{ paddingTop: 20 }}
           renderItem={({ item }) => (
             <TouchableOpacity
-              onPress={() =>
+              onPress={() => {
+                if (item.title == 'Logout') {
+                  this.userLogout();
+                }
                 this.props.navigation.navigate(item.action, {
                   pcID: item.value,
                   pcName: item.pcName
-                })
-              }
+                });
+              }}
             >
               <View style={{ flexDirection: 'row', padding: 20 }}>
                 <View style={{ flex: 1 }}>
-                  <Image source={item.image} />
+                  <Image
+                    source={item.image}
+                    style={{ height: 40, width: 40 }}
+                  />
                 </View>
                 <View style={{ flex: 5 }}>
-                  <Text style={style.whiteText}>{item.title}</Text>
+                  <Text
+                    style={{
+                      color: R.colors.b1,
+                      fontWeight: 'bold',
+                      fontSize: 18,
+                      fontStyle: 'normal',
+                      paddingTop: 10,
+                      paddingLeft: 20
+                    }}
+                  >
+                    {item.title}
+                  </Text>
                 </View>
+                {this.displayCartCount(item.cartCount)}
               </View>
             </TouchableOpacity>
           )}
         />
-
-        <TouchableOpacity onPress={() => this.userLogout()}>
-          <View style={{ flexDirection: 'row', padding: 20 }}>
-            <View style={{ flex: 1 }}>
-              <Image source={R.images.logout_icon} />
-            </View>
-            <View style={{ flex: 5 }}>
-              <Text style={style.whiteText}>Logout</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
       </SafeAreaView>
     );
   }
