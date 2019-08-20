@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* NeoSTORETests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* NeoSTORETests.m */; };
 		0B9C47B360756AF0CCCE2D81 /* libPods-NeoSTORE.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CD9E272ED3FE7A0C3D6924 /* libPods-NeoSTORE.a */; };
@@ -17,11 +18,11 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* NeoSTORETests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* NeoSTORETests.m */; };
 		3CF249E4D113893DE8575855 /* libPods-NeoSTORE-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DD4701756EB2683B36BD019A /* libPods-NeoSTORE-tvOSTests.a */; };
+		8391979D99BA4C46BBD80DD6 /* Gotham-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1211887484964771B81487A3 /* Gotham-Bold.otf */; };
+		95698061A05541139498005D /* Gotham-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5E7E74E5F21F49F5AD9A8008 /* Gotham-Light.otf */; };
 		CBB696CCB27CB3A521F214F9 /* libPods-NeoSTORE-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D589772130E3B20F2E46AA5E /* libPods-NeoSTORE-tvOS.a */; };
 		DF76C385D17D2E032F3AE401 /* libPods-NeoSTORETests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C8098E39683BAC8460C1135B /* libPods-NeoSTORETests.a */; };
 		EAC15D0FA62A476B9018A7F2 /* Gotham-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = FA0836452DC74BB08D1449B9 /* Gotham-Black.otf */; };
-		8391979D99BA4C46BBD80DD6 /* Gotham-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1211887484964771B81487A3 /* Gotham-Bold.otf */; };
-		95698061A05541139498005D /* Gotham-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5E7E74E5F21F49F5AD9A8008 /* Gotham-Light.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* NeoSTORETests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NeoSTORETests.m; sourceTree = "<group>"; };
 		020829FE4C80858FC150D11A /* Pods-NeoSTORE-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeoSTORE-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-NeoSTORE-tvOS/Pods-NeoSTORE-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		1211887484964771B81487A3 /* Gotham-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham-Bold.otf"; path = "../app/res/fonts/Gotham-Bold.otf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* NeoSTORE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NeoSTORE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = NeoSTORE/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = NeoSTORE/AppDelegate.m; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 		2D02E4901E0B4A5D006451C7 /* NeoSTORE-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NeoSTORE-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4244BFB14017815CC77858C2 /* Pods-NeoSTORE-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeoSTORE-tvOS.release.xcconfig"; path = "Target Support Files/Pods-NeoSTORE-tvOS/Pods-NeoSTORE-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		4C32A62403F35344CFB29A4E /* Pods-NeoSTORETests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeoSTORETests.release.xcconfig"; path = "Target Support Files/Pods-NeoSTORETests/Pods-NeoSTORETests.release.xcconfig"; sourceTree = "<group>"; };
+		5E7E74E5F21F49F5AD9A8008 /* Gotham-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham-Light.otf"; path = "../app/res/fonts/Gotham-Light.otf"; sourceTree = "<group>"; };
 		A53EA688D35F907E2B42B721 /* Pods-NeoSTORE-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeoSTORE-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-NeoSTORE-tvOSTests/Pods-NeoSTORE-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		C1CD9E272ED3FE7A0C3D6924 /* libPods-NeoSTORE.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NeoSTORE.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8098E39683BAC8460C1135B /* libPods-NeoSTORETests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NeoSTORETests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,9 +72,7 @@
 		EB32B060A1C034009EEFE543 /* Pods-NeoSTORE-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeoSTORE-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-NeoSTORE-tvOSTests/Pods-NeoSTORE-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		FA0836452DC74BB08D1449B9 /* Gotham-Black.otf */ = {isa = PBXFileReference; name = "Gotham-Black.otf"; path = "../app/res/fonts/Gotham-Black.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		1211887484964771B81487A3 /* Gotham-Bold.otf */ = {isa = PBXFileReference; name = "Gotham-Bold.otf"; path = "../app/res/fonts/Gotham-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		5E7E74E5F21F49F5AD9A8008 /* Gotham-Light.otf */ = {isa = PBXFileReference; name = "Gotham-Light.otf"; path = "../app/res/fonts/Gotham-Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FA0836452DC74BB08D1449B9 /* Gotham-Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham-Black.otf"; path = "../app/res/fonts/Gotham-Black.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,7 +167,6 @@
 				1E411BB7286A3FD644BC830D /* Pods-NeoSTORETests.debug.xcconfig */,
 				4C32A62403F35344CFB29A4E /* Pods-NeoSTORETests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -205,7 +205,7 @@
 			sourceTree = "<group>";
 		};
 		8CA4064F19C4494DAAEE9253 /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 				FA0836452DC74BB08D1449B9 /* Gotham-Black.otf */,
 				1211887484964771B81487A3 /* Gotham-Bold.otf */,
@@ -213,7 +213,6 @@
 			);
 			name = Resources;
 			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -325,6 +324,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -657,6 +657,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = NeoSTORE;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -676,6 +677,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = NeoSTORE;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
