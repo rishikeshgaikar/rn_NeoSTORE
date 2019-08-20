@@ -104,9 +104,9 @@ export default class ItemDetails extends Component {
     this.userRating();
   }
 
-  bnbuttonClick() {
+  bnbuttonClick(cc) {
     this.setquantityModalVisible(!this.state.quantityModalVisible);
-    this.addToCart();
+    this.addToCart(cc);
   }
 
   setratingModalVisible(visible) {
@@ -139,7 +139,7 @@ export default class ItemDetails extends Component {
       });
   }
 
-  addToCart() {
+  addToCart(cc) {
     const { navigation } = this.props;
     const quantity = this.state.quantity;
     console.log(this.state.quantity);
@@ -149,6 +149,7 @@ export default class ItemDetails extends Component {
     const url = 'addToCart';
     return api(url, method, body)
       .then(responseJson => {
+        cc.getUpdate();
         console.log(responseJson);
       })
       .catch(error => {
@@ -353,8 +354,7 @@ export default class ItemDetails extends Component {
                     {contextValue => (
                       <RedButton
                         onPress={() => {
-                          this.bnbuttonClick();
-                          contextValue.onPlus();
+                          this.bnbuttonClick(contextValue);
                         }}
                       >
                         ADD TO CART

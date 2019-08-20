@@ -67,7 +67,7 @@ export default class Cart extends Component {
       });
   }
 
-  deleteCart(id) {
+  deleteCart(id, cc) {
     const product_id = id;
     const body = `product_id=${product_id}`;
     const method = 'POST';
@@ -78,6 +78,7 @@ export default class Cart extends Component {
         if (responseJson.status == 200) {
           console.log(responseJson.status);
           this.showCart();
+          cc.getUpdate();
         }
       })
       .catch(error => {
@@ -152,8 +153,7 @@ export default class Cart extends Component {
                           {contextValue => (
                             <TouchableOpacity
                               onPress={() => {
-                                this.deleteCart(item.product.id);
-                                contextValue.onMinus();
+                                this.deleteCart(item.product.id, contextValue);
                               }}
                             >
                               <Image

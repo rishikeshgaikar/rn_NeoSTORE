@@ -12,48 +12,25 @@ export default class CartProvider extends Component {
       name: null
     };
     this.getUpdate();
-    this.getCount();
   }
-
-  getCount() {
-    const method = 'GET';
-    const url = 'users/getUserData';
-    return api(url, method, null)
-      .then(responseJson => {
-        this.setState({
-          count: responseJson.data.total_carts
-        });
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-
-  PlusCount = () => {
-    this.setState({
-      count: this.state.count + 1
-    });
-  };
-  MinusCount = () => {
-    this.setState({
-      count: this.state.count - 1
-    });
-  };
-
   getUpdate = () => {
     const method = 'GET';
     const url = 'users/getUserData';
     return api(url, method, null)
       .then(responseJson => {
-        this.setState({
-          email: responseJson.data.user_data.email,
-          name:
-            '' +
-            responseJson.data.user_data.first_name +
-            ' ' +
-            responseJson.data.user_data.last_name
-        });
-        console.log('AD');
+        if (responseJson.status == 200) {
+          console.log(responseJson.data.total_carts);
+          this.setState({
+            count: responseJson.data.total_carts,
+            email: responseJson.data.user_data.email,
+            name:
+              '' +
+              responseJson.data.user_data.first_name +
+              ' ' +
+              responseJson.data.user_data.last_name
+          });
+          console.log('test' + this.state.count);
+        }
       })
       .catch(error => {
         console.error(error);
@@ -65,8 +42,8 @@ export default class CartProvider extends Component {
       <CartContext.Provider
         value={{
           state: this.state,
-          onPlus: this.PlusCount,
-          onMinus: this.MinusCount,
+          onPlus: this.getUpdate,
+          onMinus: this.getUpdate,
           getUpdate: this.getUpdate
         }}
       >
