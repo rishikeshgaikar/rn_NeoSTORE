@@ -1,5 +1,6 @@
-import { View, TouchableWithoutFeedback, Image } from "react-native";
-import React, { Component } from "react";
+import { View, TouchableWithoutFeedback, Image } from 'react-native';
+import React, { Component } from 'react';
+import R from '../R';
 
 class Rating extends Component {
   constructor(props) {
@@ -11,10 +12,10 @@ class Rating extends Component {
       iconHeight: this.props.iconHeight ? this.props.iconHeight : 36,
       iconSelected: this.props.iconSelected
         ? this.props.iconSelected
-        : require("../../res/images/airbnb-star-selected.png"),
+        : R.images.star_check,
       iconUnselected: this.props.iconUnselected
         ? this.props.iconUnselected
-        : require("../../res/images/airbnb-star-unselected.png"),
+        : R.images.star_unchek,
       editable: this.props.editable != null ? this.props.editable : true
     };
   }
@@ -55,7 +56,7 @@ class Rating extends Component {
       );
     }
     return (
-      <View style={[this.props.style, { flexDirection: "row" }]}>{icons}</View>
+      <View style={[this.props.style, { flexDirection: 'row' }]}>{icons}</View>
     );
   }
 }

@@ -268,8 +268,8 @@ export default class ItemDetails extends Component {
                   max={5}
                   iconWidth={24}
                   iconHeight={24}
-                  iconSelected={require('../../res/images/airbnb-star-selected.png')}
-                  iconUnselected={require('../../res/images/airbnb-star-unselected.png')}
+                  iconSelected={R.images.star_check}
+                  iconUnselected={R.images.star_unchek}
                   onRate={rating => this.setState({ rating: rating })}
                 />
                 <View style={{ width: '80%' }}>
