@@ -1,31 +1,31 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   View,
   Text,
   StatusBar,
-  Button,
   TouchableOpacity,
   ScrollView,
-  Image
-} from "react-native";
-import { RoundButton, Heading, Input, Spinner } from "../components";
-import style from "../Styles";
-import R from "../R";
-import AsyncStorage from "@react-native-community/async-storage";
-import api from "../api";
+  Image,
+  SafeAreaView
+} from 'react-native';
+import { RoundButton, Heading, Input, Spinner } from '../components';
+import style from '../Styles';
+import R from '../R';
+import AsyncStorage from '@react-native-community/async-storage';
+import api from '../api';
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dataSource: [],
-      first_name: "",
-      last_name: "",
-      email: "",
-      password: "",
-      confirm_password: "",
-      gender: "M",
-      phone_no: "",
+      first_name: '',
+      last_name: '',
+      email: '',
+      password: '',
+      confirm_password: '',
+      gender: 'M',
+      phone_no: '',
       M: R.images.chkn,
       F: R.images.chkn,
       checkButtonCondition: false,
@@ -42,9 +42,9 @@ export default class Login extends Component {
       const confirm_password = this.state.confirm_password;
       const gender = this.state.gender;
       const phone_no = this.state.phone_no;
-      const method = "POST";
+      const method = 'POST';
       const body = `first_name=${first_name}&last_name=${last_name}&email=${email}&password=${password}&confirm_password=${confirm_password}&phone_no=${phone_no}&gender=${gender}`;
-      const url = "users/register";
+      const url = 'users/register';
       return api(url, method, body)
         .then(responseJson => {
           this.setState({ dataSource: responseJson }, function() {}),
@@ -54,7 +54,7 @@ export default class Login extends Component {
           console.error(error);
         });
     } else {
-      alert("Please Check Terms & Conditions");
+      alert('Please Check Terms & Conditions');
     }
   }
 
@@ -65,20 +65,20 @@ export default class Login extends Component {
         isLoading: !this.state.isLoading
       }),
         this.saveKey(
-          "" + this.state.dataSource.data.first_name,
-          "" + this.state.dataSource.data.last_name,
-          "" + this.state.dataSource.data.email,
-          "" + this.state.dataSource.data.access_token
+          '' + this.state.dataSource.data.first_name,
+          '' + this.state.dataSource.data.last_name,
+          '' + this.state.dataSource.data.email,
+          '' + this.state.dataSource.data.access_token
         ),
         setTimeout(function() {
-          navigate("Home");
+          navigate('Home');
         }, 2000);
     } else if (this.state.dataSource.status == 401) {
-      alert("" + this.state.dataSource.user_msg);
+      alert('' + this.state.dataSource.user_msg);
     } else if (this.state.dataSource.status == 400) {
-      alert("" + this.state.dataSource.user_msg);
+      alert('' + this.state.dataSource.user_msg);
     } else {
-      alert("Something Went Wrong");
+      alert('Something Went Wrong');
     }
   }
 
@@ -93,17 +93,17 @@ export default class Login extends Component {
   }
 
   async saveKey(value1, value2, value3, value4) {
-    const fname = ["@NeoSTORE_fname", value1];
-    const lname = ["@NeoSTORE_lname", value2];
-    const email = ["@NeoSTORE_email", value3];
-    const access_token = ["@NeoSTORE_at", value4];
+    const fname = ['@NeoSTORE_fname', value1];
+    const lname = ['@NeoSTORE_lname', value2];
+    const email = ['@NeoSTORE_email', value3];
+    const access_token = ['@NeoSTORE_at', value4];
     try {
       await AsyncStorage.multiSet([fname, lname, email, access_token]);
     } catch (e) {
-      console.log("Error retrieving data" + error);
+      console.log('Error retrieving data' + error);
     }
 
-    console.log("Done.");
+    console.log('Done.');
   }
 
   changeCheckButton() {
@@ -113,21 +113,21 @@ export default class Login extends Component {
     switch (n) {
       case 0:
         this.setState({
-          gender: "M",
+          gender: 'M',
           M: R.images.chky,
           F: R.images.chkn
         });
         break;
       case 1:
         this.setState({
-          gender: "F",
+          gender: 'F',
           M: R.images.chkn,
           F: R.images.chky
         });
         break;
       default:
         this.setState({
-          gender: "M",
+          gender: 'M',
           M: R.images.chky,
           F: R.images.chkn
         });
@@ -144,39 +144,39 @@ export default class Login extends Component {
 
   render() {
     return (
-      <View style={style.redContainer}>
-        <StatusBar backgroundColor={R.colors.r2} />
+      <SafeAreaView style={style.redContainer}>
         <ScrollView>
+          <StatusBar backgroundColor={R.colors.r2} />
           <Heading>NeoSTORE</Heading>
           <Input
             image={R.images.username_icon}
-            placeholder="First Name"
+            placeholder='First Name'
             placeholderColor={R.colors.b1}
             onChangeText={first_name => this.setState({ first_name })}
           />
           <Input
             image={R.images.username_icon}
-            placeholder="Last Name"
+            placeholder='Last Name'
             placeholderColor={R.colors.b1}
             onChangeText={last_name => this.setState({ last_name })}
           />
           <Input
             image={R.images.email_icon}
-            placeholder="Email"
+            placeholder='Email'
             placeholderColor={R.colors.b1}
             onChangeText={email => this.setState({ email })}
-            keyboardType="email-address"
+            keyboardType='email-address'
           />
           <Input
             image={R.images.password_icon}
-            placeholder="Password"
+            placeholder='Password'
             placeholderColor={R.colors.b1}
             onChangeText={password => this.setState({ password })}
             secureTextEntry={true}
           />
           <Input
             image={R.images.password_icon}
-            placeholder="Confirm Password"
+            placeholder='Confirm Password'
             placeholderColor={R.colors.b1}
             onChangeText={confirm_password =>
               this.setState({ confirm_password })
@@ -185,7 +185,7 @@ export default class Login extends Component {
           />
           <View
             style={{
-              flexDirection: "row",
+              flexDirection: 'row',
               paddingHorizontal: 30,
               paddingTop: 20,
               paddingBottom: 10
@@ -209,14 +209,14 @@ export default class Login extends Component {
           </View>
           <Input
             image={R.images.cellphone}
-            placeholder="Phone Number"
+            placeholder='Phone Number'
             placeholderColor={R.colors.b1}
             onChangeText={phone_no => this.setState({ phone_no })}
-            keyboardType="number-pad"
+            keyboardType='number-pad'
           />
           <View
             style={{
-              flexDirection: "row",
+              flexDirection: 'row',
               paddingHorizontal: 30,
               paddingTop: 20
             }}
@@ -237,7 +237,7 @@ export default class Login extends Component {
           </RoundButton>
           {this.showSpinner()}
         </ScrollView>
-      </View>
+      </SafeAreaView>
     );
   }
 }

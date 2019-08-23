@@ -52,6 +52,7 @@ const Entrystack = createStackNavigator(
       headerStyle: {
         backgroundColor: R.colors.r2
       },
+      headerBackTitle: null,
       headerTintColor: R.colors.b1,
       headerTitleStyle: {
         fontWeight: 'bold',

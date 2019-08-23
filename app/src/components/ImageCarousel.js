@@ -35,8 +35,6 @@ class ImageCarousel extends Component {
   setSelectedIndex = event => {
     const contentOffset = event.nativeEvent.contentOffset;
     const viewSize = event.nativeEvent.layoutMeasurement;
-
-    // Divide the horizontal offset by the width of the view to see which page is visible
     const selectedIndex = Math.floor(contentOffset.x / viewSize.width);
     this.setState({ selectedIndex });
   };
@@ -55,10 +53,7 @@ class ImageCarousel extends Component {
   render() {
     const images = this.props.image;
     const il = this.props.image.length - 1;
-    // console.log("Length: " + il);
-    // console.log(images);
     const { selectedIndex } = this.state;
-    // console.log(selectedIndex);
 
     return (
       <View style={{ height: '100%', width: '100%' }}>
@@ -72,7 +67,6 @@ class ImageCarousel extends Component {
           {images.map(image => (
             <Image
               style={styles.backgroundImage}
-              // source={{ uri: image }}
               source={image.key}
               key={image.key}
             />

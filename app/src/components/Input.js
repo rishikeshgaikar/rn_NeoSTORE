@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image, TextInput, StyleSheet } from 'react-native';
+import { View, Image, TextInput, StyleSheet } from 'react-native';
 import R from '../R';
 const Input = ({
   image,

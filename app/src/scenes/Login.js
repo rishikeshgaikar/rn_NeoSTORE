@@ -3,9 +3,9 @@ import {
   View,
   Text,
   StatusBar,
-  Image,
   TouchableHighlight,
-  Button
+  SafeAreaView,
+  ScrollView
 } from 'react-native';
 import { RoundButton, Spinner, Heading, Input } from '../components';
 import style from '../Styles';
@@ -87,72 +87,61 @@ export default class Login extends Component {
 
   render() {
     return (
-      <View style={style.redContainer}>
-        <StatusBar backgroundColor={R.colors.r2} />
-        <View style={{ flex: 10, justifyContent: 'center' }}>
-          <Heading>NeoSTORE</Heading>
-          <Input
-            image={R.images.username_icon}
-            placeholder='Username'
-            placeholderColor={R.colors.b1}
-            onChangeText={username => this.setState({ username })}
-            keyboardType='email-address'
-          />
-          <Input
-            image={R.images.password_icon}
-            placeholder='Password'
-            placeholderColor={R.colors.b1}
-            onChangeText={password => this.setState({ password })}
-            secureTextEntry={true}
-          />
-          <CartContext.Consumer>
-            {contextValue => (
-              <RoundButton
-                disabled={this.state.isLoading}
-                onPress={() => this.Login(contextValue)}
-              >
-                LOGIN
-              </RoundButton>
-            )}
-          </CartContext.Consumer>
+      <SafeAreaView style={style.redContainer}>
+        <ScrollView contentContainerStyle={style.redContainer}>
+          <StatusBar backgroundColor={R.colors.r2} />
+          <View style={{ flex: 8, justifyContent: 'center' }}>
+            <Heading>NeoSTORE</Heading>
+            <Input
+              image={R.images.username_icon}
+              placeholder='Username'
+              placeholderColor={R.colors.b1}
+              onChangeText={username => this.setState({ username })}
+              keyboardType='email-address'
+            />
+            <Input
+              image={R.images.password_icon}
+              placeholder='Password'
+              placeholderColor={R.colors.b1}
+              onChangeText={password => this.setState({ password })}
+              secureTextEntry={true}
+            />
+            <CartContext.Consumer>
+              {contextValue => (
+                <RoundButton
+                  disabled={this.state.isLoading}
+                  onPress={() => this.Login(contextValue)}
+                >
+                  LOGIN
+                </RoundButton>
+              )}
+            </CartContext.Consumer>
 
-          <TouchableHighlight
-            underlayColor='transparent'
-            style={{ alignItems: 'center' }}
-            disabled={this.state.isLoading}
-            onPress={() => this.props.navigation.navigate('ForgotPassword')}
-          >
-            <Text style={style.whiteText}>FORGOT PASSWORD?</Text>
-          </TouchableHighlight>
-          {this.showSpinner()}
-        </View>
-        <View style={{ flex: 1 }}>
-          <TouchableHighlight
-            disabled={this.state.isLoading}
-            underlayColor='transparent'
-            onPress={() => this.props.navigation.navigate('Register')}
-          >
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                padding: 20
-              }}
+            <TouchableHighlight
+              underlayColor='transparent'
+              style={{ alignItems: 'center' }}
+              disabled={this.state.isLoading}
+              onPress={() => this.props.navigation.navigate('ForgotPassword')}
             >
-              <View style={{ flex: 8 }}>
-                <Text style={style.whiteText}>DO YOU HAVE AN ACCOUNT ?</Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <Image
-                  source={R.images.Plus}
-                  style={{ height: 20, width: 20 }}
-                />
-              </View>
-            </View>
-          </TouchableHighlight>
-        </View>
-      </View>
+              <Text style={style.whiteText}>FORGOT PASSWORD?</Text>
+            </TouchableHighlight>
+            {this.showSpinner()}
+          </View>
+          <View
+            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+          >
+            <TouchableHighlight
+              disabled={this.state.isLoading}
+              underlayColor='transparent'
+              onPress={() => this.props.navigation.navigate('Register')}
+            >
+              <Text style={style.whiteText}>
+                DO YOU HAVE AN ACCOUNT ? SIGN UP HERE !
+              </Text>
+            </TouchableHighlight>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

@@ -1,5 +1,5 @@
-import { View, TouchableWithoutFeedback, Image } from 'react-native';
 import React, { Component } from 'react';
+import { View, TouchableWithoutFeedback, Image } from 'react-native';
 import R from '../R';
 
 class Rating extends Component {

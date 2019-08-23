@@ -5,23 +5,23 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
-  Picker
+  SafeAreaView
 } from 'react-native';
+import { RedButton, Card, Spinner } from '../components';
 import R from '../R';
-import { RedButton } from '../components';
 import api from '../api';
-import InputSpinner from 'react-native-input-spinner';
 import CartContext from '../context/CartContext';
+import InputSpinner from 'react-native-input-spinner';
 
 export default class Cart extends Component {
   constructor() {
     super();
     this.state = {
-      access_token: '',
       dataSource: [],
       cartCount: '',
       cartTotal: '',
-      pickerValue: null
+      pickerValue: null,
+      isLoading: true
     };
   }
 
@@ -34,14 +34,14 @@ export default class Cart extends Component {
     const method = 'GET';
     return api(url, method, null)
       .then(responseJson => {
-        this.setState(
-          {
+        if (responseJson.status == 200) {
+          this.setState({
             dataSource: responseJson.data,
             cartCount: responseJson.count,
-            cartTotal: responseJson.total
-          },
-          function() {}
-        );
+            cartTotal: responseJson.total,
+            isLoading: !this.state.isLoading
+          });
+        }
       })
       .catch(error => {
         console.error(error);
@@ -56,9 +56,10 @@ export default class Cart extends Component {
     const url = 'editCart';
     api(url, method, body)
       .then(responseJson => {
-        console.log(responseJson);
         if (responseJson.status == 200) {
-          console.log(responseJson.status);
+          this.setState({
+            isLoading: !this.state.isLoading
+          });
           this.showCart();
         }
       })
@@ -74,9 +75,10 @@ export default class Cart extends Component {
     const url = 'deleteCart';
     api(url, method, body)
       .then(responseJson => {
-        console.log(responseJson);
         if (responseJson.status == 200) {
-          console.log(responseJson.status);
+          this.setState({
+            isLoading: !this.state.isLoading
+          });
           this.showCart();
           cc.getUpdate();
         }
@@ -99,8 +101,7 @@ export default class Cart extends Component {
         }
         onChange={value => {
           this.setState({ ['pickValue' + iVal]: value });
-          console.log('selected value' + value);
-          console.log('itemid:' + itemId);
+
           this.editCart(itemId, value);
         }}
         onMax={() => {
@@ -109,164 +110,201 @@ export default class Cart extends Component {
         onMin={() => {
           alert('Atleast 1 item should be Selected.');
         }}
-        style={{ height: 80, width: 130, paddingTop: 10 }}
-        buttonStyle={{ height: 40, width: 40 }}
-        inputStyle={{ fontSize: 18, fontFamily: R.fonts.GothamBook }}
+        style={{
+          height: 70,
+          width: 130,
+          paddingTop: 5
+        }}
+        buttonStyle={{ height: 36, width: 36 }}
+        inputStyle={{
+          fontSize: 16,
+          fontFamily: R.fonts.GothamBook,
+          paddingBottom: 10
+        }}
       />
     );
   }
 
   render() {
-    if (this.state.cartCount > 0) {
+    if (this.state.isLoading) {
       return (
-        <View style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1 }}>
+          <View
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          >
+            <Spinner />
+          </View>
+        </SafeAreaView>
+      );
+    } else if (this.state.cartCount > 0) {
+      return (
+        <SafeAreaView style={{ flex: 1 }}>
           <View style={{ flex: 9 }}>
             <FlatList
               data={this.state.dataSource}
               extraData={{ value: [this.state.pickerValue] }}
               renderItem={({ item, index }) => (
-                <View style={{ flexDirection: 'row', marginVertical: 15 }}>
-                  <View style={{ flex: 1, padding: 30 }}>
-                    <Image
-                      style={{ width: 75, height: 75 }}
-                      source={{ uri: item.product.product_images }}
-                    />
+                <Card backgroundColor={R.colors.b2}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                    >
+                      <Image
+                        style={{ width: 80, height: 80 }}
+                        source={{ uri: item.product.product_images }}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        flex: 3,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                        paddingLeft: 10
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: R.fonts.GothamBook,
+                          fontSize: 20,
+                          fontWeight: 'bold'
+                        }}
+                      >
+                        {item.product.name}
+                      </Text>
+                      <Text
+                        style={{
+                          fontFamily: R.fonts.GothamMedium,
+                          fontSize: 15
+                        }}
+                      >
+                        Category: {item.product.product_category}
+                      </Text>
+                      <Text
+                        style={{
+                          color: R.colors.r2,
+                          fontSize: 20,
+                          fontFamily: R.fonts.GothamBook,
+                          paddingVertical: 10
+                        }}
+                      >
+                        Rs. {item.product.cost}
+                      </Text>
+                    </View>
                   </View>
-                  <View style={{ flex: 4 }}>
-                    <View style={{ flexDirection: 'row' }}>
-                      <View style={{ flex: 4 }}>
-                        <Text
-                          style={{
-                            fontFamily: R.fonts.GothamBook,
-                            fontSize: 20,
-                            fontWeight: 'bold'
-                          }}
-                        >
-                          {item.product.name}
-                        </Text>
-                        <Text style={{ fontStyle: 'italic' }}>
-                          Category: {item.product.product_category}
-                        </Text>
-                      </View>
-                      <View style={{ flex: 2 }}>
-                        <CartContext.Consumer>
-                          {contextValue => (
-                            <TouchableOpacity
-                              onPress={() => {
-                                this.deleteCart(item.product.id, contextValue);
+                  <View
+                    style={{
+                      marginTop: 10,
+                      borderWidth: 1,
+                      borderColor: R.colors.b3,
+                      width: '100%'
+                    }}
+                  />
+
+                  <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flex: 1, height: 40 }}>
+                      {this.renderPicker(item.product_id, item.quantity, index)}
+                    </View>
+
+                    <View style={{ flex: 2 }}>
+                      <CartContext.Consumer>
+                        {contextValue => (
+                          <TouchableOpacity
+                            onPress={() => {
+                              this.deleteCart(item.product.id, contextValue);
+                            }}
+                          >
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'center'
                               }}
                             >
                               <Image
                                 style={{
-                                  height: 60,
-                                  width: 60,
-                                  paddingTop: 40
+                                  height: 50,
+                                  width: 50
                                 }}
                                 source={R.images.delete}
                               />
-                            </TouchableOpacity>
-                          )}
-                        </CartContext.Consumer>
-                      </View>
-                    </View>
-
-                    <View style={{ flexDirection: 'row' }}>
-                      <View style={{ flex: 4 }}>
-                        {this.renderPicker(
-                          item.product_id,
-                          item.quantity,
-                          index
+                              <Text>REMOVE</Text>
+                            </View>
+                          </TouchableOpacity>
                         )}
-                      </View>
-                      <View style={{ flex: 3 }}>
-                        <Text
-                          style={{
-                            color: R.colors.r2,
-                            fontSize: 20,
-                            fontFamily: R.fonts.GothamBook,
-                            fontWeight: 'bold',
-                            paddingTop: 10
-                          }}
-                        >
-                          Rs. {item.product.cost}
-                        </Text>
-                      </View>
+                      </CartContext.Consumer>
                     </View>
                   </View>
-                </View>
+                </Card>
               )}
               keyExtractor={(item, index) => index.toString()}
             />
           </View>
-          <View style={{ flex: 1, marginHorizontal: 20, flexDirection: 'row' }}>
-            <View style={{ flex: 4, paddingLeft: 20 }}>
-              <Text
-                style={{
-                  fontFamily: R.fonts.GothamBook,
-                  fontSize: 20,
-                  fontWeight: 'bold'
-                }}
-              >
-                Total items:
-              </Text>
-              <Text
-                style={{
-                  fontFamily: R.fonts.GothamBook,
-                  fontSize: 20,
-                  fontWeight: 'bold'
-                }}
-              >
-                Grand Total:
-              </Text>
-            </View>
-            <View style={{ flex: 2, paddingLeft: 20 }}>
-              <Text
-                style={{
-                  fontFamily: R.fonts.GothamBook,
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                  color: R.colors.r2
-                }}
-              >
-                {this.state.cartCount}
-              </Text>
-              <Text
-                style={{
-                  fontFamily: R.fonts.GothamBook,
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                  color: R.colors.r2
-                }}
-              >
-                Rs. {this.state.cartTotal}
-              </Text>
-            </View>
+          <View
+            style={{
+              flex: 1,
+              paddingHorizontal: 30,
+              justifyContent: 'space-around'
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: R.fonts.GothamBook,
+                fontSize: 20,
+                fontWeight: 'bold'
+              }}
+            >
+              Total Items: {this.state.cartCount}
+            </Text>
+            <Text
+              style={{
+                fontFamily: R.fonts.GothamBook,
+                fontSize: 20,
+                fontWeight: 'bold'
+              }}
+            >
+              Grand Total: Rs. {this.state.cartTotal}
+            </Text>
           </View>
           <View style={{ flex: 1, marginHorizontal: 20 }}>
             <RedButton
               onPress={() => this.props.navigation.navigate('AddressSelection')}
             >
-              ORDER NOW
+              PROCEED TO CHECKOUT
             </RedButton>
           </View>
-        </View>
+        </SafeAreaView>
       );
     } else {
       return (
-        <View
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-        >
-          <Image source={R.images.empty_cart} />
-          <Text
-            style={{
-              fontSize: 20,
-              fontFamily: R.fonts.GothamBook,
-              paddingTop: 20
-            }}
+        <SafeAreaView style={{ flex: 1 }}>
+          <View
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
           >
-            YOUR CART IS EMPTY!!
-          </Text>
-        </View>
+            <Image source={R.images.empty_cart} />
+            <Text
+              style={{
+                fontSize: 20,
+                fontFamily: R.fonts.GothamBook,
+                padding: 20
+              }}
+            >
+              YOUR CART IS EMPTY!!
+            </Text>
+            <RedButton onPress={() => this.props.navigation.navigate('Home')}>
+              Shop Now
+            </RedButton>
+          </View>
+        </SafeAreaView>
       );
     }
   }

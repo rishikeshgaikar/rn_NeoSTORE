@@ -2,19 +2,12 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  StatusBar,
   Image,
-  TouchableHighlight,
   ScrollView,
-  StyleSheet
+  StyleSheet,
+  SafeAreaView
 } from 'react-native';
-import {
-  RoundButton,
-  Spinner,
-  Heading,
-  Input,
-  RoundImage
-} from '../components';
+import { RoundButton, RoundImage } from '../components';
 import style from '../Styles';
 import R from '../R';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -59,66 +52,62 @@ export default class UserProfile extends Component {
   render() {
     console.log(this.state.dataSource);
     return (
-      <ScrollView
-        contentContainerStyle={{
-          justifyContent: 'center',
-          backgroundColor: R.colors.r2,
-          height: '100%'
-        }}
-      >
-        <RoundImage />
-        <View style={inputStyle.c}>
-          <View style={inputStyle.c1}>
-            <Image source={R.images.username_icon} />
+      <SafeAreaView style={style.redContainer}>
+        <ScrollView>
+          <RoundImage />
+          <View style={inputStyle.c}>
+            <View style={inputStyle.c1}>
+              <Image source={R.images.username_icon} />
+            </View>
+            <View style={inputStyle.c2}>
+              <Text style={inputStyle.textinput}>
+                {this.state.dataSource.first_name}
+              </Text>
+            </View>
           </View>
-          <View style={inputStyle.c2}>
-            <Text style={inputStyle.textinput}>
-              {this.state.dataSource.first_name}
-            </Text>
+          <View style={inputStyle.c}>
+            <View style={inputStyle.c1}>
+              <Image source={R.images.username_icon} />
+            </View>
+            <View style={inputStyle.c2}>
+              <Text style={inputStyle.textinput}>
+                {this.state.dataSource.last_name}
+              </Text>
+            </View>
           </View>
-        </View>
-        <View style={inputStyle.c}>
-          <View style={inputStyle.c1}>
-            <Image source={R.images.username_icon} />
+          <View style={inputStyle.c}>
+            <View style={inputStyle.c1}>
+              <Image source={R.images.email_icon} />
+            </View>
+            <View style={inputStyle.c2}>
+              <Text style={inputStyle.textinput}>
+                {this.state.dataSource.email}
+              </Text>
+            </View>
           </View>
-          <View style={inputStyle.c2}>
-            <Text style={inputStyle.textinput}>
-              {this.state.dataSource.last_name}
-            </Text>
+          <View style={inputStyle.c}>
+            <View style={inputStyle.c1}>
+              <Image source={R.images.cellphone} />
+            </View>
+            <View style={inputStyle.c2}>
+              <Text style={inputStyle.textinput}>
+                {this.state.dataSource.phone_no}
+              </Text>
+            </View>
           </View>
-        </View>
-        <View style={inputStyle.c}>
-          <View style={inputStyle.c1}>
-            <Image source={R.images.email_icon} />
-          </View>
-          <View style={inputStyle.c2}>
-            <Text style={inputStyle.textinput}>
-              {this.state.dataSource.email}
-            </Text>
-          </View>
-        </View>
-        <View style={inputStyle.c}>
-          <View style={inputStyle.c1}>
-            <Image source={R.images.cellphone} />
-          </View>
-          <View style={inputStyle.c2}>
-            <Text style={inputStyle.textinput}>
-              {this.state.dataSource.phone_no}
-            </Text>
-          </View>
-        </View>
 
-        <RoundButton
-          onPress={() => this.props.navigation.navigate('EditProfile')}
-        >
-          EDIT PROFILE
-        </RoundButton>
-        <RoundButton
-          onPress={() => this.props.navigation.navigate('ResetPassword')}
-        >
-          RESET PASSWORD
-        </RoundButton>
-      </ScrollView>
+          <RoundButton
+            onPress={() => this.props.navigation.navigate('EditProfile')}
+          >
+            EDIT PROFILE
+          </RoundButton>
+          <RoundButton
+            onPress={() => this.props.navigation.navigate('ResetPassword')}
+          >
+            RESET PASSWORD
+          </RoundButton>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

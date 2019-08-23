@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Image, TouchableHighlight } from 'react-native';
-import {
-  RoundButton,
-  Spinner,
-  Heading,
-  Input,
-  RoundImage
-} from '../components';
+import { View, SafeAreaView, ScrollView } from 'react-native';
+import { RoundButton, Spinner, Input, RoundImage } from '../components';
 import style from '../Styles';
 import R from '../R';
-import AsyncStorage from '@react-native-community/async-storage';
 import api from '../api';
 import CartContext from '../context/CartContext';
 
@@ -80,57 +73,58 @@ export default class EditProfile extends Component {
   }
 
   render() {
-    console.log(this.state.dataSource);
     return (
-      <View style={style.redContainer}>
-        <RoundImage />
-        <Input
-          image={R.images.username_icon}
-          placeholder='First Name'
-          placeholderColor={R.colors.b1}
-          onChangeText={first_name => this.setState({ first_name })}
-        />
-        <Input
-          image={R.images.username_icon}
-          placeholder='Last Name'
-          placeholderColor={R.colors.b1}
-          onChangeText={last_name => this.setState({ last_name })}
-        />
-        <Input
-          image={R.images.email_icon}
-          placeholder='Email'
-          placeholderColor={R.colors.b1}
-          onChangeText={email => this.setState({ email })}
-          keyboardType='email-address'
-        />
-        <Input
-          image={R.images.cellphone}
-          placeholder='PHONE NUMBER'
-          placeholderColor={R.colors.b1}
-          onChangeText={phone_no => this.setState({ phone_no })}
-          keyboardType='number-pad'
-        />
-        <Input
-          image={R.images.dob_icon}
-          placeholder='DOB'
-          placeholderColor={R.colors.b1}
-          onChangeText={dob => this.setState({ dob })}
-        />
-        <CartContext.Consumer>
-          {contextValue => (
-            <RoundButton
-              disabled={this.state.isLoading}
-              onPress={() => {
-                this.updateUser(contextValue);
-              }}
-            >
-              SUBMIT
-            </RoundButton>
-          )}
-        </CartContext.Consumer>
+      <SafeAreaView style={style.redContainer}>
+        <ScrollView>
+          <RoundImage />
+          <Input
+            image={R.images.username_icon}
+            placeholder='First Name'
+            placeholderColor={R.colors.b1}
+            onChangeText={first_name => this.setState({ first_name })}
+          />
+          <Input
+            image={R.images.username_icon}
+            placeholder='Last Name'
+            placeholderColor={R.colors.b1}
+            onChangeText={last_name => this.setState({ last_name })}
+          />
+          <Input
+            image={R.images.email_icon}
+            placeholder='Email'
+            placeholderColor={R.colors.b1}
+            onChangeText={email => this.setState({ email })}
+            keyboardType='email-address'
+          />
+          <Input
+            image={R.images.cellphone}
+            placeholder='PHONE NUMBER'
+            placeholderColor={R.colors.b1}
+            onChangeText={phone_no => this.setState({ phone_no })}
+            keyboardType='number-pad'
+          />
+          <Input
+            image={R.images.dob_icon}
+            placeholder='DOB'
+            placeholderColor={R.colors.b1}
+            onChangeText={dob => this.setState({ dob })}
+          />
+          <CartContext.Consumer>
+            {contextValue => (
+              <RoundButton
+                disabled={this.state.isLoading}
+                onPress={() => {
+                  this.updateUser(contextValue);
+                }}
+              >
+                SUBMIT
+              </RoundButton>
+            )}
+          </CartContext.Consumer>
 
-        {this.showSpinner()}
-      </View>
+          {this.showSpinner()}
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

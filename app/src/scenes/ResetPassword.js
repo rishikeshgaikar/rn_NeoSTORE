@@ -1,31 +1,30 @@
-import React, { Component } from "react";
-import { View, Text, StatusBar, Image, TouchableHighlight } from "react-native";
-import { RoundButton, Spinner, Heading, Input } from "../components";
-import style from "../Styles";
-import R from "../R";
-import AsyncStorage from "@react-native-community/async-storage";
-import api from "../api";
+import React, { Component } from 'react';
+import { View, StatusBar } from 'react-native';
+import { RoundButton, Spinner, RoundImage, Input } from '../components';
+import style from '../Styles';
+import R from '../R';
+import api from '../api';
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      access_token: "",
-      pass: "",
-      confirmPass: "",
+      access_token: '',
+      pass: '',
+      confirmPass: '',
       isLoading: false,
       dataSource: []
     };
   }
 
   resetPass() {
-    const oldPass = "1";
+    const oldPass = '1';
     const pass = this.state.pass;
     const confirmPass = this.state.confirmPass;
 
-    const method = "POST";
+    const method = 'POST';
     const body = `old_password=${oldPass}&password=${pass}&confirm_password=${confirmPass}`;
-    const url = "users/change";
+    const url = 'users/change';
     return api(url, method, body)
       .then(responseJson => {
         this.setState({ dataSource: responseJson }, function() {}),
@@ -43,15 +42,15 @@ export default class Login extends Component {
         isLoading: !this.state.isLoading
       });
       setTimeout(function() {
-        navigate("UserProfile");
+        navigate('UserProfile');
       }, 2000);
-      alert("" + this.state.dataSource.user_msg);
+      alert('' + this.state.dataSource.user_msg);
     } else if (this.state.dataSource.status == 401) {
-      alert("" + this.state.dataSource.user_msg);
+      alert('' + this.state.dataSource.user_msg);
     } else if (this.state.dataSource.status == 400) {
-      alert("" + this.state.dataSource.user_msg);
+      alert('' + this.state.dataSource.user_msg);
     } else {
-      alert("Something Went Wrong");
+      alert('Something Went Wrong');
     }
   }
 
@@ -70,24 +69,24 @@ export default class Login extends Component {
     return (
       <View style={style.redContainer}>
         <StatusBar backgroundColor={R.colors.r2} />
-        <Heading>NeoSTORE</Heading>
+        <RoundImage />
         <Input
           image={R.images.username_icon}
-          placeholder="Current Password"
+          placeholder='Current Password'
           placeholderColor={R.colors.b1}
           onChangeText={oldPass => this.setState({ oldPass })}
           secureTextEntry={true}
         />
         <Input
           image={R.images.username_icon}
-          placeholder="New Password"
+          placeholder='New Password'
           placeholderColor={R.colors.b1}
           onChangeText={pass => this.setState({ pass })}
           secureTextEntry={true}
         />
         <Input
           image={R.images.password_icon}
-          placeholder="Confirm Password"
+          placeholder='Confirm Password'
           placeholderColor={R.colors.b1}
           onChangeText={confirmPass => this.setState({ confirmPass })}
           secureTextEntry={true}
