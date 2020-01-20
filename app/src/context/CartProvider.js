@@ -27,7 +27,8 @@ export default class CartProvider extends Component {
               '' +
               responseJson.data.user_data.first_name +
               ' ' +
-              responseJson.data.user_data.last_name
+              responseJson.data.user_data.last_name,
+            profile_pic: responseJson.data.user_data.profile_pic
           });
           console.log('test' + this.state.count);
         }

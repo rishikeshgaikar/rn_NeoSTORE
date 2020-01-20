@@ -1,17 +1,17 @@
-import { StyleSheet } from "react-native";
-import R from "./R";
+import { StyleSheet } from 'react-native';
+import R from './R';
 
 const style = StyleSheet.create({
   redContainer: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     backgroundColor: R.colors.r2
   },
   whiteText: {
     color: R.colors.b1,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 16,
-    fontStyle: "normal",
+    fontStyle: 'normal',
     fontFamily: R.fonts.GothamBold
   }
 });

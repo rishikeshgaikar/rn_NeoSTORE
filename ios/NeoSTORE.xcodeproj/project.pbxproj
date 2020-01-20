@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* NeoSTORETests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* NeoSTORETests.m */; };
 		0B9C47B360756AF0CCCE2D81 /* libPods-NeoSTORE.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1CD9E272ED3FE7A0C3D6924 /* libPods-NeoSTORE.a */; };

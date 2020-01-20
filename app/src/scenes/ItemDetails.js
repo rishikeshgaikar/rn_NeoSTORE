@@ -30,7 +30,7 @@ export default class ItemDetails extends Component {
       quantityModalVisible: false,
       ratedByUser: null,
       quantity: '1',
-      isLoading: ''
+      isLoading: true
     };
   }
   static navigationOptions = ({ navigation }) => ({
@@ -52,14 +52,14 @@ export default class ItemDetails extends Component {
     const url = `products/getDetail?product_id=${product_id}`;
     return api(url, method, null)
       .then(responseJson => {
-        this.setState(
-          {
+        if (responseJson.status == 200) {
+          this.setState({
             dataSource: responseJson.data,
             productImages: responseJson.data.product_images,
-            bigImage: responseJson.data.product_images[0].image
-          },
-          function() {}
-        );
+            bigImage: responseJson.data.product_images[0].image,
+            isLoading: !this.state.isLoading
+          });
+        }
       })
       .catch(error => {
         console.error(error);

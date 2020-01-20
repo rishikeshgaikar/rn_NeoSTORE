@@ -110,7 +110,7 @@ export default class CustomDrawer extends Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: R.colors.b10 }}>
-        <RoundImage />
+        <RoundImage></RoundImage>
         <View
           style={{
             justifyContent: 'center',
@@ -144,7 +144,6 @@ export default class CustomDrawer extends Component {
             }}
           </CartContext.Consumer>
         </View>
-
         <FlatList
           data={this.state.drawerData}
           renderItem={({ item }) => (

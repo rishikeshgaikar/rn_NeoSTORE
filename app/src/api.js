@@ -14,10 +14,11 @@ export default async function api(url, m, b) {
     },
     body: body_value
   };
-  // console.log(endurl, fetchConfig);
+  console.log(endurl, fetchConfig);
   const res = await fetch(
     `http://staging.php-dev.in:8844/trainingapp/api/${endurl}`,
     fetchConfig
   );
+  console.log(res);
   return await res.json();
 }

@@ -55,6 +55,7 @@ export default class UserProfile extends Component {
       <SafeAreaView style={style.redContainer}>
         <ScrollView>
           <RoundImage />
+
           <View style={inputStyle.c}>
             <View style={inputStyle.c1}>
               <Image source={R.images.username_icon} />
